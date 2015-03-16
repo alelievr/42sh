@@ -6,13 +6,15 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/14 16:48:12 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/16 16:50:29 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/16 17:21:08 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
+#include <sys/types.h>
+#include <pwd.h>
 
-void		build_path(void)
+static void	build_path(void)
 {
 	char	buff[0xF000];
 	int		i;
@@ -41,6 +43,22 @@ void		build_path(void)
 	set_env("PATH", buff);
 }
 
+static void	build_env2(void)
+{
+	struct passwd	*pw;
+	char			buff[0xF00];
+
+	getcwd(buff, 0xF00);
+	ft_strcat(buff, "/42sh");
+	pw = getpwuid(getuid());
+	if (!get_env("HOME"))
+		set_env("HOME", pw->pw_dir);
+	if (!get_env("USER"))
+		set_env("USER", pw->pw_name);
+	if (!get_env("SHELL"))
+		set_env("SHELL", buff);
+}
+
 int			build_env(void)
 {
 	char	buff[0xF000];
@@ -61,5 +79,6 @@ int			build_env(void)
 	}
 	if (!get_env("PATH"))
 		build_path();
+	build_env2();
 	return (0);
 }
