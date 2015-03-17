@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 21:19:51 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/17 15:43:23 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/17 23:59:42 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,11 @@ static void	ft_option_echo(char **av, int option, int i)
 			if (av[i][j] == '\\')
 			{
 				if (av[i][j + 1] == 'x')
-					j += ft_display_code(ft_ndeconvert(av[i] + j + 2, 16, nbr_len(av[i] + j + 2)), av[i] + j);
+					j += ft_display_code(ft_ndeconvert(av[i] + j + 2, 16,
+								nbr_len(av[i] + j + 2)), av[i] + j);
 				else if (av[i][j + 1] == '0')
-					j += ft_display_code(ft_ndeconvert(av[i] + j + 2, 8, nbr_len(av[i] + j + 2)), av[i] + j);
+					j += ft_display_code(ft_ndeconvert(av[i] + j + 2, 8,
+								nbr_len(av[i] + j + 2)), av[i] + j);
 				else
 					write(1, &av[i][j], 1);
 			}
@@ -92,8 +94,8 @@ static char	**get_option(char **av, int *option)
 				BIT_ON(*option, OP_N);
 			else
 				break ;
-		if (av[1] && *av[1] != '-')
-			break ;
+	//	if (av[1] && *av[1] != '-')
+	//		break ;
 		av++;
 	}
 	return (av);
