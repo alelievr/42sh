@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:37:06 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/17 17:08:18 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/17 19:40:23 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,17 @@ int			ft_env(int ac, char **av)
 	else if (ac >= 2)
 	{
 		i = 1;
-		new_env = (char **)malloc(sizeof(char *) * MAX_ENV);
+		new_env = NULL;
 		if (av[1][0] == '-')
 		{
+			if (!(new_env = (char **)malloc(sizeof(char *) * MAX_ENV)))
+				m_error();
 			if (ft_strcmp(av[1], "-i"))
 			{
 				ft_putstr("env illegal option -- ");
 				ft_putchar(av[1][1]);
 				ft_putstr("\nusage: env [-i] [name=value ...] "
-						"[utility [argument ...]]");
+						"[utility [argument ...]]\n");
 				return (0);
 			}
 			else
@@ -72,12 +74,9 @@ int			ft_env(int ac, char **av)
 		else
 			new_env = ft_env_cpy(new_env);
 		while (av[i] && ft_strchr(av[i], '='))
-		{
-			new_env = ft_add_env(new_env, av[i]);
-			i++;
-		}
+			new_env = ft_add_env(new_env, av[i++]);
 		if (av[i])
-			ft_exebin(av[i], &av[1], new_env);
+			ft_exebin(av[i], &av[i], new_env);
 		else
 			ft_print_env(new_env);
 		free(new_env);
