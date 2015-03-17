@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 15:33:24 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/16 16:35:02 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/17 17:21:19 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@ int		is_dir(char *path)
 	DIR	*tmp;
 
 	if ((tmp = opendir(path)) == NULL)
-		return (0);
+		return (-1);
 	else
+	{
+		if (access(path, R_OK) == -1)
+			return (-2);
 		closedir(tmp);
+	}
 	return (1);
 }

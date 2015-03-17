@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   ft_signals.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/16 15:55:43 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/17 02:22:51 by alelievr         ###   ########.fr       */
+/*   Created: 2015/03/17 01:11:47 by alelievr          #+#    #+#             */
+/*   Updated: 2015/03/17 18:08:44 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
-#include <stdlib.h>
+#include <signal.h>
 
-char	**g_env;
-
-int		main(int ac, char **av, char **environ)
+void		ft_signals(void)
 {
-	int		i;
-
-	i = 0;
-	g_env = (char **)malloc(sizeof(char *) * MAX_ENV);
-	i = 0;
-	while (*environ)
-		g_env[i++] = ft_strdup(*environ++);
-	g_env[i++] = NULL;
-	ft_signals();
-	build_env();
-	ft_env(1, NULL);
-	get_command();
-	(void)ac;
-	(void)av;
-	return (0);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGTERM, SIG_IGN);
+	signal(SIGKILL, SIG_IGN);
+	signal(SIGPIPE, SIG_IGN);
+	signal(SIGABRT, SIG_IGN);
 }

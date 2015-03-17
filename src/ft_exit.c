@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/16 15:55:43 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/17 02:22:51 by alelievr         ###   ########.fr       */
+/*   Created: 2015/03/16 21:53:02 by alelievr          #+#    #+#             */
+/*   Updated: 2015/03/16 21:55:11 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
-#include <stdlib.h>
 
-char	**g_env;
-
-int		main(int ac, char **av, char **environ)
+int			ft_exit(int ac, char **av)
 {
-	int		i;
-
-	i = 0;
-	g_env = (char **)malloc(sizeof(char *) * MAX_ENV);
-	i = 0;
-	while (*environ)
-		g_env[i++] = ft_strdup(*environ++);
-	g_env[i++] = NULL;
-	ft_signals();
-	build_env();
-	ft_env(1, NULL);
-	get_command();
+	if (av == NULL || av[1] == NULL)
+		exit(0);
+	else
+		exit(ft_atoi(av[1]));
 	(void)ac;
-	(void)av;
 	return (0);
 }

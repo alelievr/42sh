@@ -6,7 +6,7 @@
 #    By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/28 13:21:40 by alelievr          #+#    #+#              #
-#    Updated: 2015/03/16 16:38:53 by alelievr         ###   ########.fr        #
+#    Updated: 2015/03/17 16:04:01 by alelievr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,15 @@ SRC			=	prompt.c		\
 				get_command.c	\
 				build_env.c		\
 				ft_env.c		\
+				ft_exebin.c		\
+				ft_builtins.c	\
+				ft_exit.c		\
+				ft_unsetenv.c	\
+				ft_setenv.c		\
+				ft_echo.c		\
+				ft_cd.c			\
+				unset_env.c		\
+				ft_signals.c	\
 
 #	Objects
 OBJDIR		=	obj

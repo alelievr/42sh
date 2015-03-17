@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/14 16:48:12 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/16 17:21:08 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/17 18:25:10 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,8 @@ int			build_env(void)
 	char	buff[0xF000];
 	int		tmp;
 
-	if (!get_env("PWD"))
-	{
-		getcwd(buff, 0xF000);
-		set_env("PWD", buff);
-	}
+	getcwd(buff, 0xF000);
+	set_env("PWD", buff);
 	if (!get_env("SHLVL"))
 		set_env("SHLVL", "1");
 	else
