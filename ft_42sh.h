@@ -27,6 +27,7 @@ enum					e_operate
 	PIPE,
 	REDIR_IN_OUT,
 	REDIR_R,
+	BIN,
 	EREDIR_R,
 	REDIR_L,
 	DREDIR_L,
@@ -35,15 +36,15 @@ enum					e_operate
 	SEMICOLON,
 	BACKCOTE,
 	AND,
-	XOR,
-	BIN
+	XOR
 };
 
 typedef struct			s_operate
 {
-	int		type;
-	int		len;
-	char	**value;
+	int					type;
+	int					len;
+	char				**value;
+	struct s_operate	*next;
 }					t_operate;
 
 typedef struct			s_builtins
@@ -68,9 +69,10 @@ int						ft_exebin(char *path, char **av, char **env);
 void					ft_signals(void);
 int						execute_command(t_operate *b);
 int						is_dir(char *path);
+int						execute_command(t_operate *begin);
 
 /*
-**	Builtins:
+ **	Builtins:
 */
 
 int						ft_builtins(char **com);
@@ -91,7 +93,7 @@ void					default_terminal_mode(void);
 void					raw_terminal_mode(void);
 
 /*
-** Prompt:
+ ** Prompt:
 */
 
 #define PR_BUF_SIZE		0xF0000
@@ -115,9 +117,12 @@ t_operate				*ft_parse(char *cmd);
 char					*get_command(void);
 
 /*
-** Operation:
+ ** Operation:
 */
 
-
+void					ft_right_redir(int ac, char**av);
+void					ft_exec(int ac, char **av);
+void					ft_pipe(int ac, char **av);
+void					ft_redir_stdin_stdout(int ac, char **av);
 
 #endif

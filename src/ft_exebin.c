@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 18:33:11 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/18 15:19:38 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/03/18 18:43:36 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <stdlib.h>
 #include <dirent.h>
 
-#include <stdio.h>
 static char	*ft_exe_bin_path(char *name)
 {
 	char			**p;

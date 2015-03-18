@@ -6,7 +6,7 @@
 #    By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/03/18 15:06:57 by fdaudre-          #+#    #+#              #
-#    Updated: 2015/03/18 18:02:59 by alelievr         ###   ########.fr        #
+#    Updated: 2015/03/18 22:30:18 by alelievr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,26 +17,31 @@
 
 #	Sources
 SRCDIR		=	src
-SRC			=	main.c					\
-				get_env.c				\
-				set_env.c				\
-				is_dir.c				\
-				build_env.c				\
-				ft_env.c				\
-				ft_exebin.c				\
-				ft_builtins.c			\
-				ft_exit.c				\
-				ft_unsetenv.c			\
-				ft_setenv.c				\
-				ft_echo.c				\
-				ft_getenv.c				\
-				ft_cd.c					\
-				unset_env.c				\
-				ft_signals.c			\
-				prompt.c				\
-				default_terminal_mode.c	\
-				raw_terminal_mode.c		\
-				prompt/get_command.c	\
+SRC			=	main.c								\
+				get_env.c							\
+				set_env.c							\
+				is_dir.c							\
+				build_env.c							\
+				ft_env.c							\
+				ft_exebin.c							\
+				ft_builtins.c						\
+				ft_exit.c							\
+				ft_unsetenv.c						\
+				ft_setenv.c							\
+				ft_echo.c							\
+				ft_getenv.c							\
+				ft_cd.c								\
+				unset_env.c							\
+				ft_signals.c						\
+				ft_exec.c							\
+				execute_command.c					\
+				prompt_test.c						\
+				default_terminal_mode.c				\
+				raw_terminal_mode.c					\
+				prompt/get_command.c				\
+				operation/ft_right_redir.c			\
+				operation/ft_pipe.c					\
+				operation/ft_redir_stdin_stdout.c	\
 
 #	Objects
 OBJDIR		=	obj
