@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/14 17:02:34 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/16 17:12:25 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/18 17:37:40 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int			set_env(char *name, char *value)
 	i = 0;
 	while (g_env[i])
 	{
-		if (!ft_strncmp(g_env[i], name, ft_strlen(name)))
+		if (!ft_strncmp(g_env[i], name, ft_strlen(name))
+				&& g_env[i][ft_strlen(name)] == '=')
 		{
 			set_var_env(name, value, i);
 			return (0);

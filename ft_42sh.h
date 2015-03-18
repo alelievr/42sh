@@ -25,6 +25,7 @@ extern	char	**g_env;
 enum	e_operate
 {
 	PIPE,
+	REDIR_IN_OUT,
 	REDIR_R,
 	EREDIR_R,
 	REDIR_L,
@@ -32,16 +33,17 @@ enum	e_operate
 	DREDIR_R,
 	EDREDIR_R,
 	SEMICOLON,
-	ENV,
 	BACKCOTE,
 	AND,
-	XOR
+	XOR,
+	BIN
 };
 
 typedef struct		s_operate
 {
 	int		type;
-	char	*value;
+	int		len;
+	char	**value;
 }					t_operate;
 
 typedef struct		s_builtins
@@ -62,6 +64,7 @@ int					build_env(void);
 int					is_dir(char *path);
 int					ft_exebin(char *path, char **av, char **env);
 void				ft_signals(void);
+int					execute_command(t_operate *b);
 
 /*
 **	Builtins:
@@ -90,5 +93,11 @@ void				raw_terminal_mode(void);
 void				ft_prompt(void);
 t_operate			*ft_parse(char *cmd);
 char				*get_command(void);
+
+/*
+** Operation:
+*/
+
+
 
 #endif
