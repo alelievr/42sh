@@ -94,8 +94,17 @@ void					raw_terminal_mode(void);
 
 typedef struct			s_prompt
 {
+	char				buff[PR_BUF_SIZE];
+	size_t				index;
+	t_lluint			key;
 	t_list				*history;
 }						t_prompt;
+
+typedef struct			s_pr_code
+{
+	t_lluint			code;
+	void				(*f)(t_prompt *d);
+}						t_pr_code;
 
 void					ft_prompt(void);
 t_operate				*ft_parse(char *cmd);
