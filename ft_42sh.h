@@ -19,7 +19,7 @@
 # include <stdlib.h>
 
 #define MAX_ENV			0xF00
-#define PR_BUF_SIZE		0xF000
+#define PR_BUF_SIZE		0xF0000
 
 extern	char			**g_env;
 
@@ -50,6 +50,9 @@ typedef struct			s_builtins
 	char	*name;
 	int		(*fun)(int, char **);
 }						t_builtins;
+
+typedef long long
+		unsigned int	t_lluint;
 
 /*
  **	Utilities:
