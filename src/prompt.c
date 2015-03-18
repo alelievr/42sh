@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 15:55:43 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/17 02:22:51 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/18 01:24:27 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ int		main(int ac, char **av, char **environ)
 	int		i;
 
 	i = 0;
-	g_env = (char **)malloc(sizeof(char *) * MAX_ENV);
+	if (!(g_env = (char **)malloc(sizeof(char *) * MAX_ENV)))
+		m_error();
 	i = 0;
 	while (*environ)
 		g_env[i++] = ft_strdup(*environ++);
 	g_env[i++] = NULL;
 	ft_signals();
 	build_env();
-	ft_env(1, NULL);
 	get_command();
 	(void)ac;
 	(void)av;

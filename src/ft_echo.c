@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 21:19:51 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/17 23:59:42 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/18 01:23:04 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,36 +15,34 @@
 #define OP_E 1
 #define OP_ME 2
 
-#include <stdio.h>
-static int	ft_display_code(int code, char *str)
-{
-	int		ret;
-	char	c;
-
-	c = code;
-	ft_putnbr(c);
-	write(1, &c, 1);
-	ret = 0;
-	str++;
-	while (*str >= '0' && *str <= '9')
-	{
-		str++;
-		ret++;
-	}
-	return (ret);
-}
-
-static int	nbr_len(char *str)
+static int	nbr_len(char *str, int base)
 {
 	int		i;
 
 	i = 0;
-	while (*str >= '0' && *str <= '9')
-	{
-		str++;
-		i++;
-	}
+	if (base == 8)
+		while (*str >= '0' && *str <= '9')
+		{
+			str++;
+			i++;
+		}
+	else if (base == 16)
+		while ((*str >= '0' && *str <= '9')
+				|| (ft_tolower(*str) >= 'a' && ft_tolower(*str) <= 'f'))
+		{
+			str++;
+			i++;
+		}
 	return (i);
+}
+
+static int	ft_display_code(int code, char *str, int base)
+{
+	char	c;
+
+	c = code;
+	write(1, &c, 1);
+	return (nbr_len(str + 2, base) + 1);
 }
 
 static void	ft_option_echo(char **av, int option, int i)
@@ -61,10 +59,10 @@ static void	ft_option_echo(char **av, int option, int i)
 			{
 				if (av[i][j + 1] == 'x')
 					j += ft_display_code(ft_ndeconvert(av[i] + j + 2, 16,
-								nbr_len(av[i] + j + 2)), av[i] + j);
+								nbr_len(av[i] + j + 2, 16)), av[i] + j, 16);
 				else if (av[i][j + 1] == '0')
 					j += ft_display_code(ft_ndeconvert(av[i] + j + 2, 8,
-								nbr_len(av[i] + j + 2)), av[i] + j);
+								nbr_len(av[i] + j + 2, 8)), av[i] + j, 8);
 				else
 					write(1, &av[i][j], 1);
 			}
@@ -94,8 +92,8 @@ static char	**get_option(char **av, int *option)
 				BIT_ON(*option, OP_N);
 			else
 				break ;
-	//	if (av[1] && *av[1] != '-')
-	//		break ;
+		//	if (av[1] && *av[1] != '-')
+		//		break ;
 		av++;
 	}
 	return (av);
@@ -114,7 +112,7 @@ int			ft_echo(int ac, char **av)
 		while (av[i])
 			ft_putstr(av[i++]);
 	else
-		ft_option_echo(av + 1, option, i);
+		ft_option_echo(av, option, i);
 	if (!BIT_TEST(option, OP_N))
 		write(1, "\n", 1);
 	(void)ac;
