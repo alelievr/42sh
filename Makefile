@@ -3,12 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+         #
+#    By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2015/01/28 13:21:40 by alelievr          #+#    #+#              #
-#    Updated: 2015/03/18 15:05:35 by fdaudre-         ###   ########.fr        #
+#    Created: 2015/03/18 15:06:57 by fdaudre-          #+#    #+#              #
+#    Updated: 2015/03/18 15:07:00 by fdaudre-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 #################
 ##  VARIABLES  ##
@@ -58,9 +59,9 @@ CC			=	clang
 
 SHELL		=	/bin/zsh
 OBJ			=	$(addprefix $(OBJDIR)/,$(notdir $(SRC:.c=.o)))
-	LIBFLAG		=	$(addprefix -L,$(LIBDIR))
-	INCFLAG		=	$(addprefix -I,$(INCDIR))
-	NORME		=	$(addsuffix /*.h,$(INCDIR)) $(addprefix $(SRCDIR)/,$(SRC))
+LIBFLAG		=	$(addprefix -L,$(LIBDIR))
+INCFLAG		=	$(addprefix -I,$(INCDIR))
+NORME		=	$(addsuffix /*.h,$(INCDIR)) $(addprefix $(SRCDIR)/,$(SRC))
 
 $(foreach S,$(SRC), \
 	$(eval VPATH += $(SRCDIR)/$(dir $(S)) \
