@@ -18,11 +18,12 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-#define MAX_ENV	0xF00
+#define MAX_ENV			0xF00
+#define PR_BUF_SIZE		0xF000
 
-extern	char	**g_env;
+extern	char			**g_env;
 
-enum	e_operate
+enum					e_operate
 {
 	PIPE,
 	REDIR_R,
@@ -38,57 +39,57 @@ enum	e_operate
 	XOR
 };
 
-typedef struct		s_operate
+typedef struct			s_operate
 {
 	int		type;
 	char	*value;
-}					t_operate;
+}						t_operate;
 
-typedef struct		s_builtins
+typedef struct			s_builtins
 {
 	char	*name;
 	int		(*fun)(int, char **);
-}					t_builtins;
+}						t_builtins;
 
 /*
  **	Utilities:
 */
 
-char				*get_env(char *name);
-int					set_env(char *name, char *value);
-int					unset_env(char *name);
+char					*get_env(char *name);
+int						set_env(char *name, char *value);
+int						unset_env(char *name);
 
-int					build_env(void);
-int					is_dir(char *path);
-int					ft_exebin(char *path, char **av, char **env);
-void				ft_signals(void);
+int						build_env(void);
+int						is_dir(char *path);
+int						ft_exebin(char *path, char **av, char **env);
+void					ft_signals(void);
 
 /*
 **	Builtins:
 */
 
-int					ft_builtins(char **com);
+int						ft_builtins(char **com);
 
-int					ft_env(int ac, char **av);
-int					ft_exit(int ac, char **av);
-int					ft_unsetenv(int ac, char **av);
-int					ft_setenv(int ac, char **av);
-int					ft_echo(int ac, char **av);
-int					ft_cd(int ac, char **av);
+int						ft_env(int ac, char **av);
+int						ft_exit(int ac, char **av);
+int						ft_unsetenv(int ac, char **av);
+int						ft_setenv(int ac, char **av);
+int						ft_echo(int ac, char **av);
+int						ft_cd(int ac, char **av);
 
 /*
  **	Terminal:
 */
 
-void				default_terminal_mode(void);
-void				raw_terminal_mode(void);
+void					default_terminal_mode(void);
+void					raw_terminal_mode(void);
 
 /*
 ** Prompt:
 */
 
-void				ft_prompt(void);
-t_operate			*ft_parse(char *cmd);
-char				*get_command(void);
+void					ft_prompt(void);
+t_operate				*ft_parse(char *cmd);
+char					*get_command(void);
 
 #endif
