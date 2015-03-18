@@ -19,7 +19,6 @@
 # include <stdlib.h>
 
 #define MAX_ENV			0xF00
-#define PR_BUF_SIZE		0xF0000
 
 extern	char			**g_env;
 
@@ -90,6 +89,13 @@ void					raw_terminal_mode(void);
 /*
 ** Prompt:
 */
+
+#define PR_BUF_SIZE		0xF0000
+
+typedef struct			s_prompt
+{
+	t_list				*history;
+}						t_prompt;
 
 void					ft_prompt(void);
 t_operate				*ft_parse(char *cmd);
