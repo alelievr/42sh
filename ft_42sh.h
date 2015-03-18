@@ -6,14 +6,14 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:28:25 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/18 13:42:31 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/03/18 14:55:02 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_42SH_H
 # define FT_42SH_H
 
-# include "libft/libft.h"
+# include "libft.h"
 # include <term.h>
 # include <unistd.h>
 # include <stdlib.h>

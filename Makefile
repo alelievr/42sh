@@ -6,7 +6,7 @@
 #    By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/28 13:21:40 by alelievr          #+#    #+#              #
-#    Updated: 2015/03/18 11:38:43 by alelievr         ###   ########.fr        #
+#    Updated: 2015/03/18 14:54:36 by fdaudre-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ SRC			=	prompt.c				\
 				get_env.c				\
 				set_env.c				\
 				is_dir.c				\
-				get_command.c			\
 				build_env.c				\
 				ft_env.c				\
 				ft_exebin.c				\
@@ -34,22 +33,23 @@ SRC			=	prompt.c				\
 				ft_signals.c			\
 				default_terminal_mode.c	\
 				raw_terminal_mode.c		\
+				prompt/get_command.c	\
 
 #	Objects
 OBJDIR		=	obj
 
 #	Includes
-INCDIR		=	./
+INCDIR		=	. libft
 
 #	Libraries
 LIBDIR		=	libft
-LIB			=	-lft
+LIB			=	-lft -lncurses
 
 #	Output
 NAME		=	42sh
 
 #	Compiler
-CFLAGS		=	-g -Werror -Wall -Wextra -lcurses
+CFLAGS		=	-g -Werror -Wall -Wextra
 CC			=	clang
 
 #################
