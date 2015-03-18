@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:28:25 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/18 11:34:02 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/18 13:42:31 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int					set_env(char *name, char *value);
 int					unset_env(char *name);
 
 int					build_env(void);
-int					get_command(void);
+char				**get_command(void);
 int					is_dir(char *path);
 int					ft_exebin(char *path, char **av, char **env);
 void				ft_signals(void);
