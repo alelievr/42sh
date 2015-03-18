@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:28:25 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/17 02:22:13 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/18 14:49:06 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ enum	e_operate
 {
 	PIPE,
 	REDIR_R,
+	EREDIR_R,
 	REDIR_L,
 	DREDIR_L,
 	DREDIR_R,
+	EDREDIR_R,
 	SEMICOLON,
 	ENV,
 	BACKCOTE,

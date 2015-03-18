@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:37:06 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/17 19:45:49 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/18 14:50:34 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,10 @@ static char	**ft_env2(char **av, int *i)
 	char	**new_env;
 
 	*i = 1;
-	new_env = NULL;
+	if (!(new_env = (char **)malloc(sizeof(char *) * MAX_ENV)))
+		m_error();
 	if (av[1][0] == '-')
 	{
-		if (!(new_env = (char **)malloc(sizeof(char *) * MAX_ENV)))
-			m_error();
 		if (ft_strcmp(av[1], "-i"))
 		{
 			ft_putstr("env illegal option -- ");
