@@ -5,15 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Updated: 2015/03/18 14:55:02 by fdaudre-         ###   ########.fr       */
 /*   Created: 2015/03/18 14:51:54 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/18 14:51:59 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_42SH_H
 # define FT_42SH_H
 
-# include "libft/libft.h"
+# include "libft.h"
 # include <term.h>
 # include <unistd.h>
 # include <stdlib.h>
