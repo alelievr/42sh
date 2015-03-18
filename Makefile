@@ -6,7 +6,7 @@
 #    By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/28 13:21:40 by alelievr          #+#    #+#              #
-#    Updated: 2015/03/18 14:54:36 by fdaudre-         ###   ########.fr        #
+#    Updated: 2015/03/18 15:05:35 by fdaudre-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,7 @@ all: $(NAME)
 
 #	Linking
 $(NAME): $(OBJ)
-	@make -C libft 1>/dev/null 2>/dev/null
+	@make -C libft
 	@echo "\033[38;5;149m⇒ Linking:"
 	@echo "\033[38;5;148m⇒ \033[38;5;149m"$(CC) $(CFLAGS) $(LIBFLAG) -o $(NAME) $(LIB) $(OBJ)"\033[31m"
 	@$(CC) $(CFLAGS) $(LIBFLAG) -o $(NAME) $(LIB) $(OBJ)
