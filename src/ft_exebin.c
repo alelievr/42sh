@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 18:33:11 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/16 21:19:13 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/18 11:20:38 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,34 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <dirent.h>
+
+#include <stdio.h>
+static char	*ft_exe_bin_path(char *name)
+{
+	char			**p;
+	char			*path;
+	DIR				*dir;
+	struct dirent	*dd;
+
+	if (!(path = get_env("PATH")))
+		return (NULL);
+	p = ft_strsplit(path, ':');
+	while (*p)
+	{
+		if ((dir = opendir(*p)))
+		{
+			while ((dd = readdir(dir)))
+			{
+				if (!ft_strcmp(dd->d_name, name))
+					return (ft_strjoin(*p, ft_strjoin("/", dd->d_name)));
+			}
+			closedir(dir);
+		}
+		p++;
+	}
+	return (NULL);
+}
 
 static int	ft_exebin_fork(char *path, char **av, char **env)
 {
@@ -37,8 +65,13 @@ static int	ft_exebin_fork(char *path, char **av, char **env)
 
 int			ft_exebin(char *path, char **av, char **env)
 {
-	if (access(path, F_OK) != -1)
+	char	*tmp;
+
+	tmp = NULL;
+	if (access(path, F_OK) != -1 || ((tmp = ft_exe_bin_path(path)) != NULL))
 	{
+		if (tmp != NULL)
+			path = tmp;
 		if (access(path, X_OK) != -1)
 			return (ft_exebin_fork(path, av, env));
 		else

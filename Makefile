@@ -6,7 +6,7 @@
 #    By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/28 13:21:40 by alelievr          #+#    #+#              #
-#    Updated: 2015/03/17 16:04:01 by alelievr         ###   ########.fr        #
+#    Updated: 2015/03/18 11:38:43 by alelievr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,22 +16,24 @@
 
 #	Sources
 SRCDIR		=	src
-SRC			=	prompt.c		\
-				get_env.c		\
-				set_env.c		\
-				is_dir.c		\
-				get_command.c	\
-				build_env.c		\
-				ft_env.c		\
-				ft_exebin.c		\
-				ft_builtins.c	\
-				ft_exit.c		\
-				ft_unsetenv.c	\
-				ft_setenv.c		\
-				ft_echo.c		\
-				ft_cd.c			\
-				unset_env.c		\
-				ft_signals.c	\
+SRC			=	prompt.c				\
+				get_env.c				\
+				set_env.c				\
+				is_dir.c				\
+				get_command.c			\
+				build_env.c				\
+				ft_env.c				\
+				ft_exebin.c				\
+				ft_builtins.c			\
+				ft_exit.c				\
+				ft_unsetenv.c			\
+				ft_setenv.c				\
+				ft_echo.c				\
+				ft_cd.c					\
+				unset_env.c				\
+				ft_signals.c			\
+				default_terminal_mode.c	\
+				raw_terminal_mode.c		\
 
 #	Objects
 OBJDIR		=	obj
@@ -47,8 +49,8 @@ LIB			=	-lft
 NAME		=	42sh
 
 #	Compiler
-CFLAGS		=	-g -Werror -Wall -Wextra
-CC			=	gcc
+CFLAGS		=	-g -Werror -Wall -Wextra -lcurses
+CC			=	clang
 
 #################
 ##  AUTO       ##
