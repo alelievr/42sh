@@ -6,7 +6,7 @@
 #    By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/01/28 13:21:40 by alelievr          #+#    #+#              #
-#    Updated: 2015/03/18 11:38:43 by alelievr         ###   ########.fr        #
+#    Updated: 2015/03/18 15:00:03 by alelievr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ LIB			=	-lft
 NAME		=	42sh
 
 #	Compiler
-CFLAGS		=	-g -Werror -Wall -Wextra -lcurses
+CFLAGS		=	-g -Werror -Wall -Wextra
 CC			=	clang
 
 #################
@@ -58,9 +58,9 @@ CC			=	clang
 
 SHELL		=	/bin/zsh
 OBJ			=	$(addprefix $(OBJDIR)/,$(notdir $(SRC:.c=.o)))
-	LIBFLAG		=	$(addprefix -L,$(LIBDIR))
-	INCFLAG		=	$(addprefix -I,$(INCDIR))
-	NORME		=	$(addsuffix /*.h,$(INCDIR)) $(addprefix $(SRCDIR)/,$(SRC))
+LIBFLAG		=	$(addprefix -L,$(LIBDIR))
+INCFLAG		=	$(addprefix -I,$(INCDIR))
+NORME		=	$(addsuffix /*.h,$(INCDIR)) $(addprefix $(SRCDIR)/,$(SRC))
 
 $(foreach S,$(SRC), \
 	$(eval VPATH += $(SRCDIR)/$(dir $(S)) \
