@@ -59,7 +59,6 @@ int					set_env(char *name, char *value);
 int					unset_env(char *name);
 
 int					build_env(void);
-char				**get_command(void);
 int					is_dir(char *path);
 int					ft_exebin(char *path, char **av, char **env);
 void				ft_signals(void);
@@ -83,5 +82,13 @@ int					ft_cd(int ac, char **av);
 
 void				default_terminal_mode(void);
 void				raw_terminal_mode(void);
+
+/*
+** Prompt:
+*/
+
+void				ft_prompt(void);
+t_operate			*ft_parse(char *cmd);
+char				*get_command(void);
 
 #endif

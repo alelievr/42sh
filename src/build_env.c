@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/14 16:48:12 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/17 19:23:18 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/18 15:18:42 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	build_env2(void)
 int			build_env(void)
 {
 	char	buff[0xF000];
-	int		tmp;
+//	int		tmp;
 
 	getcwd(buff, 0xF000);
 	set_env("PWD", buff);
@@ -70,8 +70,9 @@ int			build_env(void)
 		set_env("SHLVL", "1");
 	else
 	{
-		tmp = ft_deconvert((unsigned char *)get_env("SHLVL"), 10);
-		ft_convert(buff, tmp + 1, 10, 0);
+//		tmp = ft_deconvert((unsigned char *)get_env("SHLVL"), 10);
+		ft_sprintf(buff, "%d", atoi(get_env("SHLVL")) + 1);
+//		ft_convert(buff, tmp + 1, 10, 0);
 		set_env("SHLVL", buff);
 	}
 	if (!get_env("PATH"))

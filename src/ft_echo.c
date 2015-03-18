@@ -6,14 +6,14 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 21:19:51 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/18 01:25:13 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/18 15:37:01 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
-#define OP_N 0
-#define OP_E 1
-#define OP_ME 2
+#define OP_N 1
+#define OP_E 2
+#define OP_ME 3
 
 static int	nbr_len(char *str, int base)
 {
@@ -108,12 +108,12 @@ int			ft_echo(int ac, char **av)
 		return (write(1, "\n", 1));
 	i = 0;
 	av = get_option(av + 1, &option);
-	if (!BIT_TEST(option, OP_E))
+	if (!BIT_VAL(option, OP_E))
 		while (av[i])
 			ft_putstr(av[i++]);
 	else
 		ft_option_echo(av, option, i);
-	if (!BIT_TEST(option, OP_N))
+	if (!BIT_VAL(option, OP_N))
 		write(1, "\n", 1);
 	(void)ac;
 	return (1);

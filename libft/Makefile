@@ -6,7 +6,7 @@
 #    By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/07/15 15:13:38 by fdaudre-          #+#    #+#              #
-#    Updated: 2015/03/16 17:46:22 by fdaudre-         ###   ########.fr        #
+#    Updated: 2015/03/18 15:26:32 by fdaudre-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCDIR		=	.
 SRC			=	ft_memset.c			\
 				ft_bzero.c			\
 				ft_memcpy.c			\
+				ft_merror.c			\
 				ft_memccpy.c		\
 				ft_memmove.c		\
 				ft_memchr.c			\
@@ -108,6 +109,8 @@ SRC			=	ft_memset.c			\
 				ft_nmatch.c			\
 				ft_memmem.c			\
 				ft_strrev.c			\
+				ft_deconvert.c		\
+				ft_ndeconvert.c		\
 				ft_dbg.c			\
 				ft_syserrlist.c		\
 				ft_errnullptr.c					\

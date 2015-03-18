@@ -3,31 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/18 15:39:32 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/18 15:55:32 by fdaudre-         ###   ########.fr       */
+/*   Created: 2015/03/16 15:55:43 by alelievr          #+#    #+#             */
+/*   Updated: 2015/03/18 15:52:03 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
+#include <stdlib.h>
 
-t_operate				*ft_parse(char *cmd)
+char	**g_env;
+
+int		main(int ac, char **av, char **environ)
 {
-	ft_putstr(cmd);
-	if (!*cmd)
-		return (NULL);
-	return ((t_operate *)0x1);
-}
+	int		i;
 
-void					ft_prompt(void)
-{
-	t_operate			*op;
-
-	while (42)
-	{
-		op = ft_parse(get_command());
-		if (op == NULL)
-			break ;
-	}
+	i = 0;
+	if (!(g_env = (char **)malloc(sizeof(char *) * MAX_ENV)))
+		m_error();
+	i = 0;
+	while (*environ)
+		g_env[i++] = ft_strdup(*environ++);
+	g_env[i++] = NULL;
+	ft_signals();
+	build_env();
+	ft_prompt();
+	(void)ac;
+	(void)av;
+	return (0);
 }

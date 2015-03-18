@@ -6,7 +6,7 @@
 #    By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/03/18 15:06:57 by fdaudre-          #+#    #+#              #
-#    Updated: 2015/03/18 15:07:00 by fdaudre-         ###   ########.fr        #
+#    Updated: 2015/03/18 15:53:00 by fdaudre-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@
 
 #	Sources
 SRCDIR		=	src
-SRC			=	prompt.c				\
+SRC			=	main.c					\
 				get_env.c				\
 				set_env.c				\
 				is_dir.c				\
@@ -32,6 +32,7 @@ SRC			=	prompt.c				\
 				ft_cd.c					\
 				unset_env.c				\
 				ft_signals.c			\
+				prompt.c				\
 				default_terminal_mode.c	\
 				raw_terminal_mode.c		\
 				prompt/get_command.c	\

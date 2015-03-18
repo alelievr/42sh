@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 18:33:11 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/18 11:20:38 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/18 15:19:38 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,7 @@ static int	ft_exebin_fork(char *path, char **av, char **env)
 	{
 		wait(&ret);
 		if ((ret & 0xFF00) >> 8 != 0)
-		{
-			ft_putstr("error code: ");
-			ft_putnbr((ret & 0xFF00) >> 8);
-			ft_putchar('\n');
-		}
+			ft_printf("error code: %d\n", (ret & 0xFF00) >> 8);
 	}
 	if (pid == 0)
 		exit(execve(path, av, env));

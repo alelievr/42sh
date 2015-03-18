@@ -6,7 +6,7 @@
 /*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 18:51:11 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/16 18:17:32 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/03/18 15:36:18 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ extern char const			*const g_serr[];
 # define MIN(X, Y)			(X < Y ? X : Y)
 # define SIGN(X)			(X < 0 ? -1 : 1)
 # define ABS(X)				(X < 0 ? -X : X)
+
+
 
 # define BIT_VAL(nbr, r)	(nbr & (1L << (r - 1)))
 # define BIT_ON(nbr, r)		(nbr |= (1L << (r - 1)))
@@ -156,6 +158,9 @@ int						ft_ndigitsbase(uint64_t nbr, size_t base);
 size_t					ft_nbrlen(int64_t nbr, const size_t base);
 size_t					ft_unbrlen(uint64_t nbr, const size_t base);
 
+int64_t					ft_deconvert(char *n, int b);
+int64_t					ft_ndeconvert(char *n, int b, int len);
+
 /*
 ** Linked list
 */
@@ -182,25 +187,18 @@ void					ft_lstprint(const t_list *lst,
 							void (*f)(const void *, size_t));
 void					ft_simpleprint(const void *content, size_t size);
 
-
-
-
-
-
-
-
-
-
 /*
 ** Debug
 */
 void					ft_dbg(char *file, int line);
 void					ft_errnullptr(char const *str);
+void					m_error(void);
 
 /*
 ** Matrix calculation
 */
 # define FT_MAT_DIM		4
+# undef tab
 
 typedef struct			s_matrix
 {
