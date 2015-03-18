@@ -5,18 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/16 16:28:25 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/18 14:49:06 by alelievr         ###   ########.fr       */
+/*   Created: 2015/03/18 14:51:54 by alelievr          #+#    #+#             */
+/*   Updated: 2015/03/18 14:51:59 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_42SH_H
 # define FT_42SH_H
 
-#include "libft/libft.h"
-#include <term.h>
-#include <unistd.h>
-#include <stdlib.h>
+# include "libft/libft.h"
+# include <term.h>
+# include <unistd.h>
+# include <stdlib.h>
 
 #define MAX_ENV	0xF00
 
@@ -50,15 +50,18 @@ typedef struct		s_builtins
 	int		(*fun)(int, char **);
 }					t_builtins;
 
+/*
+ **	Utilities:
+*/
+
 char				*get_env(char *name);
 int					set_env(char *name, char *value);
+int					unset_env(char *name);
+
 int					build_env(void);
-int					set_env(char *name, char *value);
-char				*get_env(char *name);
-int					get_command(void);
+char				**get_command(void);
 int					is_dir(char *path);
 int					ft_exebin(char *path, char **av, char **env);
-int					unset_env(char *name);
 void				ft_signals(void);
 
 /*
@@ -73,5 +76,12 @@ int					ft_unsetenv(int ac, char **av);
 int					ft_setenv(int ac, char **av);
 int					ft_echo(int ac, char **av);
 int					ft_cd(int ac, char **av);
+
+/*
+ **	Terminal:
+*/
+
+void				default_terminal_mode(void);
+void				raw_terminal_mode(void);
 
 #endif
