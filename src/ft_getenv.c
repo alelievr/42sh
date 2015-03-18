@@ -1,43 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_builtins.c                                      :+:      :+:    :+:   */
+/*   ft_getenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/16 21:08:56 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/18 17:57:08 by alelievr         ###   ########.fr       */
+/*   Created: 2015/03/18 17:49:44 by alelievr          #+#    #+#             */
+/*   Updated: 2015/03/18 17:57:10 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
 
-t_builtins	g_builts[7] = {
-				{"env", ft_env},
-				{"unsetenv", ft_unsetenv},
-				{"setenv", ft_setenv},
-				{"cd", ft_cd},
-				{"exit", ft_exit},
-				{"echo", ft_echo},
-				{"getenv", ft_getenv}
-						};
-
-int			ft_builtins(char **com)
+int			ft_getenv(int ac, char **av)
 {
 	int		i;
-	int		ac;
-	int		ret;
 
-	ret = 0;
-	ac = 0;
-	while (com[ac])
-		ac++;
-	i = 0;
-	while (i < 7)
+	i = 1;
+	while (i < ac)
 	{
-		if (!ft_strncmp(*com, g_builts[i].name, ft_strlen(*com)) && ((ret = 1)))
-			g_builts[i].fun(ac, com);
+		ft_putendl(get_env(av[i]));
 		i++;
 	}
-	return (ret);
+	return (0);
 }

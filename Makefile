@@ -6,7 +6,7 @@
 #    By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/03/18 15:06:57 by fdaudre-          #+#    #+#              #
-#    Updated: 2015/03/18 17:09:26 by alelievr         ###   ########.fr        #
+#    Updated: 2015/03/18 17:53:16 by alelievr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,10 +29,11 @@ SRC			=	main.c					\
 				ft_unsetenv.c			\
 				ft_setenv.c				\
 				ft_echo.c				\
+				ft_getenv.c				\
 				ft_cd.c					\
 				unset_env.c				\
 				ft_signals.c			\
-				prompt.c				\
+				prompt_test.c				\
 				default_terminal_mode.c	\
 				raw_terminal_mode.c		\
 				prompt/get_command.c	\

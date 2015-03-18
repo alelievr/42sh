@@ -81,6 +81,7 @@ int						ft_unsetenv(int ac, char **av);
 int						ft_setenv(int ac, char **av);
 int						ft_echo(int ac, char **av);
 int						ft_cd(int ac, char **av);
+int						ft_getenv(int ac, char **av);
 
 /*
  **	Terminal:
