@@ -99,7 +99,7 @@ void					raw_terminal_mode(void);
  ** Prompt:
 */
 
-#define PR_BUF_SIZE		0xF0000
+# define PR_BUF_SIZE		0xF0000
 
 typedef struct			s_prompt
 {
@@ -107,6 +107,7 @@ typedef struct			s_prompt
 	size_t				index;
 	t_lluint			key;
 	t_list				*history;
+	size_t				col;
 }						t_prompt;
 
 typedef struct			s_pr_code
@@ -119,20 +120,20 @@ void					ft_prompt(void);
 t_operate				*ft_parse(char *cmd);
 char					*get_command(void);
 
-#define PR_UP			0ull
-#define PR_DO			0ull
-#define PR_RI			4414235ull
-#define PR_LE			4479771ull
-#define PR_S_RI			73883020516123ull
-#define PR_S_LE			74982532143899ull
-#define PR_BEG			4741915ull
-#define PR_END			4610843ull
-#define PR_C_A			1ull
-#define PR_C_E			5ull
-#define PR_BACK			127ull
-#define PR_DEL			2117294875ull
-#define PR_C_K			11ull
-#define PR_C_U			21ull
+# define PR_UP			0ull
+# define PR_DO			0ull
+# define PR_RI			4414235ull
+# define PR_LE			4479771ull
+# define PR_S_RI		73883020516123ull
+# define PR_S_LE		74982532143899ull
+# define PR_BEG			4741915ull
+# define PR_END			4610843ull
+# define PR_C_A			1ull
+# define PR_C_E			5ull
+# define PR_BACK		127ull
+# define PR_DEL			2117294875ull
+# define PR_C_K			11ull
+# define PR_C_U			21ull
 
 void					pr_move(t_prompt *d);
 void					pr_del(t_prompt *d);
