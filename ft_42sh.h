@@ -15,6 +15,8 @@
 
 # include "libft.h"
 # include <term.h>
+# include <termios.h>
+# include <ncurses.h>
 # include <unistd.h>
 # include <stdlib.h>
 

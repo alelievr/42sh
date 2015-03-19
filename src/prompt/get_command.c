@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/19 12:12:19 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/03/19 12:57:07 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,23 @@ static void				pr_addchar(t_prompt *d)
 
 static void				pr_affbuff(t_prompt *d)
 {
-	ft_putstr(tgetstr("cr", NULL));
+//	ft_putstr(tgetstr("cr", NULL));
+	ft_putstr(tgetstr("rc", NULL));
 	ft_putstr(tgetstr("cd", NULL));
 //ft_printf("[%llu]\n", d->key);
 	ft_printf("%{F}$> %{!F}", 123);
 	ft_putstr(d->buff);
-	ft_putstr(tgetstr("cr", NULL));
+	ft_putstr(tgetstr("rc", NULL));
+//	ft_putstr(tgetstr("cr", NULL));
 	ft_printf("\033[%luC", 3 + d->index);
+}
+
+static inline void		get_command_init(t_prompt *d)
+{
+	raw_terminal_mode();
+	d->index = 0;
+	d->buff[0] = '\0';
+	ft_putstr(tgetstr("sc", NULL));
 }
 
 char					*get_command(void)
@@ -68,9 +78,7 @@ char					*get_command(void)
 	static t_prompt		d;
 	int					i;
 
-	raw_terminal_mode();
-	d.index = 0;
-	ft_bzero(d.buff, PR_BUF_SIZE);
+	get_command_init(&d);
 	while (42)
 	{
 		pr_affbuff(&d);

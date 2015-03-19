@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 21:20:22 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/18 15:22:06 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/03/19 13:46:44 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int			ft_setenv(int ac, char **av)
 		{
 			value = tmp + 1;
 			name = av[ac];
-			printf("name = %s\nvalue = %s\n", name, value);
+			ft_printf("name = %s\nvalue = %s\n", name, value);
 			*tmp = '\0';
 			set_env(name, value);
 		}

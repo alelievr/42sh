@@ -6,7 +6,7 @@
 /*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/15 12:20:35 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/01/17 19:21:50 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/03/19 13:43:13 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int						flag_prec(t_pfflags *flags, const char *format,
 			BIT_OFF(flags->flg, 13);
 		return (2);
 	}
-	flags->prec = atoi(format + 1);
+	flags->prec = ft_atoi(format + 1);
 	return (ft_nbrlen((int64_t)flags->prec, 10) +
 	((format[1] < '0') || (format[1] > '9') ? 0 : 1));
 }
