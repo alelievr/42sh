@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/19 15:13:10 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/03/19 15:25:11 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ static void				pr_initline(t_prompt *d)
 	size_t					l;
 
 	ioctl(0, TIOCGWINSZ, &ws);
-	if ((l = ft_strlen(PROMPT42) + d->index) > ws.ws_col)
-		ft_putstr(tparm(tgetstr("UP", NULL), l / (ws.ws_col + (l % ws.ws_col ? 0 : 1))));
-	ft_putstr(tgetstr("cr", NULL));
-	ft_putstr(tgetstr("cd", NULL)); // clear
+	ft_printf("%s%s%s",
+		((l = ft_strlen(PROMPT42) + ft_strlen(d->buff)) > ws.ws_col) ?
+		tparm(tgetstr("UP", NULL), l / (ws.ws_col + !(l % ws.ws_col))) : "",
+		tgetstr("cr", NULL), tgetstr("cd", NULL));
 }
 
 static void				pr_affbuff(t_prompt *d)
