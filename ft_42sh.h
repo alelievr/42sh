@@ -17,6 +17,7 @@
 # include <term.h>
 # include <termios.h>
 # include <ncurses.h>
+# include <sys/ioctl.h>
 # include <unistd.h>
 # include <stdlib.h>
 
