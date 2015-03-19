@@ -3,13 +3,12 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+         #
+#    By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2015/03/18 15:06:57 by fdaudre-          #+#    #+#              #
-#    Updated: 2015/03/19 11:46:55 by fdaudre-         ###   ########.fr        #
+#    Created: 2015/03/19 19:54:40 by alelievr          #+#    #+#              #
+#    Updated: 2015/03/19 19:57:13 by alelievr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 #################
 ##  VARIABLES  ##
@@ -17,33 +16,37 @@
 
 #	Sources
 SRCDIR		=	src
-SRC			=	main.c								\
-				get_env.c							\
-				set_env.c							\
-				is_dir.c							\
-				build_env.c							\
-				ft_env.c							\
-				ft_exebin.c							\
-				ft_builtins.c						\
-				ft_exit.c							\
-				ft_unsetenv.c						\
-				ft_setenv.c							\
-				ft_echo.c							\
-				ft_getenv.c							\
-				ft_cd.c								\
-				unset_env.c							\
-				ft_signals.c						\
-				ft_exec.c							\
-				execute_command.c					\
-				prompt.c							\
-				default_terminal_mode.c				\
-				raw_terminal_mode.c					\
-				prompt/get_command.c				\
-				prompt/pr_move.c					\
-				prompt/pr_del.c						\
-				operation/ft_right_redir.c			\
-				operation/ft_pipe.c					\
-				operation/ft_redir_stdin_stdout.c	\
+SRC			=	main.c									\
+				get_env.c								\
+				set_env.c								\
+				is_dir.c								\
+				build_env.c								\
+				ft_env.c								\
+				ft_exebin.c								\
+				ft_builtins.c							\
+				ft_exit.c								\
+				ft_unsetenv.c							\
+				ft_setenv.c								\
+				ft_echo.c								\
+				ft_getenv.c								\
+				ft_cd.c									\
+				unset_env.c								\
+				ft_signals.c							\
+				ft_exec.c								\
+				execute_command.c						\
+				prompt.c								\
+				default_terminal_mode.c					\
+				raw_terminal_mode.c						\
+				prompt/get_command.c					\
+				operation/ft_pipe.c						\
+				operation/ft_right_redir.c				\
+				operation/ft_redir_stdin_stdout.c		\
+				operation/ft_double_right_redir.c		\
+				operation/ft_error_double_right_redir.c	\
+				operation/ft_error_right_redir.c		\
+				pr_del.c								\
+				pr_move.c								\
+
 
 #	Objects
 OBJDIR		=	obj
