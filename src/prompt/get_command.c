@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/19 11:58:46 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/03/19 12:12:19 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,24 @@
 /*
  * UP
  * DOWN
- * LEFT
- * RIGHT
  * CTRL + LEFT
  * CTRL + RIGHT
- * HOME
- * END
  * CTRL + UP
- * SUPPR
 */
 
 static t_pr_code		g_pr_codes[] =
 {
 	{PR_RI, pr_move},
 	{PR_LE, pr_move},
-	{PR_C_RI, pr_move},
-	{PR_C_LE, pr_move},
+	{PR_S_RI, pr_move},
+	{PR_S_LE, pr_move},
 	{PR_BEG, pr_move},
 	{PR_C_A, pr_move},
 	{PR_END, pr_move},
 	{PR_C_E, pr_move},
 	{PR_BACK, pr_del},
 	{PR_DEL, pr_del},
+	{PR_C_K, pr_del},
 	{PR_C_U, pr_del},
 	{0, NULL}
 };
@@ -92,5 +88,5 @@ char					*get_command(void)
 			}
 	}
 	default_terminal_mode();
-	return ((d.key == 4) && (!d.buff[d.index]) ? NULL : (char *)d.buff);
+	return ((d.key == 4) && (!d.buff[0]) ? NULL : (char *)d.buff);
 }

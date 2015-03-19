@@ -120,14 +120,15 @@ char					*get_command(void);
 #define PR_DO			0ull
 #define PR_RI			4414235ull
 #define PR_LE			4479771ull
-#define PR_C_RI			74982532143899ull
-#define PR_C_LE			73883020516123ull
+#define PR_S_RI			73883020516123ull
+#define PR_S_LE			74982532143899ull
 #define PR_BEG			4741915ull
 #define PR_END			4610843ull
 #define PR_C_A			1ull
 #define PR_C_E			5ull
 #define PR_BACK			127ull
 #define PR_DEL			2117294875ull
+#define PR_C_K			11ull
 #define PR_C_U			21ull
 
 void					pr_move(t_prompt *d);

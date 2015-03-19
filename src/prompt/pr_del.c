@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/19 11:47:06 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/19 11:58:32 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/03/19 12:11:31 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void					pr_del(t_prompt *d)
 			++tmp;
 		}
 	}
+	else if (d->key == PR_C_K)
+		d->buff[d->index] = '\0';
 	else if (d->key == PR_C_U)
 	{
 		d->buff[0] = '\0';
