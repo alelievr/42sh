@@ -120,9 +120,12 @@ char					*get_command(void);
  ** Operation:
 */
 
-void					ft_right_redir(int ac, char**av);
 void					ft_exec(int ac, char **av);
 void					ft_pipe(int ac, char **av);
 void					ft_redir_stdin_stdout(int ac, char **av);
+void					ft_right_redir(int ac, char**av);
+void					ft_double_right_redir(int ac, char **av);
+void					ft_error_double_right_redir(int ac, char **av);
+void					ft_error_right_redir(int ac, char **av);
 
 #endif
