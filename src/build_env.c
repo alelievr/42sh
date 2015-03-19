@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/14 16:48:12 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/18 15:18:42 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/03/19 13:40:01 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int			build_env(void)
 	else
 	{
 //		tmp = ft_deconvert((unsigned char *)get_env("SHLVL"), 10);
-		ft_sprintf(buff, "%d", atoi(get_env("SHLVL")) + 1);
+		ft_sprintf(buff, "%d", ft_atoi(get_env("SHLVL")) + 1);
 //		ft_convert(buff, tmp + 1, 10, 0);
 		set_env("SHLVL", buff);
 	}
