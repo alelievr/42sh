@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/18 17:55:35 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/03/19 11:58:46 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,19 @@
  * SUPPR
 */
 
-#define pr_move NULL
 static t_pr_code		g_pr_codes[] =
 {
-	{4414235ull, pr_move}, // right
-	{4479771ull, pr_move}, // left
-	{74982532143899ull, pr_move}, // ctrl + left
-	{73883020516123ull, pr_move}, // ctrl + left
-	{4741915ull, pr_move}, // begin
-	{1ull, pr_move}, // begin
-	{4610843ull, pr_move}, // end
-	{5ull, pr_move}, // end
+	{PR_RI, pr_move},
+	{PR_LE, pr_move},
+	{PR_C_RI, pr_move},
+	{PR_C_LE, pr_move},
+	{PR_BEG, pr_move},
+	{PR_C_A, pr_move},
+	{PR_END, pr_move},
+	{PR_C_E, pr_move},
+	{PR_BACK, pr_del},
+	{PR_DEL, pr_del},
+	{PR_C_U, pr_del},
 	{0, NULL}
 };
 
@@ -58,7 +60,7 @@ static void				pr_affbuff(t_prompt *d)
 {
 	ft_putstr(tgetstr("cr", NULL));
 	ft_putstr(tgetstr("cd", NULL));
-//ft_printf("[%llu]", d->key);
+//ft_printf("[%llu]\n", d->key);
 	ft_printf("%{F}$> %{!F}", 123);
 	ft_putstr(d->buff);
 	ft_putstr(tgetstr("cr", NULL));
@@ -90,5 +92,5 @@ char					*get_command(void)
 			}
 	}
 	default_terminal_mode();
-	return ((d.key == 4) && (!d.index) ? NULL : (char *)d.buff);
+	return ((d.key == 4) && (!d.buff[d.index]) ? NULL : (char *)d.buff);
 }
