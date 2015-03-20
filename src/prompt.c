@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/18 15:39:32 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/19 12:52:46 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/03/19 22:56:40 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 t_operate				*ft_parse(char *cmd)
 {
-	ft_putchar('\n');
 	if (cmd == NULL)
 		return (NULL);
 	return ((t_operate *)0x1);
