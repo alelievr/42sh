@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   pr_addch.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/18 15:39:32 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/19 22:56:40 by fdaudre-         ###   ########.fr       */
+/*   Created: 2015/03/20 10:02:38 by fdaudre-          #+#    #+#             */
+/*   Updated: 2015/03/20 10:06:16 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
 
-t_operate				*ft_parse(char *cmd)
+void					pr_addchar(t_prompt *d)
 {
-	if (cmd == NULL)
-		return (NULL);
-	return ((t_operate *)0x1);
-}
+	size_t				tmp;
 
-void					ft_prompt(void)
-{
-	t_operate			*op;
-
-	while (42)
+	tmp = ft_strlen(d->buff);
+	d->buff[tmp + 1] = '\0';
+	while (tmp != d->index)
 	{
-		op = ft_parse(get_command());
-		if (op == NULL)
-			break ;
+		d->buff[tmp] = d->buff[tmp - 1];
+		--tmp;
 	}
+	d->buff[tmp] = d->key;
+	++(d->index);
 }

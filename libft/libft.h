@@ -6,7 +6,7 @@
 /*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 18:51:11 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/18 15:36:18 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/03/20 12:20:50 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ char					*ft_strsub(const char *s, unsigned int start,
 							size_t len);
 char					*ft_strjoin(const char *s1, const char *s2);
 char					*ft_strtrim(const char *s);
-char					**ft_strsplit(const char *s, char c);
+char					**ft_strsplit(const char *s, char const *c);
 
 int						ft_toupper(int c);
 int						ft_tolower(int c);

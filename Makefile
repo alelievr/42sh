@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2015/03/19 19:54:40 by alelievr          #+#    #+#              #
-#    Updated: 2015/03/20 12:20:38 by alelievr         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 #################
 ##  VARIABLES  ##
 #################
@@ -35,9 +23,14 @@ SRC			=	main.c									\
 				ft_exec.c								\
 				execute_command.c						\
 				prompt_test.c								\
+	#			ft_read.c								
 				default_terminal_mode.c					\
 				raw_terminal_mode.c						\
 				prompt/get_command.c					\
+				prompt/pr_addch.c						\
+				prompt/pr_del.c							\
+				prompt/pr_move.c						\
+				parser/parse.c							\
 				operation/ft_pipe.c						\
 				operation/ft_right_redir.c				\
 				operation/ft_redir_stdin_stdout.c		\

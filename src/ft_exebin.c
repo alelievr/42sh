@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 18:33:11 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/18 18:43:36 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/20 12:21:22 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*ft_exe_bin_path(char *name)
 
 	if (!(path = get_env("PATH")))
 		return (NULL);
-	p = ft_strsplit(path, ':');
+	p = ft_strsplit(path, ":");
 	while (*p)
 	{
 		if ((dir = opendir(*p)))
