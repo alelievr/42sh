@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 21:19:16 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/17 20:42:00 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/20 11:24:16 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void		ft_cd_dir(char *path, char *old_pwd)
 	getcwd(cwd, 0xF00);
 	set_env("PWD", cwd);
 	strcpy(old_pwd, old_cwd);
+	set_env("OLDPWD", old_pwd);
 }
 
 static void	ft_cd_err(int err, char *name)

@@ -150,5 +150,6 @@ void					ft_double_right_redir(int ac, char **av);
 void					ft_error_double_right_redir(int ac, char **av);
 void					ft_error_right_redir(int ac, char **av);
 void					ft_left_redir(int ac, char **av);
+void					ft_double_left_redir(int ac, char **av);
 
 #endif
