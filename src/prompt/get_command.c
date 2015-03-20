@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/19 22:55:52 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/03/20 10:16:54 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static t_pr_code		g_pr_codes[] =
 	{PR_LE, pr_move},
 	{PR_S_RI, pr_move},
 	{PR_S_LE, pr_move},
+	{PR_S_UP, pr_move},
+	{PR_S_DO, pr_move},
 	{PR_BEG, pr_move},
 	{PR_C_A, pr_move},
 	{PR_END, pr_move},
@@ -29,21 +31,6 @@ static t_pr_code		g_pr_codes[] =
 	{PR_C_U, pr_del},
 	{0, NULL}
 };
-
-static void				pr_addchar(t_prompt *d)
-{
-	size_t				tmp;
-
-	tmp = ft_strlen(d->buff);
-	d->buff[tmp + 1] = '\0';
-	while (tmp != d->index)
-	{
-		d->buff[tmp] = d->buff[tmp - 1];
-		--tmp;
-	}
-	d->buff[tmp] = d->key;
-	++(d->index);
-}
 
 static void				pr_initline(t_prompt *d)
 {
@@ -78,7 +65,7 @@ ft_putstr(tgetstr("rc", NULL));
 	if (!gap)
 		gap = d->col - 1;
 	ft_printf("%{F}%s%{!F}%s", 123, PROMPT42, d->buff);
-	if (l > gap) // en ce cas, il faut faire des ups
+	if (l > gap)
 	{
 		x = l - gap;
 		x = x / d->col + !!(x % d->col);

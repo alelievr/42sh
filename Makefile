@@ -6,7 +6,7 @@
 #    By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/03/19 19:54:40 by alelievr          #+#    #+#              #
-#    Updated: 2015/03/19 19:57:13 by alelievr         ###   ########.fr        #
+#    Updated: 2015/03/20 10:06:06 by fdaudre-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRC			=	main.c									\
 				operation/ft_double_right_redir.c		\
 				operation/ft_error_double_right_redir.c	\
 				operation/ft_error_right_redir.c		\
+				pr_addch.c								\
 				pr_del.c								\
 				pr_move.c								\
 
