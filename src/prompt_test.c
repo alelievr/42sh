@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/18 15:39:32 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/19 22:06:34 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/19 23:35:32 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void					ft_prompt(void)
 	char	**v2 = (char **)malloc(sizeof(char *) * 3);
 	v1[0] = "t1";
 	v1[1] = NULL;
-	v2[0] = "ls";
+	v2[0] = "cat";
 	v2[1] = NULL;
-	op = create_op_redir(v1, 1, REDIR_R);
+	op = create_op_redir(v1, 1, REDIR_L);
 	op->next = create_op_redir(v2, 1, BIN);
 	op->next->next = NULL;
 	execute_command(op);
