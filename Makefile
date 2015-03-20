@@ -6,7 +6,7 @@
 #    By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/03/19 19:54:40 by alelievr          #+#    #+#              #
-#    Updated: 2015/03/20 10:06:06 by fdaudre-         ###   ########.fr        #
+#    Updated: 2015/03/20 10:23:48 by fdaudre-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,19 +34,20 @@ SRC			=	main.c									\
 				ft_signals.c							\
 				ft_exec.c								\
 				execute_command.c						\
-				prompt.c								\
+				ft_read.c								\
 				default_terminal_mode.c					\
 				raw_terminal_mode.c						\
 				prompt/get_command.c					\
+				prompt/pr_addch.c						\
+				prompt/pr_del.c							\
+				prompt/pr_move.c						\
+				parser/parse.c							\
 				operation/ft_pipe.c						\
 				operation/ft_right_redir.c				\
 				operation/ft_redir_stdin_stdout.c		\
 				operation/ft_double_right_redir.c		\
 				operation/ft_error_double_right_redir.c	\
 				operation/ft_error_right_redir.c		\
-				pr_addch.c								\
-				pr_del.c								\
-				pr_move.c								\
 
 
 #	Objects

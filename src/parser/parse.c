@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/18 15:39:32 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/19 22:56:40 by fdaudre-         ###   ########.fr       */
+/*   Created: 2015/03/20 10:20:48 by fdaudre-          #+#    #+#             */
+/*   Updated: 2015/03/20 10:27:43 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,6 @@ t_operate				*ft_parse(char *cmd)
 {
 	if (cmd == NULL)
 		return (NULL);
-	return ((t_operate *)0x1);
-}
-
-void					ft_prompt(void)
-{
-	t_operate			*op;
-
-	while (42)
-	{
-		op = ft_parse(get_command());
-		if (op == NULL)
-			break ;
-	}
+	;
+	return ((t_operate *)0x1); // temporaire
 }

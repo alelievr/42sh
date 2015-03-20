@@ -3,77 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/06 19:14:22 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/02/27 14:16:21 by fdaudre-         ###   ########.fr       */
+/*   Created: 2015/03/20 12:05:21 by fdaudre-          #+#    #+#             */
+/*   Updated: 2015/03/20 12:05:27 by fdaudre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static inline int		ft_strsplit_nbr(const char *s, char c)
+static inline int		ft_strsplit_nbr(char const *s, char const *c)
 {
 	int					i;
 	int					nbr;
+	int					last;
 
-	i = 0;
-	nbr = 0;
-	while (s[i])
-	{
-		while (s[i] == c)
-			i++;
-		if (s[i])
-			nbr++;
-		while ((s[i] != c) && s[i])
-			i++;
-	}
+	i = -1;
+	last = 1;
+	nbr = 1;
+	while (s[++i])
+		if (ft_strchr(c, s[i]) != NULL)
+		{
+			if (!last)
+				nbr++;
+			if (!s[i + 1])
+				nbr--;
+			last = 1;
+		}
+		else
+			last = 0;
 	return (nbr);
 }
 
-static int				ft_strsplit_write(const char *src, char **dst, char c)
+void					ft_strsplit_write(char **tab,
+							char const *s, char const *c)
 {
-	int					i;
-	int					size;
+	int					index;
+	size_t				size;
 
-	size = 0;
-	while ((src[size] != c) && src[size])
-		size++;
-	*dst = (char *)malloc((size + 1) * sizeof(**dst));
-	if (*dst == NULL)
-		return (-1);
-	(*dst)[size] = '\0';
-	i = -1;
-	while (++i < size)
-		(*dst)[i] = src[i];
-	return (i);
+	index = -1;
+	while (*s)
+	{
+		if (ft_strchr(c, *s) == NULL)
+		{
+			size = 0;
+			while (s[++size] && (ft_strchr(c, s[size]) == NULL))
+				;
+			tab[++index] = (char *)malloc((size + 1) * sizeof(char));
+			ft_strncpy(tab[index], s, size);
+			tab[index][size] = '\0';
+			s += size;
+		}
+		else
+			++s;
+	}
 }
 
-char					**ft_strsplit(const char *s, char c)
+char					**ft_strsplit(char const *s, char const *c)
 {
 	char				**tab;
 	int					nbr;
-	int					i;
-	int					n;
-	int					index;
 
-	if (LIBFT_DEBUG && (s == NULL))
-		ft_errnullptr("ft_strsplit");
 	nbr = ft_strsplit_nbr(s, c);
 	tab = (char **)malloc((nbr + 1) * sizeof(*tab));
-	if (tab == NULL)
-		return (NULL);
-	tab[nbr] = '\0';
-	index = -1;
-	i = 0;
-	while (++index < nbr)
-	{
-		while (s[i] == c)
-			++i;
-		n = ft_strsplit_write(s + i, &(tab[index]), c);
-		if (n < 0)
-			return (NULL);
-		i += n;
-	}
+	tab[nbr] = NULL;
+	ft_strsplit_write(tab, s, c);
 	return (tab);
 }
