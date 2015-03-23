@@ -32,8 +32,8 @@ enum					e_operate
 
 typedef struct			s_operate
 {
-	int					type;
-	int					len;
+	enum e_operate		type;
+//	int					len;
 	char				**value;
 	struct s_operate	*next;
 }					t_operate;
