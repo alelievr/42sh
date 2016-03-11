@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   get_stdin.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/16 17:39:19 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/20 15:03:09 by alelievr         ###   ########.fr       */
+/*   Created: 2015/03/20 14:57:00 by alelievr          #+#    #+#             */
+/*   Updated: 2015/03/20 15:01:25 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <fcntl.h>
 
-int						ft_isspace(int c)
+int			get_stdin(void)
 {
-	return ((c == '\t')
-	|| (c == '\n')
-	|| (c == '\v')
-	|| (c == '\f')
-	|| (c == '\r')
-	|| (c == ' '));
+	static int		fd = -1;
+
+	if (fd == -1)
+		fd = open("/dev/tty", O_RDWR);
+	return (fd);
 }

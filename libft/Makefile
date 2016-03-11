@@ -6,7 +6,7 @@
 #    By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/07/15 15:13:38 by fdaudre-          #+#    #+#              #
-#    Updated: 2015/03/18 15:26:32 by fdaudre-         ###   ########.fr        #
+#    Updated: 2015/03/20 15:00:40 by alelievr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,6 +113,8 @@ SRC			=	ft_memset.c			\
 				ft_ndeconvert.c		\
 				ft_dbg.c			\
 				ft_syserrlist.c		\
+				get_stdin.c			\
+				ft_putstdout.c		\
 				ft_errnullptr.c					\
 				ft_printf/ft_printf.c			\
 				ft_printf/ft_vprintf.c			\

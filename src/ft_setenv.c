@@ -6,13 +6,12 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 21:20:22 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/19 13:46:44 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/04/03 23:16:54 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
 
-#include <stdio.h>
 int			ft_setenv(int ac, char **av)
 {
 	char	*name;

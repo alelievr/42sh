@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/20 12:05:21 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/20 12:05:27 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2015/04/01 12:55:56 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ char					**ft_strsplit(char const *s, char const *c)
 	int					nbr;
 
 	nbr = ft_strsplit_nbr(s, c);
-	tab = (char **)malloc((nbr + 1) * sizeof(*tab));
+	if (!(tab = (char **)malloc((nbr + 1) * sizeof(*tab))))
+		return (NULL);
 	tab[nbr] = NULL;
 	ft_strsplit_write(tab, s, c);
 	return (tab);

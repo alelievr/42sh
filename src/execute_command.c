@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/18 17:09:04 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/20 12:21:45 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/24 16:37:07 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,15 @@ void		(*op[13])(int, char **) = {
 
 int			execute_command(t_operate *b)
 {
+	int		ac;
+
 	while (b)
 	{
+		ac = 0;
+		while (b->value[ac])
+			ac++;
 		ft_fprintf(open("/dev/tty", O_RDWR), "%i\n", b->type);
-		op[b->type](b->len, b->value);
+		op[b->type](ac, b->value);
 		b = b->next;
 	}
 	return (0);

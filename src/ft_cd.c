@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 21:19:16 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/20 11:24:16 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/12/03 17:59:39 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int			ft_cd(int ac, char **av)
 	{
 		if (!ft_strcmp(av[1], "-"))
 		{
-			if (old_pwd == NULL)
+			if (!old_pwd[0])
 				ft_putstr("cd: old pwd not set !\n");
 			else
 				ft_cd_dir(old_pwd, old_pwd);

@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_left_redir.c                                    :+:      :+:    :+:   */
+/*   ft_setenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/19 23:37:45 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/20 14:17:25 by alelievr         ###   ########.fr       */
+/*   Created: 2015/03/16 21:20:22 by alelievr          #+#    #+#             */
+/*   Updated: 2015/04/03 23:16:48 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
-#include <fcntl.h>
 
-void			ft_left_redir(int ac, char **av)
+int			ft_set(int ac, char **av)
 {
-	int		i;
-	int		fd;
+	char	*name;
+	char	*value;
+	char	*tmp;
 
-	i = 0;
-	while (i < ac)
+	ac--;
+	while (ac > 0)
 	{
-		if (av[i])
+		if ((tmp = ft_strchr(av[ac], '=')) != NULL)
 		{
-			if ((fd = open(*av, O_RDONLY)) == -1)
-				ft_putstr("Can't open file for redirecion left !\n");
-			else
-				dup2(fd, 0);
+			value = tmp + 1;
+			name = av[ac];
+			ft_printf("name = %s\nvalue = %s\n", name, value);
+			*tmp = '\0';
+			set_var(name, value);
 		}
-		i++;
+		ac--;
 	}
+	return (1);
 }

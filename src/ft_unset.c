@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_unsetenv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/16 17:39:19 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/20 15:03:09 by alelievr         ###   ########.fr       */
+/*   Created: 2015/03/16 21:21:07 by alelievr          #+#    #+#             */
+/*   Updated: 2016/02/15 17:40:17 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_42sh.h"
 
-int						ft_isspace(int c)
+int				ft_unset(int ac, char **av)
 {
-	return ((c == '\t')
-	|| (c == '\n')
-	|| (c == '\v')
-	|| (c == '\f')
-	|| (c == '\r')
-	|| (c == ' '));
+	while (ac > 0)
+		unset_var(av[--ac]);
+	return (1);
 }

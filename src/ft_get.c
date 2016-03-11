@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_getenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/16 17:39:19 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/20 15:03:09 by alelievr         ###   ########.fr       */
+/*   Created: 2015/03/18 17:49:44 by alelievr          #+#    #+#             */
+/*   Updated: 2015/04/03 23:26:21 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_42sh.h"
 
-int						ft_isspace(int c)
+int			ft_get(int ac, char **av)
 {
-	return ((c == '\t')
-	|| (c == '\n')
-	|| (c == '\v')
-	|| (c == '\f')
-	|| (c == '\r')
-	|| (c == ' '));
+	int		i;
+	char	*tmp;
+
+	i = 1;
+	while (i < ac)
+	{
+		tmp = get_var(av[i]);
+		if (tmp)
+			ft_putendl(tmp);
+		else
+			ft_printf("%s not set !\n", av[i]);
+		i++;
+	}
+	return (0);
 }

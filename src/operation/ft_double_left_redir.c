@@ -6,26 +6,18 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/20 11:20:57 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/20 12:20:13 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/03/20 14:33:11 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
 #include <fcntl.h>
 
-void			ft_double_left_redir(int ac, char **av)
+void			ft_double_left_redir_prompt(char **av, int fd)
 {
 	char		line[0xF000];
-	int			i;
 	int			ret;
-	int			fd;
 
-	i = 0;
-	if ((fd = open("/tmp/tmpstdin", O_RDWR, 0755)) == -1)
-	{
-		ft_putstr("broken redirection !\n");
-		return ;
-	}
 	while ((ret = read(0, line, 0xF000)) >= 0)
 	{
 		if (ret == -1)
@@ -39,8 +31,26 @@ void			ft_double_left_redir(int ac, char **av)
 			break ;
 		line[ret - 1] = '\n';
 		write(fd, line, ret);
+		ft_putstr(">> ");
 	}
-	dup2(fd, 0);
-	close(0);
+}
+
+void			ft_double_left_redir(int ac, char **av)
+{
+	int			i;
+	int			fd;
+	char		*file;
+
+	file = "/tmp/tmpstdin";
+	i = 0;
+	if ((fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0755)) == -1)
+	{
+		ft_putstr("broken redirection !\n");
+		return ;
+	}
+	ft_putstr(">> ");
+	ft_double_left_redir_prompt(av, fd);
+	close(fd);
+	ft_left_redir(1, &file);
 	(void)ac;
 }

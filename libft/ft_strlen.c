@@ -3,58 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alelievr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/03 19:28:51 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/02 20:38:26 by fdaudre-         ###   ########.fr       */
+/*   Created: 2014/11/03 11:42:14 by alelievr          #+#    #+#             */
+/*   Updated: 2016/03/06 19:29:38 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string.h>
 #include "libft.h"
-#define LONGPTR_MASK	(sizeof(uint64_t) - 1)
 
-#define MASK01			0x0101010101010101
-#define MASK80			0x8080808080808080
-
-static inline size_t	testbytes(const char *str, char *p)
+size_t	ft_strlen(char const *s)
 {
-	if (!p[0])
-		return (p - str);
-	else if (!p[1])
-		return (p - str + 1);
-	else if (!p[2])
-		return (p - str + 2);
-	else if (!p[3])
-		return (p - str + 3);
-	else if (!p[4])
-		return (p - str + 4);
-	else if (!p[5])
-		return (p - str + 5);
-	else if (!p[6])
-		return (p - str + 6);
-	return (p - str + 7);
-}
+	const unsigned long	*str = (unsigned long *)(unsigned long)s;
+	register size_t		ret;
+	const char			*cp;
 
-size_t					ft_strlen(register const char *str)
-{
-	register char			*p;
-	register uint64_t		*lp;
-
-	if (LIBFT_DEBUG && (str == NULL))
-		ft_errnullptr("ft_strlen");
-	p = (char *)str;
-	while ((uint64_t)p & LONGPTR_MASK)
-	{
-		if (!*p)
-			return (p - str);
-		p++;
-	}
-	lp = (uint64_t *)p;
+	ret = 0;
 	while (42)
 	{
-		if ((*lp - MASK01) & MASK80)
-			break ;
-		lp++;
+		if ((LONGCHR_NULL(*str++)))
+		{
+			cp = (const char *) (str - 1);
+			IFRET__(cp[0] == 0, cp - s);
+			IFRET__(cp[1] == 0, cp - s + 1);
+			IFRET__(cp[2] == 0, cp - s + 2);
+			IFRET__(cp[3] == 0, cp - s + 3);
+			IFRET__(cp[4] == 0, cp - s + 4);
+			IFRET__(cp[5] == 0, cp - s + 5);
+			IFRET__(cp[6] == 0, cp - s + 6);
+			IFRET__(cp[7] == 0, cp - s + 7);
+		}
 	}
-	return (testbytes(str, (char *)lp));
+	return (0);
 }

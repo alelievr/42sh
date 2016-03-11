@@ -9,9 +9,12 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-#define MAX_ENV			0xF00
+#define MAX_ENV					0xF00
+#define MAX_VAR					0xF00
+#define MAX_REDIRECTION_COMMAND	32
 
 extern	char			**g_env;
+extern	char			**g_var;
 
 enum					e_operate
 {
@@ -27,8 +30,36 @@ enum					e_operate
 	SEMICOLON,
 	BACKCOTE,
 	AND,
-	XOR
+	OR
 };
+
+typedef struct			s_redirection
+{
+	enum e_operate		type;
+	char				*file;
+	int					fd;
+	int					ftn__:32;
+}						t_redirection;
+
+typedef struct			s_operator
+{
+	char				*bin;
+	char				**av_bin;
+	int					ac_bin;
+	t_redirection		redirs[MAX_REDIRECTION_COMMAND];
+}						t_operator;
+
+typedef struct			s_command
+{
+	t_operator			*list;
+	struct s_command	*next;
+}						t_command;
+
+typedef struct			s_commandline
+{
+	t_command			*command;
+	struct s_command	*next;
+}						t_commandline;
 
 typedef struct			s_operate
 {
@@ -51,9 +82,6 @@ typedef long long
  **	Utilities:
 */
 
-char					*get_env(char *name);
-int						set_env(char *name, char *value);
-int						unset_env(char *name);
 
 int						build_env(void);
 int						ft_exebin(char *path, char **av, char **env);
@@ -66,15 +94,18 @@ int						execute_command(t_operate *begin);
  **	Builtins:
 */
 
-int						ft_builtins(char **com);
+int						ft_builtins(char **av);
 
 int						ft_env(int ac, char **av);
 int						ft_exit(int ac, char **av);
 int						ft_unsetenv(int ac, char **av);
+int						ft_unset(int ac, char **av);
 int						ft_setenv(int ac, char **av);
+int						ft_set(int ac, char **av);
+int						ft_getenv(int ac, char **av);
+int						ft_get(int ac, char **av);
 int						ft_echo(int ac, char **av);
 int						ft_cd(int ac, char **av);
-int						ft_getenv(int ac, char **av);
 
 /*
  **	Terminal:
@@ -124,10 +155,12 @@ char					*get_command(void);
 # define PR_C_E			5ull
 # define PR_C_K			11ull
 # define PR_C_U			21ull
+# define PR_TAB			9ull
 
 void					pr_addchar(t_prompt *d);
 void					pr_move(t_prompt *d);
 void					pr_del(t_prompt *d);
+void					pr_tab(t_prompt *d);
 
 /*
  ** Operation:
@@ -142,5 +175,16 @@ void					ft_error_double_right_redir(int ac, char **av);
 void					ft_error_right_redir(int ac, char **av);
 void					ft_left_redir(int ac, char **av);
 void					ft_double_left_redir(int ac, char **av);
+
+/*
+ ** Variables:
+*/
+
+char					*get_env(char *name);
+int						set_env(char *name, char *value);
+int						unset_env(char *name);
+int						set_var(char *name, char *value);
+int						unset_var(char *name);
+char					*get_var(char *name);
 
 #endif

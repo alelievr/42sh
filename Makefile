@@ -5,8 +5,6 @@
 #	Sources
 SRCDIR		=	src
 SRC			=	main.c									\
-				get_env.c								\
-				set_env.c								\
 				is_dir.c								\
 				build_env.c								\
 				ft_env.c								\
@@ -14,22 +12,30 @@ SRC			=	main.c									\
 				ft_builtins.c							\
 				ft_exit.c								\
 				ft_unsetenv.c							\
+				ft_unset.c								\
 				ft_setenv.c								\
+				ft_set.c								\
 				ft_echo.c								\
 				ft_getenv.c								\
+				ft_get.c								\
 				ft_cd.c									\
 				unset_env.c								\
+				unset_var.c								\
+				get_env.c								\
+				get_var.c								\
+				set_env.c								\
+				set_var.c								\
 				ft_signals.c							\
 				ft_exec.c								\
 				execute_command.c						\
-				prompt_test.c								\
-	#			ft_read.c								
 				default_terminal_mode.c					\
 				raw_terminal_mode.c						\
+				prompt_test.c							\
 				prompt/get_command.c					\
 				prompt/pr_addch.c						\
 				prompt/pr_del.c							\
 				prompt/pr_move.c						\
+				prompt/pr_tab.c							\
 				parser/parse.c							\
 				operation/ft_pipe.c						\
 				operation/ft_right_redir.c				\
@@ -39,8 +45,6 @@ SRC			=	main.c									\
 				operation/ft_error_right_redir.c		\
 				operation/ft_double_left_redir.c		\
 				operation/ft_left_redir.c				\
-				pr_del.c								\
-				pr_move.c								\
 
 
 #	Objects

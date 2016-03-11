@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/20 10:16:54 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2016/03/11 20:18:27 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static t_pr_code		g_pr_codes[] =
 	{PR_DEL, pr_del},
 	{PR_C_K, pr_del},
 	{PR_C_U, pr_del},
+
+	{PR_TAB, pr_tab},
 	{0, NULL}
 };
 

@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   get_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/16 17:39:19 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/20 15:03:09 by alelievr         ###   ########.fr       */
+/*   Created: 2015/04/03 23:23:44 by alelievr          #+#    #+#             */
+/*   Updated: 2015/04/03 23:23:45 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_42sh.h"
 
-int						ft_isspace(int c)
+char	*get_var(char *name)
 {
-	return ((c == '\t')
-	|| (c == '\n')
-	|| (c == '\v')
-	|| (c == '\f')
-	|| (c == '\r')
-	|| (c == ' '));
+	int		i;
+
+	i = 0;
+	while (g_var[i])
+	{
+		if (!ft_strncmp(name, g_var[i], ft_strlen(name))
+				&& g_var[i][ft_strlen(name)] == '=')
+			return (g_var[i] + ft_strlen(name) + 1);
+		i++;
+	}
+	return (NULL);
 }

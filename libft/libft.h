@@ -6,7 +6,7 @@
 /*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 18:51:11 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/20 12:20:50 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2016/03/11 20:14:41 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ char					*ft_strncpy(char *dst, const char *src, size_t n);
 char					*ft_strcat(char *s1, const char *s2);
 char					*ft_strncat(char *s1, const char *s2, size_t n);
 size_t					ft_strlcat(char *dst, const char *src, size_t size);
+size_t					strlcpy(char *dst, const char *src, size_t size);
 char					*ft_strchr(const char *s, int c);
 char					*ft_strrchr(const char *s, int c);
 char					*ft_strstr(const char *s1, const char *s2);
@@ -141,9 +142,11 @@ int						ft_islower(int c);
 /*
 ** Display
 */
+int						get_stdout(void);
 void					ft_putchar(char c);
 void					ft_putstr(char const *s);
 void					ft_putendl(char const *s);
+void					ft_putstdout(char const *s);
 void					ft_putchar_fd(char c, int fd);
 void					ft_putstr_fd(char const *s, int fd);
 void					ft_putendl_fd(char const *s, int fd);

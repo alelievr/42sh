@@ -6,21 +6,25 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 21:08:56 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/18 18:05:59 by alelievr         ###   ########.fr       */
+/*   Updated: 2015/04/03 23:28:30 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
 
-t_builtins	g_builts[7] = {
-				{"env", ft_env},
-				{"unsetenv", ft_unsetenv},
-				{"setenv", ft_setenv},
-				{"cd", ft_cd},
-				{"exit", ft_exit},
-				{"echo", ft_echo},
-				{"getenv", ft_getenv}
-						};
+t_builtins	g_builts[] = {
+	{"env", ft_env},
+	{"unsetenv", ft_unsetenv},
+	{"setenv", ft_setenv},
+	{"cd", ft_cd},
+	{"exit", ft_exit},
+	{"echo", ft_echo},
+	{"getenv", ft_getenv},
+	{"set", ft_set},
+	{"unset", ft_unset},
+	{"get", ft_get},
+	{NULL, NULL}
+};
 
 int			ft_builtins(char **com)
 {
@@ -33,9 +37,9 @@ int			ft_builtins(char **com)
 	while (com[ac])
 		ac++;
 	i = 0;
-	while (i < 7)
+	while (g_builts[i].name)
 	{
-		if (!ft_strncmp(*com, g_builts[i].name, ft_strlen(*com)) && ((ret = 1)))
+		if (!ft_strcmp(*com, g_builts[i].name) && ((ret = 1)))
 			g_builts[i].fun(ac, com);
 		i++;
 	}

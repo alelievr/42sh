@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_putstdin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/16 17:39:19 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/20 15:03:09 by alelievr         ###   ########.fr       */
+/*   Created: 2015/03/20 14:56:13 by alelievr          #+#    #+#             */
+/*   Updated: 2015/03/20 15:01:57 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int						ft_isspace(int c)
+void			ft_putstdin(const char *s)
 {
-	return ((c == '\t')
-	|| (c == '\n')
-	|| (c == '\v')
-	|| (c == '\f')
-	|| (c == '\r')
-	|| (c == ' '));
+	ft_putstr_fd(s, get_stdout());
 }
