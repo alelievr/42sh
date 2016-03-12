@@ -23,6 +23,7 @@ t_builtins	g_builts[] = {
 	{"set", ft_set},
 	{"unset", ft_unset},
 	{"get", ft_get},
+	{"bonus", ft_bonus},
 	{NULL, NULL}
 };
 

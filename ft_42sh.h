@@ -30,40 +30,49 @@ enum					e_operate
 	SEMICOLON,
 	BACKCOTE,
 	AND,
-	OR
+	OR,
 };
 
 typedef struct			s_redirection
 {
-	enum e_operate		type;
-	char				*file;
-	int					fd;
+	enum e_operate		type;	//specify the type of the redirection
+	char				*file;	//output file, if null the fd is taken
+	int					fd;		//used when std* redirections like >&2 or 2>&- are
+								//	usedredirections for example
 	int					ftn__:32;
 }						t_redirection;
 
 typedef struct			s_operator
 {
-	char				*bin;
-	char				**av_bin;
-	int					ac_bin;
-	t_redirection		redirs[MAX_REDIRECTION_COMMAND];
+	char				*bin;		//binary liked entered in the command line
+	char				**av_bin;	//binay arguments
+	int					ac_bin;		//binay arguments number
+	int					ftn__:32;
+	t_redirection		redirs[MAX_REDIRECTION_COMMAND];	//all redirections of the command
 }						t_operator;
 
 typedef struct			s_command
 {
-	t_operator			*list;
+	t_operator			*list; //each node is a command like (ls -l fkewlf > file),
+							   //	if there is a next element, the command output
+							   //	is piped in the next node
+	int					background; //can be 1 or 0 if the command is in background
+	int					ftn__:32;
 	struct s_command	*next;
 }						t_command;
 
 typedef struct			s_commandline
 {
 	t_command			*command;
+	enum e_operate		type; //can be ||, && or ;
+	int					ftn__:32;
 	struct s_command	*next;
 }						t_commandline;
 
 typedef struct			s_operate
 {
 	enum e_operate		type;
+	int					ftn__:32;
 //	int					len;
 	char				**value;
 	struct s_operate	*next;
@@ -74,6 +83,12 @@ typedef struct			s_builtins
 	char	*name;
 	int		(*fun)(int, char **);
 }						t_builtins;
+
+typedef struct			s_file
+{
+	unsigned char		type;
+	char				*name;
+}						t_file;
 
 typedef long long
 		unsigned int	t_lluint;
@@ -106,6 +121,7 @@ int						ft_getenv(int ac, char **av);
 int						ft_get(int ac, char **av);
 int						ft_echo(int ac, char **av);
 int						ft_cd(int ac, char **av);
+int						ft_bonus(int ac, char **av);
 
 /*
  **	Terminal:
@@ -144,6 +160,8 @@ char					*get_command(void);
 # define PR_DO			4348699ull
 # define PR_RI			4414235ull
 # define PR_LE			4479771ull
+# define PR_UP			4283163ull
+# define PR_DW			4348699ull
 # define PR_S_UP		71683997260571ull
 # define PR_S_DO		72783508888347ull
 # define PR_S_RI		73883020516123ull
@@ -163,6 +181,14 @@ void					pr_addstr(t_prompt *d, char *s, size_t len);
 void					pr_move(t_prompt *d);
 void					pr_del(t_prompt *d);
 void					pr_tab(t_prompt *d);
+void					pr_history(t_prompt *d);
+
+/*
+ ** Prompt history:
+*/
+char					*get_history_index(size_t index);
+char					*get_history_search(char *s);
+t_list					*get_history_list(t_list *h);
 
 /*
  ** Operation:

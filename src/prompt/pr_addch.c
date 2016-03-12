@@ -16,7 +16,7 @@ void					pr_addchar(t_prompt *d)
 {
 	size_t				tmp;
 
-	tmp = ft_strlen(d->buff);
+	tmp = d->len;
 	d->buff[tmp + 1] = '\0';
 	while (tmp != d->index)
 	{
@@ -25,13 +25,14 @@ void					pr_addchar(t_prompt *d)
 	}
 	d->buff[tmp] = d->key;
 	++(d->index);
+	++(d->len);
 }
 
 void					pr_addstr(t_prompt *d, char *s, size_t len)
 {
 	size_t		tmp;
 
-	tmp = ft_strlen(d->buff);
+	tmp = d->len;
 	d->buff[tmp + len] = '\0';
 	while (tmp != d->index)
 	{
@@ -43,4 +44,5 @@ void					pr_addstr(t_prompt *d, char *s, size_t len)
 		d->buff[tmp++] = *s++;
 		++(d->index);
 	}
+	d->len += len;
 }

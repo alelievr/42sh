@@ -30,6 +30,8 @@ static t_pr_code		g_pr_codes[] =
 	{PR_DEL, pr_del},
 	{PR_C_K, pr_del},
 	{PR_C_U, pr_del},
+	{PR_UP, pr_history},
+	{PR_DW, pr_history},
 
 	{PR_TAB, pr_tab},
 	{0, NULL}
@@ -63,10 +65,10 @@ static void				pr_affbuff(t_prompt *d)
 	size_t					gap;
 	size_t					x;
 
-/*ft_putstr(tgetstr("sc", NULL));
+ft_putstr(tgetstr("sc", NULL));
 ft_putstr(tgetstr("ho", NULL));
 ft_printf("[%llu]", d->key);
-ft_putstr(tgetstr("rc", NULL));*/
+ft_putstr(tgetstr("rc", NULL));
 	l = ft_strlen(d->buff) - d->index;
 	gap = (ft_strlen(PROMPT42) + ft_strlen(d->buff)) % d->col;
 	if (!gap)
@@ -89,8 +91,15 @@ static inline void		get_command_init(t_prompt *d)
 {
 	raw_terminal_mode();
 	d->index = 0;
+	d->len = 0;
 	d->buff[0] = '\0';
 	pr_initline(d);
+}
+
+static inline void		pr_history_append(t_prompt *d)
+{
+	ft_printf("%{F}%s%{!F}%s\n", 123, PROMPT42, d->buff);
+	ft_lstadd(&d->history, ft_lstnew(d->buff, d->len));
 }
 
 char					*get_command(void)
@@ -117,7 +126,7 @@ char					*get_command(void)
 			}
 	}
 	pr_initline(&d);
-	ft_printf("%{F}%s%{!F}%s\n", 123, PROMPT42, d.buff);
+	pr_history_append(&d);
 	default_terminal_mode();
 	return ((d.key == 4) && (!d.buff[0]) ? NULL : (char *)d.buff);
 }

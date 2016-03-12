@@ -18,6 +18,7 @@ SRC			=	main.c									\
 				ft_getenv.c								\
 				ft_get.c								\
 				ft_cd.c									\
+				ft_bonus.c								\
 				unset_env.c								\
 				unset_var.c								\
 				get_env.c								\
@@ -36,6 +37,8 @@ SRC			=	main.c									\
 				prompt/pr_del.c							\
 				prompt/pr_move.c						\
 				prompt/pr_tab.c							\
+				prompt/pr_history.c						\
+				prompt/pr_history_api.c					\
 				parser/parse.c							\
 				operation/ft_pipe.c						\
 				operation/ft_right_redir.c				\
