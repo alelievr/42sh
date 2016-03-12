@@ -87,8 +87,8 @@ int						build_env(void);
 int						ft_exebin(char *path, char **av, char **env);
 void					ft_signals(void);
 int						execute_command(t_operate *b);
-int						is_dir(char *path);
 int						execute_command(t_operate *begin);
+int						is_dir(const char *name);
 
 /*
  **	Builtins:
@@ -123,6 +123,7 @@ void					raw_terminal_mode(void);
 typedef struct			s_prompt
 {
 	char				buff[PR_BUF_SIZE];
+	size_t				len;
 	size_t				index;
 	t_lluint			key;
 	t_list				*history;
@@ -158,6 +159,7 @@ char					*get_command(void);
 # define PR_TAB			9ull
 
 void					pr_addchar(t_prompt *d);
+void					pr_addstr(t_prompt *d, char *s, size_t len);
 void					pr_move(t_prompt *d);
 void					pr_del(t_prompt *d);
 void					pr_tab(t_prompt *d);

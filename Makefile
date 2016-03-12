@@ -5,7 +5,6 @@
 #	Sources
 SRCDIR		=	src
 SRC			=	main.c									\
-				is_dir.c								\
 				build_env.c								\
 				ft_env.c								\
 				ft_exebin.c								\
@@ -30,6 +29,7 @@ SRC			=	main.c									\
 				execute_command.c						\
 				default_terminal_mode.c					\
 				raw_terminal_mode.c						\
+				utils.c									\
 				prompt_test.c							\
 				prompt/get_command.c					\
 				prompt/pr_addch.c						\
@@ -61,7 +61,7 @@ LIB			=	-lft -lncurses
 NAME		=	42sh
 
 #	Compiler
-CFLAGS		=	-g -Werror -Wall -Wextra
+CFLAGS		=	-g -Werror -Wall -Wextra -O2
 CC			=	clang
 
 #################

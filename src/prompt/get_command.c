@@ -12,6 +12,7 @@
 
 #include "ft_42sh.h"
 #define PROMPT42		"$> "
+#include <errno.h>
 
 static t_pr_code		g_pr_codes[] =
 {
@@ -39,7 +40,11 @@ static void				pr_initline(t_prompt *d)
 	static struct winsize	ws;
 	size_t					l;
 
-	ioctl(0, TIOCGWINSZ, &ws);
+	if (ioctl(0, TIOCGWINSZ, &ws) == -1)
+	{
+		ft_printf("ioctl error: %s\n", strerror(errno));
+		exit(1);
+	}
 	d->col = ws.ws_col;
 	l = ft_strlen(PROMPT42) + d->index;
 	if (l > (ws.ws_col - !(l % ws.ws_col)))
@@ -58,10 +63,10 @@ static void				pr_affbuff(t_prompt *d)
 	size_t					gap;
 	size_t					x;
 
-ft_putstr(tgetstr("sc", NULL));
+/*ft_putstr(tgetstr("sc", NULL));
 ft_putstr(tgetstr("ho", NULL));
 ft_printf("[%llu]", d->key);
-ft_putstr(tgetstr("rc", NULL));
+ft_putstr(tgetstr("rc", NULL));*/
 	l = ft_strlen(d->buff) - d->index;
 	gap = (ft_strlen(PROMPT42) + ft_strlen(d->buff)) % d->col;
 	if (!gap)
