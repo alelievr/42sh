@@ -12,6 +12,8 @@
 #define MAX_ENV					0xF00
 #define MAX_VAR					0xF00
 #define MAX_REDIRECTION_COMMAND	32
+#define BELL					write(1, "\a", 1)
+#define PROMPT42				"$> "
 
 extern	char			**g_env;
 extern	char			**g_var;
@@ -124,6 +126,12 @@ int						ft_cd(int ac, char **av);
 int						ft_bonus(int ac, char **av);
 
 /*
+ **	Pid utils:
+*/
+pid_t					get_foreground_pid(pid_t p);
+pid_t					get_last_backgrounded_pid(pid_t p);
+
+/*
  **	Terminal:
 */
 
@@ -143,6 +151,7 @@ typedef struct			s_prompt
 	size_t				index;
 	t_lluint			key;
 	t_list				*history;
+	size_t				history_index;
 	size_t				col;
 }						t_prompt;
 
@@ -154,7 +163,9 @@ typedef struct			s_pr_code
 
 void					ft_prompt(void);
 t_operate				*ft_parse(char *cmd);
-char					*get_command(void);
+char					*get_command(t_prompt *d);
+void					load_history(t_prompt *d);
+void					write_history(t_prompt *d);
 
 # define PR_UP			4283163ull
 # define PR_DO			4348699ull
@@ -186,8 +197,8 @@ void					pr_history(t_prompt *d);
 /*
  ** Prompt history:
 */
-char					*get_history_index(size_t index);
-char					*get_history_search(char *s);
+t_list					*get_history_index(size_t index);
+t_list					*get_history_search(char *s);
 t_list					*get_history_list(t_list *h);
 
 /*

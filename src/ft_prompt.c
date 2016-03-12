@@ -30,33 +30,31 @@ void					ft_prompt(void)
 	int			r;
 	char		**tmp;
 	char		*tmp2;
+	t_prompt	d;
 
-/*	while (42)
-	{
-		r = read(0, buff, 0xF00);
-		buff[r - 1] = 0;
-		if (buff[0])
-			ft_builtins(ft_strsplit(buff, " "));
-	}*/
+	load_history(&d);
 	while (42)
 	{
 		tmp = NULL;
-		tmp2 = get_command();
+		tmp2 = get_command(&d);
+		//TODO: parse the cmd to t_commandline *
+		//TODO: execute the t_commandline *
 		printf("cmd = [%s]\n", tmp2);
 	//	tmp2 = ft_strjoin("env -i ", tmp2);
 		if (tmp2)
 		{
+			if (!*tmp2)
+				continue ;
 			tmp = ft_strsplit(tmp2, " \t\f\v\r\n");
 			if (tmp && tmp[0])
-			{
 				if (!ft_builtins(tmp))
 					if (!(ft_exebin(tmp[0], tmp, g_env)))
 						ft_printf("%s: command not found !\n", tmp[0]);
-			}
 		}
 		else
 			break ;
 	}
+	write_history(&d);
 	/*
 	t_operate			*op;
 	t_operate			*tmp;

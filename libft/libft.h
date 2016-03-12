@@ -295,5 +295,6 @@ typedef struct			s_gnl
 }						t_gnl;
 
 int						ft_gnl(const int fd, char **line);
+int						get_next_line(int const fd, char **line);
 
 #endif

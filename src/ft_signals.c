@@ -13,6 +13,14 @@
 #include "ft_42sh.h"
 #include <signal.h>
 
+void		siguser_handler(int s)
+{
+	pid_t		fg;
+
+	if ((fg = get_foreground_pid(0)))
+		kill(fg, s);
+}
+
 void		ft_signals(void)
 {
 	signal(SIGINT, SIG_IGN);
@@ -20,6 +28,6 @@ void		ft_signals(void)
 	signal(SIGKILL, SIG_IGN);
 	signal(SIGPIPE, SIG_IGN);
 	signal(SIGABRT, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
+	signal(SIGTSTP, siguser_handler);
 	signal(SIGQUIT, SIG_IGN);
 }

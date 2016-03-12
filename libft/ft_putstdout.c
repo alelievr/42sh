@@ -14,5 +14,5 @@
 
 void			ft_putstdin(const char *s)
 {
-	ft_putstr_fd(s, get_stdout());
+	ft_putstr_fd(s, 1);
 }

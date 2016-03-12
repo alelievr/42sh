@@ -68,7 +68,7 @@ static char			**get_autocomplete_list(t_prompt *p, char **beginword,
 void				pr_tab(t_prompt *d)
 {
 	char			*wordptr;
-	const size_t	len = ft_strlen(d->buff);
+	const size_t	len = d->len;
 	char			**ac_list;
 
 	printf("current prompt = %s\n", d->buff);
@@ -92,6 +92,6 @@ void				pr_tab(t_prompt *d)
 		else 
 			pr_addchar(d);
 	}
-	else
+	else if (access(wordptr, F_OK))
 		pr_addchar(d);
 }

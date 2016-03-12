@@ -31,7 +31,9 @@ SRC			=	main.c									\
 				default_terminal_mode.c					\
 				raw_terminal_mode.c						\
 				utils.c									\
-				prompt_test.c							\
+				ft_prompt.c								\
+				process_pid_api.c						\
+				rw_history.c							\
 				prompt/get_command.c					\
 				prompt/pr_addch.c						\
 				prompt/pr_del.c							\
