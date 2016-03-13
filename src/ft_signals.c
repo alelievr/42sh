@@ -23,11 +23,11 @@ void		siguser_handler(int s)
 
 void		ft_signals(void)
 {
-	signal(SIGINT, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
+	signal(SIGINT, siguser_handler);
+	signal(SIGTERM, siguser_handler);
 	signal(SIGKILL, SIG_IGN);
 	signal(SIGPIPE, SIG_IGN);
 	signal(SIGABRT, SIG_IGN);
 	signal(SIGTSTP, siguser_handler);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, siguser_handler);
 }
