@@ -17,7 +17,12 @@
 
 static inline int	add_missing_slash(char *path, size_t len, size_t *index)
 {
-	if (is_dir(path) && path[len - 1] != '/')
+	char			unscaped_path[PATH_MAX + 1];
+
+	ft_strcpy(unscaped_path, path);
+	if (ft_strstr(path, "\\ "))
+		unscape_space(unscaped_path);
+	if (is_dir(unscaped_path) && path[len - 1] != '/')
 	{
 		ft_strcpy(path + len, "/");
 		if (index)
@@ -27,7 +32,7 @@ static inline int	add_missing_slash(char *path, size_t len, size_t *index)
 	return (0);
 }
 
-static char			**get_autocomplete_list(t_prompt *p, char **beginword,
+static char			**get_autocomplete_list(t_prompt *p, char *beginword,
 		size_t blen)
 {
 	DIR				*dir;
@@ -36,28 +41,34 @@ static char			**get_autocomplete_list(t_prompt *p, char **beginword,
 	size_t			i;
 	char			buff[PATH_MAX + 1];
 
-	if (add_missing_slash(*beginword, blen, &(p->index)))
-		++(p->len);
+	(void)p;
+//	if (add_missing_slash(*beginword, blen, &(p->index)))
+//		++(p->len);
 	//TODO: memory leaks !
 	if (!(ret = malloc(sizeof(char *) * 1000)))
 		m_error();
-	if (ft_strchr(*beginword, '/'))
+	if (ft_strchr(beginword, '/'))
 	{
-		ft_strlcpy(buff, *beginword, ft_strrchr(*beginword, '/') - *beginword + 1);
-		*beginword += ft_strlen(buff) + 1;
-		blen -= ft_strlen(buff) + 1;
+		get_dirpath(beginword, buff);
+		blen = get_filename_length(beginword);
+		beginword += get_dirpath_length(beginword);
 	}
+//	else if (ft_strchr(*beginword, '/'))
+//	{
+//		ft_strlcpy(buff, *beginword, )
+//	}
 	else
 		ft_strlcpy(buff, "./", sizeof(buff));
+	unscape_space(buff);
 	printf("blen = %li\n", blen);
 	printf("buff = [%s]\n", buff);
-	printf("new beginword = [%s]\n", *beginword);
+	printf("new beginword = [%s]\n", beginword);
 
 	if (!(dir = opendir(buff)))
 		return (NULL);
 	i = 0;
 	while ((d = readdir(dir)))
-		if ((!blen && *d->d_name != '.') || (!ft_strncmp(*beginword, d->d_name,
+		if ((!blen && *d->d_name != '.') || (!ft_strncmp(beginword, d->d_name,
 						blen) && blen != ft_strlen(d->d_name)))
 			ret[i++] = ft_strdup(d->d_name) + blen;
 	ret[i] = NULL;
@@ -73,10 +84,11 @@ void				pr_tab(t_prompt *d)
 
 	printf("current prompt = %s\n", d->buff);
 	wordptr = d->buff + len;
-	while (wordptr != d->buff && wordptr[-1] != ' ')
+	while (wordptr != d->buff && (wordptr[-1] != ' ' ||
+				(wordptr[-1] == ' ' && wordptr[-2] == '\\')))
 		--wordptr;
 	printf("curent word = |%s|\n", wordptr);
-	ac_list = get_autocomplete_list(d, &wordptr, ft_strlen(wordptr));
+	ac_list = get_autocomplete_list(d, wordptr, ft_strlen(wordptr));
 	if (!ac_list) {
 		printf("an error occured !\n");
 		exit(-1);
@@ -87,11 +99,14 @@ void				pr_tab(t_prompt *d)
 	if (*ac_list)
 	{
 		pr_addstr(d, *ac_list, ft_strlen(*ac_list));
+		printf("wptr = %s\n", wordptr);
 		if (add_missing_slash(wordptr, ft_strlen(wordptr), NULL))
 			(void)((d->index)++ && (d->len++));
-		else 
+		else
 			pr_addchar(d);
 	}
-	else if (access(wordptr, F_OK))
+	else if ((access(wordptr, F_OK) == 0) && !is_dir(wordptr))
 		pr_addchar(d);
+	else
+		BELL;
 }

@@ -41,6 +41,12 @@ void					pr_addstr(t_prompt *d, char *s, size_t len)
 	}
 	while (*s)
 	{
+		if (*s == ' ')
+		{
+			d->buff[tmp++] = '\\';
+			++(d->index);
+			++(d->len);
+		}
 		d->buff[tmp++] = *s++;
 		++(d->index);
 	}

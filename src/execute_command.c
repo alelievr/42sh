@@ -17,7 +17,7 @@ void		(*op[13])(int, char **) = {
 							ft_pipe,
 							ft_redir_stdin_stdout,
 							ft_right_redir,
-							ft_exec,
+//							ft_exec,
 							ft_error_right_redir,
 							ft_left_redir,
 							ft_double_left_redir,

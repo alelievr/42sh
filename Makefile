@@ -4,45 +4,50 @@
 
 #	Sources
 SRCDIR		=	src
-SRC			=	main.c									\
-				build_env.c								\
-				ft_env.c								\
-				ft_exebin.c								\
-				ft_builtins.c							\
-				ft_exit.c								\
-				ft_unsetenv.c							\
-				ft_unset.c								\
-				ft_setenv.c								\
-				ft_set.c								\
-				ft_echo.c								\
-				ft_getenv.c								\
-				ft_get.c								\
-				ft_cd.c									\
-				ft_bonus.c								\
-				unset_env.c								\
-				unset_var.c								\
-				get_env.c								\
-				get_var.c								\
-				set_env.c								\
-				set_var.c								\
+MAIN_SRC	=	main.c									\
 				ft_signals.c							\
-				ft_exec.c								\
 				execute_command.c						\
-				default_terminal_mode.c					\
-				raw_terminal_mode.c						\
-				utils.c									\
 				ft_prompt.c								\
 				process_pid_api.c						\
 				rw_history.c							\
-				prompt/get_command.c					\
+
+UTIL_SRC	=	utils/path_utils.c						\
+				utils/is_utils.c						\
+
+BUILTIN_SRC	=	builtins/build_env.c					\
+				builtins/ft_env.c						\
+				builtins/ft_exebin.c					\
+				builtins/ft_builtins.c					\
+				builtins/ft_exit.c						\
+				builtins/ft_unsetenv.c					\
+				builtins/ft_unset.c						\
+				builtins/ft_setenv.c					\
+				builtins/ft_set.c						\
+				builtins/ft_echo.c						\
+				builtins/ft_getenv.c					\
+				builtins/ft_get.c						\
+				builtins/ft_cd.c						\
+				builtins/ft_bonus.c						\
+				builtins/unset_env.c					\
+				builtins/unset_var.c					\
+				builtins/get_env.c						\
+				builtins/get_var.c						\
+				builtins/set_env.c						\
+				builtins/set_var.c						\
+
+PROMPT_SRC	=	prompt/get_command.c					\
 				prompt/pr_addch.c						\
 				prompt/pr_del.c							\
 				prompt/pr_move.c						\
 				prompt/pr_tab.c							\
 				prompt/pr_history.c						\
 				prompt/pr_history_api.c					\
-				parser/parse.c							\
-				operation/ft_pipe.c						\
+				prompt/raw_terminal_mode.c				\
+				prompt/default_terminal_mode.c			\
+
+PARSER_SRC	=	parser/parse.c							\
+
+OPER_SRC	=	operation/ft_pipe.c						\
 				operation/ft_right_redir.c				\
 				operation/ft_redir_stdin_stdout.c		\
 				operation/ft_double_right_redir.c		\
@@ -50,6 +55,13 @@ SRC			=	main.c									\
 				operation/ft_error_right_redir.c		\
 				operation/ft_double_left_redir.c		\
 				operation/ft_left_redir.c				\
+
+SRC			=	$(MAIN_SRC)		\
+				$(UTIL_SRC)		\
+				$(BUILTIN_SRC)	\
+				$(PROMPT_SRC)	\
+				$(PARSER_SRC)	\
+				$(OPER_SRC)		\
 
 
 #	Objects

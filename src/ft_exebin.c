@@ -57,6 +57,7 @@ static int		ft_exebin_fork(char *path, char **av, char **env)
 
 	if ((pid = fork()) > 0)
 	{
+		get_fg_pid(pid);
 		wait(&ret);
 		if ((ret & 0xFF) != 0)
 			ft_printf("%s: %s\n", path, g_errors[(ret & 0x00FF) % 31 - 1]);

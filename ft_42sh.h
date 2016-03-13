@@ -105,7 +105,14 @@ int						ft_exebin(char *path, char **av, char **env);
 void					ft_signals(void);
 int						execute_command(t_operate *b);
 int						execute_command(t_operate *begin);
+
 int						is_dir(const char *name);
+
+char					*get_dirpath(char *path, char *buff);
+char					*get_filename(char *path, char *buff);
+size_t					get_dirpath_length(char *path);
+size_t					get_filename_length(char *path);
+char					*unscape_space(char *path);
 
 /*
  **	Builtins:
@@ -128,8 +135,11 @@ int						ft_bonus(int ac, char **av);
 /*
  **	Pid utils:
 */
-pid_t					get_foreground_pid(pid_t p);
-pid_t					get_last_backgrounded_pid(pid_t p);
+pid_t			get_fg_pid(pid_t p);
+t_list			*get_bg_pid_list(t_list *l);
+int				delete_last_bg_pid(void);
+void			add_bg_pid(pid_t p);
+pid_t			get_last_bg_pid(void);
 
 /*
  **	Terminal:

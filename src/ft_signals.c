@@ -17,7 +17,7 @@ void		siguser_handler(int s)
 {
 	pid_t		fg;
 
-	if ((fg = get_foreground_pid(0)))
+	if ((fg = get_fg_pid(0)))
 		kill(fg, s);
 }
 

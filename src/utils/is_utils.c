@@ -5,7 +5,7 @@ int			is_dir(const char *name)
 {
 	struct stat	st;
 
-	if (lstat(name, &st) == -1)
+	if (stat(name, &st) == -1)
 		return (0);
 	return (S_ISDIR(st.st_mode));
 }
