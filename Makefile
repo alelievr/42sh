@@ -34,6 +34,7 @@ BUILTIN_SRC	=	builtins/build_env.c					\
 				builtins/get_var.c						\
 				builtins/set_env.c						\
 				builtins/set_var.c						\
+				builtins/job_control.c					\
 
 PROMPT_SRC	=	prompt/get_command.c					\
 				prompt/pr_addch.c						\
@@ -78,7 +79,7 @@ LIB			=	-lft -lncurses
 NAME		=	42sh
 
 #	Compiler
-CFLAGS		=	-g -Werror -Wall -Wextra -O2
+CFLAGS		=	-g -Werror -Wall -Wextra -O0 -fsanitize=address
 CC			=	clang
 
 #################

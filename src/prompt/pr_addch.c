@@ -36,7 +36,7 @@ void					pr_addstr(t_prompt *d, char *s, size_t len)
 	d->buff[tmp + len] = '\0';
 	while (tmp != d->index)
 	{
-		d->buff[tmp] = d->buff[tmp - 1];
+		d->buff[tmp] = d->buff[tmp - len];
 		--tmp;
 	}
 	while (*s)

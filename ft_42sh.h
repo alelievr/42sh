@@ -14,6 +14,7 @@
 #define MAX_REDIRECTION_COMMAND	32
 #define BELL					write(1, "\a", 1)
 #define PROMPT42				"$> "
+#define PATH_NOT_FOUND			-2
 
 extern	char			**g_env;
 extern	char			**g_var;
@@ -131,15 +132,18 @@ int						ft_get(int ac, char **av);
 int						ft_echo(int ac, char **av);
 int						ft_cd(int ac, char **av);
 int						ft_bonus(int ac, char **av);
+int						ft_fg(int ac, char **av);
+int						ft_bg(int ac, char **av);
 
 /*
  **	Pid utils:
 */
-pid_t			get_fg_pid(pid_t p);
-t_list			*get_bg_pid_list(t_list *l);
-int				delete_last_bg_pid(void);
-void			add_bg_pid(pid_t p);
-pid_t			get_last_bg_pid(void);
+pid_t					get_fg_pid(pid_t p);
+t_list					*get_bg_pid_list(t_list *l);
+int						delete_last_bg_pid(void);
+void					add_bg_pid(pid_t p);
+pid_t					get_last_bg_pid(void);
+int						wait_process(pid_t pid);
 
 /*
  **	Terminal:
@@ -196,6 +200,8 @@ void					write_history(t_prompt *d);
 # define PR_C_K			11ull
 # define PR_C_U			21ull
 # define PR_TAB			9ull
+# define PR_CMD_C		482905910319
+# define PR_CMD_V		23152726714045257lu
 
 void					pr_addchar(t_prompt *d);
 void					pr_addstr(t_prompt *d, char *s, size_t len);

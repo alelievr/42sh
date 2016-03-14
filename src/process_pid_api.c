@@ -2,7 +2,7 @@
 
 pid_t			get_fg_pid(pid_t p)
 {
-	static pid_t	pid = 0;
+	static pid_t	pid = -1;
 
 	if (p)
 		pid = p;

@@ -12,6 +12,7 @@
 
 #include "ft_42sh.h"
 #include <errno.h>
+#define IS_CHAR(x)	(x > 255llu) ? -1 : x
 
 static t_pr_code		g_pr_codes[] =
 {
@@ -114,17 +115,17 @@ static inline void		pr_history_append(t_prompt *d)
 
 char					*get_command(t_prompt *d)
 {
-	int					i;
+	unsigned long long int		i;
 
 	get_command_init(d);
 	while (42)
 	{
 		pr_affbuff(d);
 		d->key = 0;
-		if ((read(0, &(d->key), 8) < 1) || (d->key == 4) || (d->key == 10))
+		if ((read(0, &(d->key), sizeof(i)) < 1) || (d->key == 4) || (d->key == 10))
 			break ;
 		pr_initline(d);
-		if (ft_isprint(d->key) && (d->key != '\t'))
+		if (ft_isprint(IS_CHAR(d->key)) && (d->key != '\t'))
 			pr_addchar(d);
 		i = -1;
 		while (g_pr_codes[++i].f != NULL)

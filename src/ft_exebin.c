@@ -50,6 +50,18 @@ static const char		*g_errors[] = {
 	"User defined signal 2"
 };
 
+int				wait_process(pid_t pid)
+{
+	int		ret;
+
+	waitpid(pid, &ret, WUNTRACED);
+	if ((ret & 0x00FF) % 31 == 3)
+		ft_printf("%i: %s\n", pid, "suspended");
+	else if ((ret & 0xFF) != 0)
+		ft_printf("%i: %s\n", pid, g_errors[(ret & 0x00FF) % 31 - 1]);
+	return (ret);
+}
+
 static int		ft_exebin_fork(char *path, char **av, char **env)
 {
 	pid_t	pid;
@@ -58,9 +70,7 @@ static int		ft_exebin_fork(char *path, char **av, char **env)
 	if ((pid = fork()) > 0)
 	{
 		get_fg_pid(pid);
-		wait(&ret);
-		if ((ret & 0xFF) != 0)
-			ft_printf("%s: %s\n", path, g_errors[(ret & 0x00FF) % 31 - 1]);
+		ret = wait_process(pid);
 	}
 	if (pid == 0)
 		exit(execve(path, av, env));
@@ -116,6 +126,8 @@ int				ft_exebin(char *path, char **av, char **env)
 		ft_exebin_fork(path, av, env);
 		return (1);
 	}
+	else if (ft_strchr(path, '/'))
+		return (PATH_NOT_FOUND);
 	else
 		return (ft_exe_bin_path(path, av));
 	(void)env;

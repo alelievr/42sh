@@ -24,6 +24,8 @@ t_builtins	g_builts[] = {
 	{"unset", ft_unset},
 	{"get", ft_get},
 	{"bonus", ft_bonus},
+	{"fg", ft_fg},
+	{"bg", ft_bg},
 	{NULL, NULL}
 };
 
@@ -41,7 +43,11 @@ int			ft_builtins(char **com)
 	while (g_builts[i].name)
 	{
 		if (!ft_strcmp(*com, g_builts[i].name) && ((ret = 1)))
+		{
+			printf("diff betewwn |%s| and |%s| ok !\n", *com, g_builts[i].name);
 			g_builts[i].fun(ac, com);
+			break ;
+		}
 		i++;
 	}
 	return (ret);

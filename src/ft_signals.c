@@ -17,8 +17,12 @@ void		siguser_handler(int s)
 {
 	pid_t		fg;
 
-	if ((fg = get_fg_pid(0)))
+	if ((fg = get_fg_pid(0)) != -1)
+	{
 		kill(fg, s);
+		if (s == SIGTSTP)
+			add_bg_pid(fg);
+	}
 }
 
 void		ft_signals(void)

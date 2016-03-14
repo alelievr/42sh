@@ -48,8 +48,12 @@ void					ft_prompt(void)
 			tmp = ft_strsplit(tmp2, " \t\f\v\r\n");
 			if (tmp && tmp[0])
 				if (!ft_builtins(tmp))
-					if (!(ft_exebin(tmp[0], tmp, g_env)))
+				{
+					if (!(r = ft_exebin(tmp[0], tmp, g_env)))
 						ft_printf("%s: command not found !\n", tmp[0]);
+					else if (r == PATH_NOT_FOUND)
+						ft_printf("%s: binary not found !\n", tmp[0]);
+				}
 		}
 		else
 			break ;
