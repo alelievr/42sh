@@ -6,7 +6,7 @@
 /*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 18:51:11 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/11 20:14:41 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/15 23:42:04 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 extern char const			*const g_serr[];
 
-# define LIBFT_DEBUG		1
+# define LIBFT_DEBUG		0
 
 # define FT_DBG				ft_dbg(__FILE__, __LINE__)
 

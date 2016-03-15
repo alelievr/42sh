@@ -135,6 +135,7 @@ int						ft_cd(int ac, char **av);
 int						ft_bonus(int ac, char **av);
 int						ft_fg(int ac, char **av);
 int						ft_bg(int ac, char **av);
+int						ft_history(int ac, char **av);
 
 /*
  **	Pid utils:
@@ -170,6 +171,7 @@ typedef struct			s_prompt
 	size_t				history_index;
 	size_t				col;
 	int					r_mode;
+	int					good_prompt;
 }						t_prompt;
 
 typedef struct			s_pr_code
@@ -221,10 +223,18 @@ t_list					*get_history_list(t_list *h);
 /*
  **	Prompt utils:
 */
-int						check_unterminated_sequences(t_prompt *d);
 void					pr_ctrlc_handler(int s);
-t_prompt				*get_current_prompt(t_prompt *p);
+void					pr_display(t_prompt *d);
+void					pr_display_line(char *buff, int prompt);
+void					pr_initline(t_prompt *d);
 void					get_command_init(t_prompt *d);
+size_t					get_col_index(t_prompt *p);
+size_t					get_row_index(t_prompt *p);
+void					get_row_bounds(t_prompt *p, size_t *start, size_t *end);
+size_t					get_max_row(t_prompt *p);
+size_t					get_prompt_length(t_prompt *p);
+int						check_unterminated_sequences(t_prompt *d);
+t_prompt				*get_current_prompt(t_prompt *p);
 
 /*
  ** Operation:

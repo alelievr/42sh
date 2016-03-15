@@ -35,6 +35,7 @@ BUILTIN_SRC	=	builtins/build_env.c					\
 				builtins/set_env.c						\
 				builtins/set_var.c						\
 				builtins/job_control.c					\
+				builtins/ft_history.c					\
 
 PROMPT_SRC	=	prompt/get_command.c					\
 				prompt/pr_addch.c						\
@@ -47,6 +48,8 @@ PROMPT_SRC	=	prompt/get_command.c					\
 				prompt/raw_terminal_mode.c				\
 				prompt/default_terminal_mode.c			\
 				prompt/pr_unterminated_seq.c			\
+				prompt/pr_display.c						\
+				prompt/pr_multiline.c					\
 
 PARSER_SRC	=	parser/parse.c							\
 

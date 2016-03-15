@@ -9,6 +9,7 @@ void			load_history(t_prompt *d)
 	char		*home;
 	char		*tmp;
 
+	tmp = NULL;
 	d->history = NULL;
 	if ((home = get_env("HOME")))
 	{

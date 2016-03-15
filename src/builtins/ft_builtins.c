@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 21:08:56 by alelievr          #+#    #+#             */
-/*   Updated: 2015/04/03 23:28:30 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/16 00:39:53 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_builtins	g_builts[] = {
 	{"bonus", ft_bonus},
 	{"fg", ft_fg},
 	{"bg", ft_bg},
+	{"history", ft_history},
 	{NULL, NULL}
 };
 

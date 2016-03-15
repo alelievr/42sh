@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/15 16:23:40 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/16 00:25:50 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_pr_code		g_pr_codes[] =
 	{0, NULL}
 };
 
-static void				pr_initline(t_prompt *d)
+void					pr_initline(t_prompt *d)
 {
 	static struct winsize	ws;
 	size_t					l;
@@ -45,51 +45,68 @@ static void				pr_initline(t_prompt *d)
 	if (ioctl(0, TIOCGWINSZ, &ws) == -1)
 	{
 		ft_printf("ioctl error: %s\n", strerror(errno));
-		exit(1);
+		default_terminal_mode();
+		d->good_prompt = 0;
+		return ;
 	}
+	if (!ws.ws_col && !(d->good_prompt = 0))
+		default_terminal_mode();
+	if (!d->good_prompt)
+		return ;
 	d->col = ws.ws_col;
 	l = ft_strlen(PROMPT42) + d->index;
-	if (l > (ws.ws_col - !(l % ws.ws_col)))
+	if (l > (ws.ws_col - !(l % ws.ws_col))) //number of line of my cmd-line
 	{
 		if (!(!d->buff[d->index] && (l == ws.ws_col)))
-		ft_putstr(tparm(tgetstr("UP", NULL), l / (ws.ws_col)
-					- !((l % ws.ws_col) || (d->buff[d->index]))));
+			ft_putstr(tparm(tgetstr("UP", NULL), l / (ws.ws_col) //up x - 1 times the nline
+						- !((l % ws.ws_col) || (d->buff[d->index]))));
 	}
 	ft_putstr(tgetstr("cr", NULL));
 	ft_putstr(tgetstr("cd", NULL));
 }
 
-static void				pr_affbuff(t_prompt *d)
+static void				pr_affbuff_line(char *buff, size_t index, size_t col, int prompt)
 {
 	size_t					l;
 	size_t					gap;
 	size_t					x;
 
-ft_putstr(tgetstr("sc", NULL));
-ft_putstr(tgetstr("ho", NULL));
-ft_printf("[%llu]", d->key);
-ft_putstr(tgetstr("rc", NULL));
-	l = ft_strlen(d->buff) - d->index;
-	gap = (ft_strlen(PROMPT42) + ft_strlen(d->buff)) % d->col;
+	l = ft_strlen(buff) - index;
+	gap = (ft_strlen(PROMPT42) + ft_strlen(buff)) % col;
 	if (!gap)
-		gap = d->col - 1;
-	ft_printf("%{F}%s%{!F}%s", 123, PROMPT42, d->buff);
+		gap = col - 1;
+	pr_display_line(buff, prompt);
 	if (l > gap)
 	{
 		x = l - gap;
-		x = x / d->col + !!(x % d->col);
+		x = x / col + !!(x % col);
 		ft_putstr(tparm(tgetstr("UP", NULL), x));
-		ft_putstr(tparm(tgetstr("ch", NULL), d->col - 1));
-		l = l - gap - d->col * (x - 1);
+		ft_putstr(tparm(tgetstr("ch", NULL), col - 1));
+		l = l - gap - col * (x - 1);
 		l += (l == 0 ? 0 : -1);
 	}
 	if (l)
 		ft_putstr(tparm(tgetstr("LE", NULL), l));
 }
 
+static void				pr_affbuff(t_prompt *d)
+{
+//	size_t			nlines;
+//	size_t			x;
+ft_putstr(tgetstr("sc", NULL));
+ft_putstr(tgetstr("ho", NULL));
+ft_printf("[%llu]", d->key);
+ft_putstr(tgetstr("rc", NULL));
+
+//	ft_putstr(tparm(tgetstr("UP", NULL), nlines));
+//	x = get_col_index(d);
+	pr_affbuff_line(d->buff, d->index, d->col, 42);
+}
+
 inline void				get_command_init(t_prompt *d)
 {
-	raw_terminal_mode();
+	if (d->good_prompt)
+		raw_terminal_mode();
 	d->history_index = 0;
 	d->index = 0;
 	d->len = 0;
@@ -115,6 +132,8 @@ int						get_line(t_prompt *d)
 {
 	size_t		i;
 
+	if (d->good_prompt == 0)
+		return (read(0, d->buff, sizeof(d->buff)));
 	while (42)
 	{
 		pr_affbuff(d);
@@ -144,6 +163,8 @@ char					*get_command(t_prompt *d)
 	get_command_init(d);
 	while (check_unterminated_sequences(d) || once)
 	{
+		if (!d->good_prompt)
+			ft_printf("%{F}%s%{!F}", 123, PROMPT42);
 		get_line(d);
 		if (once)
 			once = 0;
@@ -151,7 +172,9 @@ char					*get_command(t_prompt *d)
 	pr_initline(d);
 	pr_history_append(d);
 	signal(SIGINT, siguser_handler);
-	ft_printf("%{F}%s%{!F}%s\n", 123, PROMPT42, d->buff);
-	default_terminal_mode();
+	if (d->good_prompt)
+		pr_display(d);
+	if (d->good_prompt)
+		default_terminal_mode();
 	return ((d->key == 4) && (!d->buff[0]) ? NULL : (char *)d->buff);
 }

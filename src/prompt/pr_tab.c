@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 18:28:48 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/11 20:18:27 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/15 17:47:59 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void				pr_tab(t_prompt *d)
 	const size_t	len = d->len;
 	char			**ac_list;
 
+	//TODO: fix the src<TAB> and src/<TAB>
 	printf("current prompt = %s\n", d->buff);
 	wordptr = d->buff + len;
 	while (wordptr != d->buff && (wordptr[-1] != ' ' ||

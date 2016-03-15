@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/18 15:39:32 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/15 15:47:57 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/16 00:08:57 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ t_operate				*create_op_redir(char **cmd, int len, int type)
 
 void					ft_prompt(void)
 {
-	char		buff[0xF00];
-	int			r;
-	char		**tmp;
-	char		*tmp2;
-	t_prompt	d;
+	static t_prompt		d;
+	int					r;
+	char				**tmp;
+	char				*tmp2;
+	struct winsize		ws;
 
+	if (ioctl(0, TIOCGWINSZ, &ws) != -1)
+		d.good_prompt = 1;
 	load_history(&d);
 	get_current_prompt(&d);
 	while (42)
@@ -40,7 +42,7 @@ void					ft_prompt(void)
 		tmp2 = get_command(&d);
 		//TODO: parse the cmd to t_commandline *
 		//TODO: execute the t_commandline *
-		printf("cmd = [%s]\n", tmp2);
+		printf("\ncmd = [%s]\n", tmp2);
 	//	tmp2 = ft_strjoin("env -i ", tmp2);
 		if (tmp2)
 		{
@@ -77,6 +79,4 @@ void					ft_prompt(void)
 	execute_command(op);
 	(void)tmp;
 	(void)op;*/
-	(void)buff;
-	(void)r;
 }
