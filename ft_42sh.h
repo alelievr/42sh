@@ -139,7 +139,6 @@ int						ft_bg(int ac, char **av);
  **	Pid utils:
 */
 pid_t					get_fg_pid(pid_t p);
-t_list					*get_bg_pid_list(t_list *l);
 int						delete_last_bg_pid(void);
 void					add_bg_pid(pid_t p);
 pid_t					get_last_bg_pid(void);
@@ -200,8 +199,6 @@ void					write_history(t_prompt *d);
 # define PR_C_K			11ull
 # define PR_C_U			21ull
 # define PR_TAB			9ull
-# define PR_CMD_C		482905910319
-# define PR_CMD_V		23152726714045257lu
 
 void					pr_addchar(t_prompt *d);
 void					pr_addstr(t_prompt *d, char *s, size_t len);

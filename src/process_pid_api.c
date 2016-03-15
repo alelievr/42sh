@@ -1,4 +1,5 @@
 #include "ft_42sh.h"
+#define GET__	(void *)-1
 
 pid_t			get_fg_pid(pid_t p)
 {
@@ -9,12 +10,12 @@ pid_t			get_fg_pid(pid_t p)
 	return (pid);
 }
 
-t_list			*get_bg_pid_list(t_list *l)
+static t_list	*get_bg_pid_list(t_list *l)
 {
 	static t_list	*pid_list = NULL;
 
-	if (l)
-		pid_list = l;
+	if (l != GET__)
+	pid_list = l;
 	return (pid_list);
 }
 
@@ -22,7 +23,7 @@ int				delete_last_bg_pid(void)
 {
 	t_list			*plist;
 
-	plist = get_bg_pid_list(NULL);
+	plist = get_bg_pid_list(GET__);
 	if (!plist)
 		return (0);
 	get_bg_pid_list(plist->next);
@@ -35,7 +36,7 @@ void			add_bg_pid(pid_t p)
 	t_list	*plist;
 	t_list	*ltmp;
 
-	plist = get_bg_pid_list(NULL);
+	plist = get_bg_pid_list(GET__);
 	ltmp = plist;
 	ft_lstadd(&plist, ft_lstnew(0, p));
 	if (ltmp != plist)
@@ -44,7 +45,7 @@ void			add_bg_pid(pid_t p)
 
 pid_t			get_last_bg_pid(void)
 {
-	const t_list	*pid_list = get_bg_pid_list(NULL);
+	const t_list	*pid_list = get_bg_pid_list(GET__);
 
 	if (!pid_list)
 		return (-1);

@@ -44,7 +44,6 @@ int			ft_builtins(char **com)
 	{
 		if (!ft_strcmp(*com, g_builts[i].name) && ((ret = 1)))
 		{
-			printf("diff betewwn |%s| and |%s| ok !\n", *com, g_builts[i].name);
 			g_builts[i].fun(ac, com);
 			break ;
 		}

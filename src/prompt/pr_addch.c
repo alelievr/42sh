@@ -16,6 +16,8 @@ void					pr_addchar(t_prompt *d)
 {
 	size_t				tmp;
 
+	if (sizeof(d->buff) < d->len + 1)
+		return ;
 	tmp = d->len;
 	d->buff[tmp + 1] = '\0';
 	while (tmp != d->index)
@@ -32,6 +34,8 @@ void					pr_addstr(t_prompt *d, char *s, size_t len)
 {
 	size_t		tmp;
 
+	if (sizeof(d->buff) < d->len + len)
+		return ;
 	tmp = d->len;
 	d->buff[tmp + len] = '\0';
 	while (tmp != d->index)
