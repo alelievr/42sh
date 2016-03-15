@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/11 20:18:27 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/15 16:23:40 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ ft_putstr(tgetstr("rc", NULL));
 		ft_putstr(tparm(tgetstr("LE", NULL), l));
 }
 
-static inline void		get_command_init(t_prompt *d)
+inline void				get_command_init(t_prompt *d)
 {
 	raw_terminal_mode();
 	d->history_index = 0;
@@ -101,8 +101,6 @@ static inline void		pr_history_append(t_prompt *d)
 {
 	char		*tmp;
 
-	pr_initline(d);
-	//check for one command
 	tmp = d->buff;
 	while (*tmp)
 		if (!ft_isspace(*tmp++))
@@ -113,16 +111,15 @@ static inline void		pr_history_append(t_prompt *d)
 		}
 }
 
-char					*get_command(t_prompt *d)
+int						get_line(t_prompt *d)
 {
-	unsigned long long int		i;
+	size_t		i;
 
-	get_command_init(d);
 	while (42)
 	{
 		pr_affbuff(d);
 		d->key = 0;
-		if ((read(0, &(d->key), sizeof(i)) < 1) || (d->key == 4) || (d->key == 10))
+		if ((read(0, &(d->key), sizeof(d->key)) < 1) || (d->key == 4) || (d->key == 10))
 			break ;
 		pr_initline(d);
 		if (ft_isprint(IS_CHAR(d->key)) && (d->key != '\t'))
@@ -135,7 +132,25 @@ char					*get_command(t_prompt *d)
 				break ;
 			}
 	}
+	return (d->key);
+}
+
+char					*get_command(t_prompt *d)
+{
+	int			once;
+
+	once = 1;
+	signal(SIGINT, pr_ctrlc_handler);
+	get_command_init(d);
+	while (check_unterminated_sequences(d) || once)
+	{
+		get_line(d);
+		if (once)
+			once = 0;
+	}
+	pr_initline(d);
 	pr_history_append(d);
+	signal(SIGINT, siguser_handler);
 	ft_printf("%{F}%s%{!F}%s\n", 123, PROMPT42, d->buff);
 	default_terminal_mode();
 	return ((d->key == 4) && (!d->buff[0]) ? NULL : (char *)d->buff);

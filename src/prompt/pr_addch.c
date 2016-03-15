@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/20 10:02:38 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/20 10:06:16 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2016/03/15 16:31:36 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void					pr_addchar(t_prompt *d)
 		return ;
 	tmp = d->len;
 	d->buff[tmp + 1] = '\0';
-	while (tmp != d->index)
+	while (tmp != d->index && tmp)
 	{
 		d->buff[tmp] = d->buff[tmp - 1];
 		--tmp;
@@ -38,7 +38,7 @@ void					pr_addstr(t_prompt *d, char *s, size_t len)
 		return ;
 	tmp = d->len;
 	d->buff[tmp + len] = '\0';
-	while (tmp != d->index)
+	while (tmp != d->index && (tmp - len + 1))
 	{
 		d->buff[tmp] = d->buff[tmp - len];
 		--tmp;

@@ -43,8 +43,10 @@ PROMPT_SRC	=	prompt/get_command.c					\
 				prompt/pr_tab.c							\
 				prompt/pr_history.c						\
 				prompt/pr_history_api.c					\
+				prompt/pr_utils.c						\
 				prompt/raw_terminal_mode.c				\
 				prompt/default_terminal_mode.c			\
+				prompt/pr_unterminated_seq.c			\
 
 PARSER_SRC	=	parser/parse.c							\
 

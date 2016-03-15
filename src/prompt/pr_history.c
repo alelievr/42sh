@@ -46,7 +46,7 @@ void		pr_history(t_prompt *d)
 		--(d->history_index);
 		ft_strlcpy(d->buff, currentcmd, sizeof(currentcmd));
 		d->len = ft_strlen(currentcmd);
-		d->index = d->len - 1;
+		d->index = (d->len) ? d->len - 1 : 0;
 		return ;
 	}
 	if (d->key == PR_UP)

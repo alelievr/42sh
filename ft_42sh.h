@@ -103,6 +103,7 @@ typedef long long
 
 int						build_env(void);
 int						ft_exebin(char *path, char **av, char **env);
+void					siguser_handler(int s);
 void					ft_signals(void);
 int						execute_command(t_operate *b);
 int						execute_command(t_operate *begin);
@@ -156,16 +157,19 @@ void					raw_terminal_mode(void);
 */
 
 # define PR_BUF_SIZE		0xF0000
+# define PR_RBUF_SIZE		0xF000
 
 typedef struct			s_prompt
 {
 	char				buff[PR_BUF_SIZE];
+	char				rbuff[PR_RBUF_SIZE];
 	size_t				len;
 	size_t				index;
 	t_lluint			key;
 	t_list				*history;
 	size_t				history_index;
 	size_t				col;
+	int					r_mode;
 }						t_prompt;
 
 typedef struct			s_pr_code
@@ -213,6 +217,14 @@ void					pr_history(t_prompt *d);
 t_list					*get_history_index(size_t index);
 t_list					*get_history_search(char *s);
 t_list					*get_history_list(t_list *h);
+
+/*
+ **	Prompt utils:
+*/
+int						check_unterminated_sequences(t_prompt *d);
+void					pr_ctrlc_handler(int s);
+t_prompt				*get_current_prompt(t_prompt *p);
+void					get_command_init(t_prompt *d);
 
 /*
  ** Operation:

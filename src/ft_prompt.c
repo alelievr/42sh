@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/18 15:39:32 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/11 18:21:38 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/15 15:47:57 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void					ft_prompt(void)
 	t_prompt	d;
 
 	load_history(&d);
+	get_current_prompt(&d);
 	while (42)
 	{
 		tmp = NULL;
