@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/16 00:25:50 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/16 00:54:39 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ char					*get_command(t_prompt *d)
 		if (!d->good_prompt)
 			ft_printf("%{F}%s%{!F}", 123, PROMPT42);
 		get_line(d);
+		pr_initline(d);
 		if (once)
 			once = 0;
 	}

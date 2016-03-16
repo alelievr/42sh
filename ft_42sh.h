@@ -206,7 +206,9 @@ void					write_history(t_prompt *d);
 # define PR_C_U			21ull
 # define PR_TAB			9ull
 
-void					pr_addchar(t_prompt *d);
+void					pr_addchar(t_prompt *d,
+		char c) __attribute__((overloadable));
+void					pr_addchar(t_prompt *d) __attribute__((overloadable));
 void					pr_addstr(t_prompt *d, char *s, size_t len);
 void					pr_move(t_prompt *d);
 void					pr_del(t_prompt *d);

@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 18:28:48 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/15 17:47:59 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/16 01:37:30 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,6 @@ static char			**get_autocomplete_list(t_prompt *p, char *beginword,
 		blen = get_filename_length(beginword);
 		beginword += get_dirpath_length(beginword);
 	}
-//	else if (ft_strchr(*beginword, '/'))
-//	{
-//		ft_strlcpy(buff, *beginword, )
-//	}
 	else
 		ft_strlcpy(buff, "./", sizeof(buff));
 	unscape_space(buff);
@@ -82,7 +78,6 @@ void				pr_tab(t_prompt *d)
 	const size_t	len = d->len;
 	char			**ac_list;
 
-	//TODO: fix the src<TAB> and src/<TAB>
 	printf("current prompt = %s\n", d->buff);
 	wordptr = d->buff + len;
 	while (wordptr != d->buff && (wordptr[-1] != ' ' ||
@@ -90,24 +85,22 @@ void				pr_tab(t_prompt *d)
 		--wordptr;
 	printf("curent word = |%s|\n", wordptr);
 	ac_list = get_autocomplete_list(d, wordptr, ft_strlen(wordptr));
-	if (!ac_list) {
-		printf("an error occured !\n");
-		exit(-1);
+	if (!ac_list)
+	{
+		BELL;
+		return ;
 	}
 //	for (int i = 0; ac_list[i]; i++)
 //		printf("ac_list = %s\n", *ac_list++);
-	d->key = ' ';
 	if (*ac_list)
 	{
 		pr_addstr(d, *ac_list, ft_strlen(*ac_list));
 		printf("wptr = %s\n", wordptr);
-		if (add_missing_slash(wordptr, ft_strlen(wordptr), NULL))
-			(void)((d->index)++ && (d->len++));
-		else
-			pr_addchar(d);
 	}
-	else if ((access(wordptr, F_OK) == 0) && !is_dir(wordptr))
-		pr_addchar(d);
 	else
 		BELL;
+	if (add_missing_slash(wordptr, ft_strlen(wordptr), NULL))
+		(void)((d->index)++ && (d->len++));
+	else if (access(wordptr, F_OK) == 0)
+		pr_addchar(d, ' ');
 }
