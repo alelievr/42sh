@@ -38,6 +38,8 @@ BUILTIN_SRC	=	builtins/build_env.c					\
 				builtins/set_var.c						\
 				builtins/job_control.c					\
 				builtins/ft_history.c					\
+				builtins/ft_alias.c						\
+				builtins/ft_where.c						\
 
 PROMPT_SRC	=	prompt/get_command.c					\
 				prompt/pr_addch.c						\

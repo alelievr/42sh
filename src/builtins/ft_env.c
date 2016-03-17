@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/18 15:02:20 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/18 15:02:21 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/17 21:54:16 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char	**ft_env2(char **av, int *i)
 			ft_putstr("env illegal option -- ");
 			ft_putchar(av[1][1]);
 			ft_putstr("\nusage: env [-i] [name=value ...] "
-					"[utility [argument ...]]\n");
+					"[binary [argument ...]]\n");
 			return (0);
 		}
 		else

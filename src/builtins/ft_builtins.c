@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 21:08:56 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/16 00:39:53 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/17 19:48:15 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ t_builtins	g_builts[] = {
 	{"fg", ft_fg},
 	{"bg", ft_bg},
 	{"history", ft_history},
+	{"alias", ft_alias},
+	{"where", ft_where},
 	{NULL, NULL}
 };
 
@@ -51,4 +53,15 @@ int			ft_builtins(char **com)
 		i++;
 	}
 	return (ret);
+}
+
+int			is_builtin(char *s)
+{
+	int		i;
+
+	i = -1;
+	while (g_builts[++i].name)
+		if (!ft_strcmp(g_builts[i].name, s))
+			return (1);
+	return (0);
 }

@@ -100,6 +100,13 @@ typedef struct			s_hashtable
 	struct s_hashtable	*next;
 }						t_hashtable;
 
+typedef struct			s_alias
+{
+	char			*alias;
+	char			*value;
+	struct s_alias	*next;
+}						t_alias;
+
 typedef long long
 		unsigned int	t_lluint;
 
@@ -122,12 +129,14 @@ char					*get_filename(char *path, char *buff);
 size_t					get_dirpath_length(char *path);
 size_t					get_filename_length(char *path);
 char					*unscape_space(char *path);
+t_alias					*get_alias_list(t_alias *a);
 
 /*
  **	Builtins:
 */
 
 int						ft_builtins(char **av);
+int						is_builtin(char *s);
 
 int						ft_env(int ac, char **av);
 int						ft_exit(int ac, char **av);
@@ -143,6 +152,8 @@ int						ft_bonus(int ac, char **av);
 int						ft_fg(int ac, char **av);
 int						ft_bg(int ac, char **av);
 int						ft_history(int ac, char **av);
+int						ft_alias(int ac, char **av);
+int						ft_where(int ac, char **av);
 
 /*
  **	Pid utils:
@@ -161,6 +172,7 @@ t_hashtable				*new_hashtable_entry(unsigned long hash, const char *path);
 int						add_hashtable_entry(t_hashtable **ht, t_hashtable *e);
 
 char					*get_binhash_path(unsigned long hash);
+t_hashtable				*get_binhash(t_hashtable *h);
 void					load_binhash(void);
 void					delete_binhash(void);
 void					reload_binhash(void);

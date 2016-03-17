@@ -6,14 +6,14 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 15:52:22 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/17 17:10:58 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/17 19:42:54 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
 #include <dirent.h>
 
-static t_hashtable		*get_binhash(t_hashtable *h)
+t_hashtable				*get_binhash(t_hashtable *h)
 {
 	static t_hashtable	*ht = NULL;
 
@@ -37,7 +37,7 @@ char					*get_binhash_path(unsigned long hash)
 	return (NULL);
 }
 
-void					add_binhash_bin(char *cur, t_hashtable **ht,
+static void				add_binhash_bin(char *cur, t_hashtable **ht,
 		t_hashtable **begin)
 {
 	static char     path[0xF000];
