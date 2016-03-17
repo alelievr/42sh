@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 15:55:43 by alelievr          #+#    #+#             */
-/*   Updated: 2015/04/03 23:37:09 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/17 17:06:56 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ int		main(int ac, char **av, char **environ)
 	g_env[i++] = NULL;
 	ft_signals();
 	build_env();
+	load_binhash();
 	ft_prompt();
+	delete_binhash();
 	(void)ac;
 	(void)av;
 	return (0);

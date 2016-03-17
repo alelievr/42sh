@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 18:28:48 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/16 01:37:30 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/16 20:52:53 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void				pr_tab(t_prompt *d)
 	const size_t	len = d->len;
 	char			**ac_list;
 
+	d->index = ft_strlen(d->buff);
 	printf("current prompt = %s\n", d->buff);
 	wordptr = d->buff + len;
 	while (wordptr != d->buff && (wordptr[-1] != ' ' ||
@@ -94,7 +95,10 @@ void				pr_tab(t_prompt *d)
 //		printf("ac_list = %s\n", *ac_list++);
 	if (*ac_list)
 	{
-		pr_addstr(d, *ac_list, ft_strlen(*ac_list));
+		ft_strcat(d->buff, *ac_list);
+		d->index = ft_strlen(d->buff);
+		d->len = ft_strlen(d->buff);
+	//	pr_addstr(d, *ac_list, ft_strlen(*ac_list));
 		printf("wptr = %s\n", wordptr);
 	}
 	else

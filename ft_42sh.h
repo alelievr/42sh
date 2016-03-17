@@ -93,6 +93,13 @@ typedef struct			s_file
 	char				*name;
 }						t_file;
 
+typedef struct			s_hashtable
+{
+	unsigned long		hash;
+	char				*path;
+	struct s_hashtable	*next;
+}						t_hashtable;
+
 typedef long long
 		unsigned int	t_lluint;
 
@@ -145,6 +152,18 @@ int						delete_last_bg_pid(void);
 void					add_bg_pid(pid_t p);
 pid_t					get_last_bg_pid(void);
 int						wait_process(pid_t pid);
+
+/*
+ **	HashTable:
+ */
+unsigned long			hashstring(char *str);
+t_hashtable				*new_hashtable_entry(unsigned long hash, const char *path);
+int						add_hashtable_entry(t_hashtable **ht, t_hashtable *e);
+
+char					*get_binhash_path(unsigned long hash);
+void					load_binhash(void);
+void					delete_binhash(void);
+void					reload_binhash(void);
 
 /*
  **	Terminal:

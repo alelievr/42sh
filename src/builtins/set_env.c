@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/14 17:02:34 by alelievr          #+#    #+#             */
-/*   Updated: 2015/04/03 23:20:09 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/17 17:10:45 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ static void	set_var_env(char *name, char *value, int i)
 	strcpy(g_env[i], name);
 	strcat(g_env[i], "=");
 	strcat(g_env[i], value);
+	if (!ft_strcmp(name, "PATH"))
+	{
+		delete_binhash();
+		load_binhash();
+	}
 }
 
 int			set_env(char *name, char *value)

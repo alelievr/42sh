@@ -10,6 +10,8 @@ MAIN_SRC	=	main.c									\
 				ft_prompt.c								\
 				process_pid_api.c						\
 				rw_history.c							\
+				bin_hashtable.c							\
+				hashtable_utils.c						\
 
 UTIL_SRC	=	utils/path_utils.c						\
 				utils/is_utils.c						\
@@ -84,7 +86,7 @@ LIB			=	-lft -lncurses
 NAME		=	42sh
 
 #	Compiler
-CFLAGS		=	-g -Werror -Wall -Wextra -O0 -fsanitize=address
+CFLAGS		=	-g -Werror -Wall -Wextra -O1 -fsanitize=address
 CC			=	clang
 
 #################

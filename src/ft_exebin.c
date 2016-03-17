@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 18:33:11 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/11 18:22:25 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/17 17:11:16 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,46 +77,15 @@ static int		ft_exebin_fork(char *path, char **av, char **env)
 	return ((ret & 0xFF00) >> 8);
 }
 
-static int		ft_exebin_concat(char *cur, char *bin, char **av)
-{
-	static char	path[0xF000];
-
-	ft_strncpy(path, cur, sizeof(path) - ft_strlen(bin) - 3);
-	ft_strlcat(path, "/", sizeof(path));
-	ft_strlcat(path, bin, sizeof(path));
-	if (access(path, F_OK | X_OK) != -1)
-	{
-		ft_exebin_fork(path, av, g_env);
-		return (1);
-	}
-	return (0);
-}
-
 static int		ft_exe_bin_path(char *bin, char **av)
 {
-	static char	buff[0xF0000];
-	char		*tmp_path;
-	char		*cur;
-	char		*ptr;
+	char		*path;
 
-	if (!(tmp_path = get_env("PATH")))
+	path = get_binhash_path(hashstring(bin));
+	if (!path)
 		return (0);
-	ft_strncpy(buff, tmp_path, sizeof(buff) - 1);
-	cur = buff;
-	ptr = buff;
-	while (*ptr)
-	{
-		ptr++;
-		if (*ptr == ':' || !*ptr)
-		{
-			*ptr = 0;
-			if (ft_exebin_concat(cur, bin, av))
-				return (1);
-			cur = ptr + 1;
-			ptr++;
-		}
-	}
-	return (0);
+	ft_exebin_fork(path, av, g_env);
+	return (1);
 }
 
 int				ft_exebin(char *path, char **av, char **env)
