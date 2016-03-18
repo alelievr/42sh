@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/18 15:39:32 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/16 00:08:57 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/18 01:53:15 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void					ft_prompt(void)
 	char				*tmp2;
 	struct winsize		ws;
 
-	if (ioctl(0, TIOCGWINSZ, &ws) != -1)
+	if (ioctl(0, TIOCGWINSZ, &ws) != -1 && get_env("TERM"))
 		d.good_prompt = 1;
 	load_history(&d);
 	get_current_prompt(&d);

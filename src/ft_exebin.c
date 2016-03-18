@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 18:33:11 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/17 17:11:16 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/18 02:43:13 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,11 @@ static int		ft_exebin_fork(char *path, char **av, char **env)
 
 	if ((pid = fork()) > 0)
 	{
+		setpgid(pid, pid);
 		get_fg_pid(pid);
 		ret = wait_process(pid);
+		get_fg_pid(-1);
+		printf("fg pid = %i\n", get_fg_pid(0));
 	}
 	if (pid == 0)
 		exit(execve(path, av, env));

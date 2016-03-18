@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/17 01:11:47 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/20 15:33:36 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/18 02:37:43 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void		siguser_handler(int s)
 
 	if ((fg = get_fg_pid(0)) != -1)
 	{
+		printf("sending sig %i to %i\n", s, fg);
 		kill(fg, s);
 		if (s == SIGTSTP)
 			add_bg_pid(fg);

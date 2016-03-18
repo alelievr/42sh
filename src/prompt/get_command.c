@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/16 00:54:39 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/18 02:37:33 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static t_pr_code		g_pr_codes[] =
 	{PR_C_U, pr_del},
 	{PR_UP, pr_history},
 	{PR_DW, pr_history},
+	{PR_C_P, pr_vim_export},
 
 	{PR_TAB, pr_tab},
 	{0, NULL}
@@ -150,6 +151,8 @@ int						get_line(t_prompt *d)
 				g_pr_codes[i].f(d);
 				break ;
 			}
+		if (d->key == PR_C_P)
+			break ;
 	}
 	return (d->key);
 }
@@ -165,7 +168,8 @@ char					*get_command(t_prompt *d)
 	{
 		if (!d->good_prompt)
 			ft_printf("%{F}%s%{!F}", 123, PROMPT42);
-		get_line(d);
+		if (get_line(d) == PR_C_P)
+			break ;
 		pr_initline(d);
 		if (once)
 			once = 0;

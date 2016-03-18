@@ -9,12 +9,13 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-#define MAX_ENV					0xF00
-#define MAX_VAR					0xF00
-#define MAX_REDIRECTION_COMMAND	32
-#define BELL					write(1, "\a", 1)
-#define PROMPT42				"$> "
-#define PATH_NOT_FOUND			-2
+# define MAX_ENV					0xF00
+# define MAX_VAR					0xF00
+# define MAX_REDIRECTION_COMMAND	32
+# define BELL						write(1, "\a", 1)
+# define PROMPT42					"$> "
+# define PATH_NOT_FOUND				-2
+# define MAX_VARNAME_LENGTH			512
 
 extern	char			**g_env;
 extern	char			**g_var;
@@ -236,6 +237,7 @@ void					write_history(t_prompt *d);
 # define PR_C_K			11ull
 # define PR_C_U			21ull
 # define PR_TAB			9ull
+# define PR_C_P			16ull
 
 void					pr_addchar(t_prompt *d,
 		char c) __attribute__((overloadable));
@@ -245,6 +247,7 @@ void					pr_move(t_prompt *d);
 void					pr_del(t_prompt *d);
 void					pr_tab(t_prompt *d);
 void					pr_history(t_prompt *d);
+void					pr_vim_export(t_prompt *p);
 
 /*
  ** Prompt history:

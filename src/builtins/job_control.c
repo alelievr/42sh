@@ -11,6 +11,7 @@ int				ft_fg(int ac, char **av)
 	{
 		kill(bgprocess, SIGCONT);
 		delete_last_bg_pid();
+		get_fg_pid(bgprocess);
 		wait_process(bgprocess);
 	}
 	(void)ac;

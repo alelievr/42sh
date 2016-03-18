@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 19:37:06 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/17 20:30:24 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/17 22:43:53 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static void		ft_where_command(char *c)
 			ft_printf("%s\n", binht->path);
 		binht = binht->next;
 	}
+	if (!matched)
+		ft_printf("%s not found\n", c);
 }
 
 int				ft_where(int ac, char **av)

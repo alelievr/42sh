@@ -54,8 +54,11 @@ PROMPT_SRC	=	prompt/get_command.c					\
 				prompt/pr_unterminated_seq.c			\
 				prompt/pr_display.c						\
 				prompt/pr_multiline.c					\
+				prompt/pr_vim_export.c					\
 
 PARSER_SRC	=	parser/parse.c							\
+				#replace/replace_vars.c					\
+				replace/replace_alias.c					\
 
 OPER_SRC	=	operation/ft_pipe.c						\
 				operation/ft_right_redir.c				\

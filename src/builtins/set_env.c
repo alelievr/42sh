@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/14 17:02:34 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/17 17:10:45 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/17 22:37:08 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 
 static void	set_var_env(char *name, char *value, int i)
 {
+	if (ft_strlen(name) > MAX_VARNAME_LENGTH)
+	{
+		ft_printf("maximum varname length exceeded\n");
+		return ;
+	}
 	if (!(g_env[i] = malloc(SC * (ft_strlen(name) + ft_strlen(value) + 2))))
 		m_error();
 	strcpy(g_env[i], name);

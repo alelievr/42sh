@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/04/03 23:02:21 by alelievr          #+#    #+#             */
-/*   Updated: 2015/04/03 23:22:49 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/17 22:37:16 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 
 static void set_loc_var(char *name, char *value, int i)
 {
+	if (ft_strlen(name) > MAX_VARNAME_LENGTH)
+	{
+		ft_printf("maximum varname length exceeded\n");
+		return ;
+	}
 	if (!(g_var[i] = malloc(SC * (ft_strlen(name) + ft_strlen(value) + 2))))
 		m_error();
 	strcpy(g_var[i], name);
