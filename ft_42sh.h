@@ -16,6 +16,7 @@
 # define PROMPT42					"$> "
 # define PATH_NOT_FOUND				-2
 # define MAX_VARNAME_LENGTH			512
+# define MAX_ALIAS_NAME_LENGTH		(0xF00 - 1)
 
 extern	char			**g_env;
 extern	char			**g_var;
@@ -131,6 +132,7 @@ size_t					get_dirpath_length(char *path);
 size_t					get_filename_length(char *path);
 char					*unscape_space(char *path);
 t_alias					*get_alias_list(t_alias *a);
+char					*get_alias_value(char *name);
 
 /*
  **	Builtins:
@@ -177,6 +179,15 @@ t_hashtable				*get_binhash(t_hashtable *h);
 void					load_binhash(void);
 void					delete_binhash(void);
 void					reload_binhash(void);
+
+/*
+ **	Preparser:
+*/
+char					**preparse_command(char *cmd);
+char					**cmd_split_quote(char *cmd);
+char					**cmd_split_quote_table(char **ptrs, size_t len);
+char					*cmd_replace_alias(char *s);
+char					*cmd_replace_vars(char *s);
 
 /*
  **	Terminal:

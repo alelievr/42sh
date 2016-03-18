@@ -56,7 +56,12 @@ PROMPT_SRC	=	prompt/get_command.c					\
 				prompt/pr_multiline.c					\
 				prompt/pr_vim_export.c					\
 
-PARSER_SRC	=	parser/parse.c							\
+PARSER_SRC	=	preparser/preparser.c					\
+				preparser/split_quote.c					\
+				preparser/split_quote_table.c			\
+				preparser/replace_vars.c				\
+				preparser/replace_alias.c				\
+				parser/parse.c							\
 				#replace/replace_vars.c					\
 				replace/replace_alias.c					\
 

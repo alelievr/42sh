@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/18 15:39:32 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/18 01:53:15 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/18 18:56:37 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,31 @@ t_operate				*create_op_redir(char **cmd, int len, int type)
 	return (op);
 }
 
+void					exec_command(char *cmd)
+{
+	char				**tmp;
+	int					r;
+
+	tmp = NULL;
+	//TODO: parse the cmd to t_commandline *
+	//TODO: execute the t_commandline *
+
+	printf("\ncmd = [%s]\n", cmd);
+	tmp = preparse_command(cmd);
+	if (tmp)
+		if (!ft_builtins(tmp))
+		{
+			if (!(r = ft_exebin(tmp[0], tmp, g_env)))
+				ft_printf("%s: command not found !\n", tmp[0]);
+			else if (r == PATH_NOT_FOUND)
+				ft_printf("%s: binary not found !\n", tmp[0]);
+		}
+}
+
 void					ft_prompt(void)
 {
 	static t_prompt		d;
-	int					r;
-	char				**tmp;
-	char				*tmp2;
+	char				*cmd;
 	struct winsize		ws;
 
 	if (ioctl(0, TIOCGWINSZ, &ws) != -1 && get_env("TERM"))
@@ -38,45 +57,11 @@ void					ft_prompt(void)
 	get_current_prompt(&d);
 	while (42)
 	{
-		tmp = NULL;
-		tmp2 = get_command(&d);
-		//TODO: parse the cmd to t_commandline *
-		//TODO: execute the t_commandline *
-		printf("\ncmd = [%s]\n", tmp2);
-	//	tmp2 = ft_strjoin("env -i ", tmp2);
-		if (tmp2)
-		{
-			if (!*tmp2)
-				continue ;
-			tmp = ft_strsplit(tmp2, " \t\f\v\r\n");
-			if (tmp && tmp[0])
-				if (!ft_builtins(tmp))
-				{
-					if (!(r = ft_exebin(tmp[0], tmp, g_env)))
-						ft_printf("%s: command not found !\n", tmp[0]);
-					else if (r == PATH_NOT_FOUND)
-						ft_printf("%s: binary not found !\n", tmp[0]);
-				}
-		}
+		cmd = get_command(&d);
+		if (cmd)
+			exec_command(cmd);
 		else
 			break ;
 	}
 	write_history(&d);
-	/*
-	t_operate			*op;
-	t_operate			*tmp;
-
-	char	**v1 = (char **)malloc(sizeof(char *) * 3);
-	char	**v2 = (char **)malloc(sizeof(char *) * 3);
-	v1[0] = "end";
-	v1[1] = NULL;
-	v2[0] = "cat";
-	v2[1] = "-e";
-	v2[2] = NULL;
-	op = create_op_redir(v1, 1, DREDIR_L);
-	op->next = create_op_redir(v2, 1, BIN);
-	op->next->next = NULL;
-	execute_command(op);
-	(void)tmp;
-	(void)op;*/
 }

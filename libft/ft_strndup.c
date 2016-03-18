@@ -6,7 +6,7 @@
 /*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/11 12:03:18 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/02/27 14:13:19 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2016/03/18 16:27:59 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ char					*ft_strndup(const char *s1, size_t n)
 	dst = (char *)malloc((n + 1) * sizeof(char));
 	if (dst != NULL)
 		ft_strncpy(dst, s1, n);
+	dst[n] = 0;
 	return (dst);
 }

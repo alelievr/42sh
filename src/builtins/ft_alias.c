@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 17:26:30 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/17 20:30:23 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/18 18:38:10 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ static void		add_alias(char *data)
 		return ;
 	}
 	*value++ = 0;
+	if (ft_strlen(data) > MAX_ALIAS_NAME_LENGTH)
+		return ;
 	if (!(al = get_alias_list(NULL)))
 		get_alias_list(new_alias(data, value));
 	else if (replace_alias(al, data, value))
