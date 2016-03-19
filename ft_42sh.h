@@ -206,6 +206,8 @@ char					**cmd_split_quote_table(char **ptrs, size_t len);
 char					*cmd_replace_alias(char *s);
 char					*cmd_replace_vars(char *s);
 char					*cmd_globing_expand(char *s);
+void					cmd_globing_expand_braces(char *s, char *buff);
+void					cmd_globing_expand_wildcard(char *s, char *buff);
 
 /*
  **	Terminal:

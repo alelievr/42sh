@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 15:39:25 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/18 18:48:46 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/19 18:00:47 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static inline int	skip_dbquote(char **s, char *begin)
 
 static inline int	skip_word(char **s, char *begin)
 {
-	while (**s && !ft_isspace(**s))
+	while (**s && (!ft_isspace(**s) ||
+				(ft_isspace(**s) && *((*s) - 1) == '\\')))
 	{
 		if (CHECK_QUOTE(*s, begin) && SKIP_QUOTE(s))
 			break ;

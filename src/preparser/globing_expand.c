@@ -6,11 +6,12 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 19:23:25 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/18 20:55:08 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/19 18:14:59 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
+#define IFBREAK_(x, y)	if (x) { y; break ; }
 
 static int		cmd_is_to_glob(char *s)
 {
@@ -23,11 +24,11 @@ static int		cmd_is_to_glob(char *s)
 	b = 0;
 	while (s[i])
 	{
-		if (s[i] == '\'' && b && (i == 0 || (s[i - 1] != '\\')))
+		if (s[i] == '\'' && (i == 0 || (s[i - 1] != '\\')))
 			b = ((b >> 0) & 1) ? b ^ (1 << 0) : b | (1 << 0);
-		if (s[i] == '`' && b && (i == 0 || (s[i - 1] != '\\')))
+		if (s[i] == '`' && (i == 0 || (s[i - 1] != '\\')))
 			b = ((b >> 1) & 1) ? b ^ (1 << 1) : b | (1 << 1);
-		if (s[i] == '\"' && b && (i == 0 || (s[i - 1] != '\\')))
+		if (s[i] == '\"' && (i == 0 || (s[i - 1] != '\\')))
 			b = ((b >> 2) & 1) ? b ^ (1 << 2) : b | (1 << 2);
 		if (!b && (s[i] == '*' || s[i] == '?' || s[i] == '{'
 				|| s[i] == '[' || s[i] == '}' || s[i] == ']'))
@@ -42,25 +43,22 @@ static char		*cmd_globing_expand_string(char *s, char *buff)
 	size_t	i;
 	char	*ret;
 	int		b;
-//	char	*wptr;
 
 	ret = buff;
-	i = 0;
-	while (s[i])
+	ft_strcpy(buff, s);
+	while (cmd_is_to_glob(buff))
 	{
-		if (s[i] == '\'' && b && (i == 0 || (s[i - 1] != '\\')))
-			b = ((b >> 0) & 1) ? b ^ (1 << 0) : b | (1 << 0);
-		if (s[i] == '`' && b && (i == 0 || (s[i - 1] != '\\')))
-			b = ((b >> 1) & 1) ? b ^ (1 << 1) : b | (1 << 1);
-		if (!b && (s[i] == '*' || s[i] == '?' || s[i] == '{'
-				|| s[i] == '[' || s[i] == '}' || s[i] == ']'))
+		i = 0;
+		while (s[i])
 		{
-	//		wptr = s + i;
-	//		while (!ft_isspace(*wptr) && wprt != s)
-	//			wptr--;
-	//		globing_expand_current(wptr)
+			if (s[i] == '\'' && b && (i == 0 || (s[i - 1] != '\\')))
+				b = ((b >> 0) & 1) ? b ^ (1 << 0) : b | (1 << 0);
+			if (s[i] == '`' && b && (i == 0 || (s[i - 1] != '\\')))
+				b = ((b >> 1) & 1) ? b ^ (1 << 1) : b | (1 << 1);
+			IFBREAK_((!b && s[i] == '{'), cmd_globing_expand_braces(s, buff));
+			IFBREAK_((!b && s[i] == '*'), cmd_globing_expand_wildcard(s, buff));
+			i++;
 		}
-		i++;
 	}
 	return (ret);
 }
