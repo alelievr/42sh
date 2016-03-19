@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 16:22:55 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/18 19:12:44 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/18 20:38:29 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ static char		*cmd_quote_strndup(char *ptr, size_t max)
 
 	if (!(ret = malloc(sizeof(char) * (max + 1))))
 		m_error();
+	delete = 0;
 	str = ret;
 	i = -1;
 	while (++i < max)
 	{
-		if (ptr[i] == '\"' && delete && (i == 0 || (ptr[i - 1] != '\\')))
+		if (ptr[i] == '\"' && !delete && (i == 0 || (ptr[i - 1] != '\\')))
 			continue ;
 		if (ptr[i] == '\'' && delete && (i == 0 || (ptr[i - 1] != '\\')))
-			delete = !delete;
+			delete = ((delete >> 0) & 1) ? delete ^ (1 << 0) : delete | (1 << 0);
 		if (ptr[i] == '`' && delete && (i == 0 || (ptr[i - 1] != '\\')))
-			delete = !delete;
+			delete = ((delete >> 1) & 1) ? delete ^ (1 << 1) : delete | (1 << 1);
 		*str++ = ptr[i];
 	}
 	*str = 0;

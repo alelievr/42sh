@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/18 15:39:32 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/18 18:56:37 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/18 23:06:19 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,11 @@ void					ft_prompt(void)
 		if (cmd)
 			exec_command(cmd);
 		else
+		{
+			write(1, "\n", 1);
 			break ;
+		}
 	}
 	write_history(&d);
+	killall_bg_process();
 }

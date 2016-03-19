@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 17:52:54 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/18 18:58:13 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/18 19:35:12 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ char			*cmd_replace_alias(char *s)
 
 	begin = s;
 	cmd_copy_alias_name(&s, aliasname);
-	printf("aliasname = %s\n", aliasname);
 	if ((alias = get_alias_value(aliasname)))
 	{
 		ft_strcpy(buff, alias);

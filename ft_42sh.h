@@ -165,6 +165,7 @@ pid_t					get_fg_pid(pid_t p);
 int						delete_last_bg_pid(void);
 void					add_bg_pid(pid_t p);
 pid_t					get_last_bg_pid(void);
+void					killall_bg_process(void);
 int						wait_process(pid_t pid);
 
 /*
@@ -188,6 +189,7 @@ char					**cmd_split_quote(char *cmd);
 char					**cmd_split_quote_table(char **ptrs, size_t len);
 char					*cmd_replace_alias(char *s);
 char					*cmd_replace_vars(char *s);
+char					*cmd_globing_expand(char *s);
 
 /*
  **	Terminal:

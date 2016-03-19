@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 18:33:11 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/18 18:57:03 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/19 02:15:52 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ int				wait_process(pid_t pid)
 	int		ret;
 
 	waitpid(pid, &ret, WUNTRACED);
-	if ((ret & 0x00FF) % 31 == 3)
-		ft_printf("%i: %s\n", pid, "suspended");
+	if ((ret & 0x00FF) % 31 == 3 && WIFSTOPPED(ret))
+		ft_printf("\n%i: %s\n", pid, "suspended");
 	else if ((ret & 0xFF) != 0)
-		ft_printf("%i: %s\n", pid, g_errors[(ret & 0x00FF) % 31 - 1]);
+		ft_printf("\n%i: %s\n", pid, g_errors[(ret & 0x00FF) % 31 - 1]);
 	return (ret);
 }
 
@@ -69,13 +69,17 @@ static int		ft_exebin_fork(char *path, char **av, char **env)
 
 	if ((pid = fork()) > 0)
 	{
-		setpgid(pid, pid);
+		//TODO try to fix this ...
+		setsid();
 		get_fg_pid(pid);
 		ret = wait_process(pid);
 		get_fg_pid(-1);
 	}
 	if (pid == 0)
+	{
+//		setpgid(0, 0);
 		exit(execve(path, av, env));
+	}
 	return ((ret & 0xFF00) >> 8);
 }
 

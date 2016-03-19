@@ -12,6 +12,7 @@ MAIN_SRC	=	main.c									\
 				rw_history.c							\
 				bin_hashtable.c							\
 				hashtable_utils.c						\
+				killall_process.c						\
 
 UTIL_SRC	=	utils/path_utils.c						\
 				utils/is_utils.c						\
@@ -61,6 +62,7 @@ PARSER_SRC	=	preparser/preparser.c					\
 				preparser/split_quote_table.c			\
 				preparser/replace_vars.c				\
 				preparser/replace_alias.c				\
+				preparser/globing_expand.c				\
 				parser/parse.c							\
 				#replace/replace_vars.c					\
 				replace/replace_alias.c					\

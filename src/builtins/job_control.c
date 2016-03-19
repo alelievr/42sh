@@ -26,7 +26,9 @@ int				ft_bg(int ac, char **av)
 	if ((bgprocess = get_last_bg_pid()) == -1)
 		ft_printf("bg: no current job\n");
 	else
+	{
 		kill(bgprocess, SIGCONT);
+	}
 	(void)ac;
 	(void)av;
 	return (1);
