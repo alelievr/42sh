@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 18:33:11 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/19 16:51:26 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/19 20:43:42 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int				wait_process(pid_t pid, char *pname)
 	int		ret;
 
 	waitpid(pid, &ret, WUNTRACED);
-	printf("retcode = %i\n", (ret & 0xFF00) >> 8);
 	if ((ret & 0x00FF) % 31 == 3 && WIFSTOPPED(ret))
 		ft_printf("\n%i: %s %s\n", pid, "suspended", pname);
 	else if ((ret & 0xFF) != 0)

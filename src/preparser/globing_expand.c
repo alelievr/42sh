@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 19:23:25 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/19 18:14:59 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/19 20:58:28 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int		cmd_is_to_glob(char *s)
 
 static char		*cmd_globing_expand_string(char *s, char *buff)
 {
+	static char	tmps[0xF0000];
 	size_t	i;
 	char	*ret;
 	int		b;
@@ -48,15 +49,17 @@ static char		*cmd_globing_expand_string(char *s, char *buff)
 	ft_strcpy(buff, s);
 	while (cmd_is_to_glob(buff))
 	{
+		ft_strcpy(tmps, buff);
 		i = 0;
-		while (s[i])
+		b = 0;
+		while (tmps[i])
 		{
-			if (s[i] == '\'' && b && (i == 0 || (s[i - 1] != '\\')))
+			if (tmps[i] == '\'' && b && (i == 0 || (tmps[i - 1] != '\\')))
 				b = ((b >> 0) & 1) ? b ^ (1 << 0) : b | (1 << 0);
-			if (s[i] == '`' && b && (i == 0 || (s[i - 1] != '\\')))
+			if (tmps[i] == '`' && b && (i == 0 || (tmps[i - 1] != '\\')))
 				b = ((b >> 1) & 1) ? b ^ (1 << 1) : b | (1 << 1);
-			IFBREAK_((!b && s[i] == '{'), cmd_globing_expand_braces(s, buff));
-			IFBREAK_((!b && s[i] == '*'), cmd_globing_expand_wildcard(s, buff));
+			IFBREAK_((!b && tmps[i] == '{'), cmd_globing_expand_braces(tmps, buff));
+			IFBREAK_((!b && tmps[i] == '*'), cmd_globing_expand_wildcard(tmps, buff));
 			i++;
 		}
 	}

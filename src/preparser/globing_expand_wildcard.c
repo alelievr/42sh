@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   preparser.c                                        :+:      :+:    :+:   */
+/*   globing_expand_wildcard.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/18 15:27:22 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/19 19:49:54 by alelievr         ###   ########.fr       */
+/*   Created: 2016/03/19 18:13:31 by alelievr          #+#    #+#             */
+/*   Updated: 2016/03/19 22:31:22 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
 
-char		**preparse_command(char *cmd)
+void					cmd_globing_expand_wildcard(char *s, char *buff)
 {
-	char	**ret;
-	int		i;
-
-	if (!(cmd = cmd_replace_alias(cmd)))
-		return (NULL);
-	if (!(ret = cmd_split_quote(cmd)))
-		return (NULL);
-	i = -1;
-	while (ret[++i])
-	{
-		ret[i] = cmd_replace_vars(ret[i]);
-		ret[i] = cmd_globing_expand(ret[i]);
-	}
-	return (ret);
+	printf("before = %s\n", s);
+	(void)s;
+	(void)buff;
 }
