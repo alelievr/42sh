@@ -38,6 +38,13 @@ enum					e_operate
 	OR,
 };
 
+enum					e_status
+{
+	S_RUNNING,
+	S_STOPPED,
+	S_TERMINATED
+};
+
 typedef struct			s_redirection
 {
 	enum e_operate		type;	//specify the type of the redirection
@@ -94,6 +101,14 @@ typedef struct			s_file
 	unsigned char		type;
 	char				*name;
 }						t_file;
+
+typedef struct			s_process
+{
+	pid_t				pid;
+	char				*name;
+	enum e_status		status;
+	struct s_process	*next;
+}						t_process;
 
 typedef struct			s_hashtable
 {
@@ -154,6 +169,7 @@ int						ft_cd(int ac, char **av);
 int						ft_bonus(int ac, char **av);
 int						ft_fg(int ac, char **av);
 int						ft_bg(int ac, char **av);
+int						ft_jobs(int ac, char **av);
 int						ft_history(int ac, char **av);
 int						ft_alias(int ac, char **av);
 int						ft_where(int ac, char **av);
@@ -161,12 +177,12 @@ int						ft_where(int ac, char **av);
 /*
  **	Pid utils:
 */
-pid_t					get_fg_pid(pid_t p);
+t_process				*get_fg_pid(pid_t p, char *pname, int status);
 int						delete_last_bg_pid(void);
-void					add_bg_pid(pid_t p);
-pid_t					get_last_bg_pid(void);
+void					add_bg_pid(pid_t p, char *pname, int status);
+t_process				*get_last_bg_pid(void);
 void					killall_bg_process(void);
-int						wait_process(pid_t pid);
+int						wait_process(pid_t pid, char *pname);
 
 /*
  **	HashTable:

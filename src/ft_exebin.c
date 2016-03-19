@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 18:33:11 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/19 02:15:52 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/19 16:51:26 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,14 @@ static const char		*g_errors[] = {
 	"User defined signal 2"
 };
 
-int				wait_process(pid_t pid)
+int				wait_process(pid_t pid, char *pname)
 {
 	int		ret;
 
 	waitpid(pid, &ret, WUNTRACED);
+	printf("retcode = %i\n", (ret & 0xFF00) >> 8);
 	if ((ret & 0x00FF) % 31 == 3 && WIFSTOPPED(ret))
-		ft_printf("\n%i: %s\n", pid, "suspended");
+		ft_printf("\n%i: %s %s\n", pid, "suspended", pname);
 	else if ((ret & 0xFF) != 0)
 		ft_printf("\n%i: %s\n", pid, g_errors[(ret & 0x00FF) % 31 - 1]);
 	return (ret);
@@ -70,10 +71,9 @@ static int		ft_exebin_fork(char *path, char **av, char **env)
 	if ((pid = fork()) > 0)
 	{
 		//TODO try to fix this ...
-		setsid();
-		get_fg_pid(pid);
-		ret = wait_process(pid);
-		get_fg_pid(-1);
+		get_fg_pid(pid, *av, S_RUNNING);
+		ret = wait_process(pid, *av);
+		get_fg_pid(0, NULL, 0);
 	}
 	if (pid == 0)
 	{

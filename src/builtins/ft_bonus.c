@@ -9,7 +9,7 @@ int			ft_bonus(int ac, char **av)
 	ft_printf("line edition (shift-right, shift-left, ctrl-a and ctrl-e)\n");
 	ft_printf("dynamic completion with tab, if 0 matches -> beep\n");
 	ft_printf("reconstruction of the environement if vars are missing + SHLVL\n");
-	ft_printf("job control fg, bg, ctrl-z and &\n");
+	ft_printf("job control jobs, fg, bg, ctrl-z and &\n");
 	ft_printf("aliases\n");
 	ft_printf("where command builtin\n");
 	ft_printf("Ctrl-P to export your command in a vim file to edit it\n");

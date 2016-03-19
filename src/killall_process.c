@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 23:04:02 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/18 23:07:18 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/19 16:39:25 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 void		killall_bg_process(void)
 {
-	pid_t		pid;
+	t_process		*p;
 
-	while ((pid = get_last_bg_pid()) != -1)
+	while ((p = get_last_bg_pid()) != NULL)
 	{
-		kill(pid, SIGKILL);
+		kill(p->pid, SIGKILL);
 		delete_last_bg_pid();
 	}
 }
