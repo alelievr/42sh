@@ -6,12 +6,11 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 18:23:25 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/22 01:51:24 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/22 03:10:32 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#define	NOT_ESCAPED(b, s, c) (*(s) == c && (s == b || *((s) - 1) != '\\'))
+#include "ft_42sh.h"
 #define	BRCMP_(s1, s2) (ft_strchr(cmd_get_brq_value(&s2), *s1))
 #define	CHAR_CMP(s1,s2,be) (*(s1)==*(s2)||NOT_ESCAPED(be,s2,'?')||BRCMP_(s1,s2))
 #define CHECK_END(x) {char *__ = x; while (*__=='*')__++; if (!*__) return (1);}
@@ -103,10 +102,10 @@ int		cmd_globing_match(char *s1, char *s2)
 	}
 	return (0);
 }
-
+/*
 int		main(int ac, char **av)
 {
 	if (ac == 3)
 		printf("%i\n", cmd_globing_match(av[1], av[2]));
 	return (0);
-}
+}*/
