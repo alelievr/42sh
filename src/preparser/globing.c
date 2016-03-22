@@ -6,22 +6,40 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 18:23:25 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/22 00:49:16 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/22 01:51:24 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #define	NOT_ESCAPED(b, s, c) (*(s) == c && (s == b || *((s) - 1) != '\\'))
-#define	BRCMP_(s1, s2) (ft_strchr(cmd_get_brq_value(s2), *s1))
+#define	BRCMP_(s1, s2) (ft_strchr(cmd_get_brq_value(&s2), *s1))
 #define	CHAR_CMP(s1,s2,be) (*(s1)==*(s2)||NOT_ESCAPED(be,s2,'?')||BRCMP_(s1,s2))
 #define CHECK_END(x) {char *__ = x; while (*__=='*')__++; if (!*__) return (1);}
 
-char	*cmd_get_brq_value(char *s2)
+char	*cmd_get_brq_value(char **s2)
 {
-	static char		match[257];
+	static char		match[1024];
+	size_t			i;
+	char			tmp;
 
-	if (*s2)
-	(void)s2;
+	i = 0;
+	if (**s2 == '[')
+	{
+		++(*s2);
+		while (**s2 != ']')
+		{
+			if (i == 255)
+				break ;
+			if (**s2 == '-' && ((tmp = *((*s2) -1)) != '[') && tmp < *((*s2) + 1))
+				while (tmp < *((*s2) + 1))
+					match[i++] = tmp++;
+			else
+				match[i++] = **s2;
+			++(*s2);
+		}
+	}
+	match[i] = 0;
+	printf("match = %s\n", match);
 	return (match);
 }
 
