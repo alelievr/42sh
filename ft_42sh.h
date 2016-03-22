@@ -200,6 +200,7 @@ void					reload_binhash(void);
 /*
  **	Preparser:
 */
+# define NOT_ESCAPED(b, s, c) (*(s) == c && (s == b || *((s) - 1) != '\\'))
 char					**preparse_command(char *cmd);
 char					**cmd_split_quote(char *cmd);
 char					**cmd_split_quote_table(char **ptrs, size_t len);
@@ -208,6 +209,7 @@ char					*cmd_replace_vars(char *s);
 char					*cmd_globing_expand(char *s);
 void					cmd_globing_expand_braces(char *s, char *buff);
 void					cmd_globing_expand_wildcard(char *s, char *buff);
+int						cmd_globing_match(char *s1, char *s2);
 
 /*
  **	Terminal:
