@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/23 15:37:49 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/23 22:15:48 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/24 00:49:29 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static char		*concat_path(char *dirs, char *file)
 {
 	if (!*dirs)
 	{
-		strcpy(dirs, "./");
+		if (ft_strncmp(file, "./", 2) && ft_strcmp(file, "."))
+			strcpy(dirs, "./");
 		strlcat(dirs, file, PATH_MAX);
 		return (dirs);
 	}
@@ -84,9 +85,9 @@ static int		isdir(char *path)
 
 static void		cmd_create_path_regex(char **s, char *oldpath, char *path, char *regex)
 {
-	if (!*oldpath && **s != '/')
+	if (!*oldpath && **s != '/' && ft_strncmp(*s, "./", 2))
 		strlcpy(path, "./", PATH_MAX);
-	else if (!*oldpath && **s == '/')
+	else if (!*oldpath && **s == '/' && ft_strncmp(*s, "./", 2))
 		strlcpy(path, "/", PATH_MAX);
 	else
 		strlcpy(path, oldpath, PATH_MAX);

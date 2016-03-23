@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 19:23:25 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/19 20:58:28 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/24 00:49:47 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char			*cmd_globing_expand(char *s)
 		printf("to glob string: %s\n", s);
 		cmd_globing_expand_string(s, buff);
 		free(s);
+//		printf("new string: %s\n", buff);
 		return (ft_strdup(buff));
 	}
 	return (s);
