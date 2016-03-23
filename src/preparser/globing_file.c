@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/23 15:37:49 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/23 18:19:25 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/23 19:42:38 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,18 @@ typedef struct		s_mlist
 	struct s_mlist	*next;
 }					t_mlist;
 
+static int		cmd_has_wildcard(char *s)
+{
+	while (*s)
+	{
+		if (*s == '*' || *s == '?' || *s == '[')
+			return (1);
+		s++;
+	}
+	return (0);
+}
+
+
 static void		copy_next_regex(char **s, char *buff, size_t max)
 {
 	char	*ret;
@@ -34,7 +46,7 @@ static void		copy_next_regex(char **s, char *buff, size_t max)
 	while (ret[i] && ret[i] != '/' && i < max - 1)
 		*buff++ = ret[i++];
 	*buff = 0;
-	*s = ret + i + ((ret[i] == '/' && ret[i + 1]) ? 1 : 0);
+	*s = ret + i + ((ret[i] == '/') ? 1 : 0);
 }
 
 static char		*concat_path(char *dirs, char *file)
@@ -72,20 +84,12 @@ static int		isdir(char *path)
 	return (S_ISDIR(st.st_mode));
 }
 
-static int		cmd_has_wildcard(char *s)
-{
-	while (*s)
-	{
-		if (*s == '*' || *s == '?' || *s == '[')
-			return (1);
-		s++;
-	}
-	return (0);
-}
-
 static void		cmd_create_path_regex(char **s, char *oldpath, char *path, char *regex)
 {
-	strlcpy(path, oldpath, PATH_MAX);
+	if (!*oldpath)
+		strlcpy(path, "./", PATH_MAX);
+	else
+		strlcpy(path, oldpath, PATH_MAX);
 	printf("fullregex2 = %s\n", *s);
 	copy_next_regex(s, regex, 0xF00);
 	printf("oldpath = %s\n", oldpath);
@@ -106,6 +110,9 @@ static int		cmd_is_last_regex(char *r)
 {
 	while (*r && *r != '/' && *r != '*' && *r != '?' && *r != '[')
 		r++;
+	if (*r == '/')
+		while (*r && *r != '*' && *r != '?' && *r != '[')
+			r++;
 	return (!*r);
 }
 
@@ -141,13 +148,17 @@ static void		cmd_add_list_to_list(t_mlist *t, t_mlist **b, char *end)
 	{
 		strlcpy(buff, t->str, PATH_MAX);
 		strlcat(buff, end, PATH_MAX);
+		if (access(buff, F_OK) == -1 && ((t = t->next) + 1lu))
+			continue ;
+		strlcpy(buff, t->str, PATH_MAX);
+		ft_strlcat(buff, "/", PATH_MAX);
+		strlcat(buff, end, PATH_MAX);
+		if (access(buff, F_OK) == -1 && ((t = t->next) + 1lu))
+			continue ;
 		printf("final match path = %s\n", buff);
-		if (access(buff, F_OK) == 0)
-		{
-			new = new_mlist(t->str);
-			new->next = *b;
-			*b = new;
-		}
+		new = new_mlist(buff);
+		new->next = *b;
+		*b = new;
 		t = t->next;
 	}
 }
