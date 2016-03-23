@@ -6,26 +6,22 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/23 15:37:49 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/23 19:42:38 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/23 22:15:48 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "ft_42sh.h"
 #include <dirent.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/syslimits.h>
 #include <sys/stat.h>
 
-typedef struct		s_mlist
-{
-	char			*str;
-	struct s_mlist	*next;
-}					t_mlist;
-
 static int		cmd_has_wildcard(char *s)
 {
+	char	*begin;
+
+	begin = s;
 	while (*s)
 	{
 		if (*s == '*' || *s == '?' || *s == '[')
@@ -43,10 +39,12 @@ static void		copy_next_regex(char **s, char *buff, size_t max)
 
 	i = 0;
 	ret = *s;
+	while (ret[i] == '/')
+		i++;
 	while (ret[i] && ret[i] != '/' && i < max - 1)
 		*buff++ = ret[i++];
 	*buff = 0;
-	*s = ret + i + ((ret[i] == '/') ? 1 : 0);
+	*s = ret + i;
 }
 
 static char		*concat_path(char *dirs, char *file)
@@ -86,23 +84,25 @@ static int		isdir(char *path)
 
 static void		cmd_create_path_regex(char **s, char *oldpath, char *path, char *regex)
 {
-	if (!*oldpath)
+	if (!*oldpath && **s != '/')
 		strlcpy(path, "./", PATH_MAX);
+	else if (!*oldpath && **s == '/')
+		strlcpy(path, "/", PATH_MAX);
 	else
 		strlcpy(path, oldpath, PATH_MAX);
-	printf("fullregex2 = %s\n", *s);
+//	printf("fullregex2 = %s\n", *s);
 	copy_next_regex(s, regex, 0xF00);
-	printf("oldpath = %s\n", oldpath);
-	printf("regex = %s\n", regex);
-	printf("path = %s\n", path);
+//	printf("oldpath = %s\n", oldpath);
+//	printf("regex = %s\n", regex);
+//	printf("path = %s\n", path);
 	while (!cmd_has_wildcard(regex) && *regex)
 	{
 		concat_path(path, regex);
-		printf("fullregex2 = %s\n", *s);
+//		printf("fullregex2 = %s\n", *s);
 		copy_next_regex(s, regex, 0xF00);
-		printf("fullregex2 = %s\n", *s);
-		printf("regex = %s\n", regex);
-		printf("path = %s\n", path);
+//		printf("fullregex2 = %s\n", *s);
+//		printf("regex = %s\n", regex);
+//		printf("path = %s\n", path);
 	}
 }
 
@@ -140,22 +140,25 @@ static void		cmd_list_add_file_if_matching(char *fname, char *fpath, char *regex
 
 static void		cmd_add_list_to_list(t_mlist *t, t_mlist **b, char *end)
 {
-	t_mlist		*tmp;
 	t_mlist		*new;
 	char		buff[PATH_MAX];
 
+//	printf("end = %s\n", end);
 	while (t)
 	{
 		strlcpy(buff, t->str, PATH_MAX);
 		strlcat(buff, end, PATH_MAX);
-		if (access(buff, F_OK) == -1 && ((t = t->next) + 1lu))
-			continue ;
+		if (access(buff, F_OK) == 0)
+			GOTO(list_add_matched);
 		strlcpy(buff, t->str, PATH_MAX);
 		ft_strlcat(buff, "/", PATH_MAX);
 		strlcat(buff, end, PATH_MAX);
-		if (access(buff, F_OK) == -1 && ((t = t->next) + 1lu))
-			continue ;
-		printf("final match path = %s\n", buff);
+		if (access(buff, F_OK) == 0)
+			GOTO(list_add_matched);
+		t = t->next;
+		continue ;
+		list_add_matched:
+	//	printf("final match path = %s\n", buff);
 		new = new_mlist(buff);
 		new->next = *b;
 		*b = new;
@@ -178,30 +181,33 @@ static void		cmd_match_patern_rec(char *s, char *p, t_mlist **b)
 	cmd_create_path_regex(&s, p, path, regex);
 
 	tmp = NULL;
-	printf("matching regex withs files in dirs: %s\n", regex);
-	printf("fullregex = %s\n", s);
+//	printf("matching regex withs files in dirs: %s\n", regex);
+//	printf("fullregex = %s\n", s);
 	if (!(dir = opendir(path)))
 		return ;
 	while ((dd = readdir(dir)))
 		cmd_list_add_file_if_matching(dd->d_name, path, regex, &tmp, s);
+	closedir(dir);
 
 	///////////////////////////////////////////////////////////////
-	printf("file list:\n");
+/*	printf("file list:\n");
 	t_mlist	*tt = tmp;
 	while (tt)
 	{
 		printf("\t%s\n", tt->str);
 		tt = tt->next;
-	}
+	}*/
 	///////////////////////////////////////////////////////////////
 
-	printf("fullregex = %s\n", s);
+//	printf("fullregex = %s\n", s);
 	if (cmd_is_last_regex(s))
 		cmd_add_list_to_list(tmp, b, s);
 	else
 		while (tmp)
 		{
 			cmd_match_patern_rec(s, tmp->str, b);
+			free(tmp->str);
+			//TODO: free
 			tmp = tmp->next;
 		}
 	tmp = NULL;
@@ -216,7 +222,7 @@ t_mlist			*cmd_match_patern_files(char *s)
 	cmd_match_patern_rec(s, "", &tmp);
 	return (tmp);
 }
-
+/*
 int			main(int ac, char **av)
 {
 	t_mlist			*tmp;
@@ -232,4 +238,4 @@ int			main(int ac, char **av)
 		}
 	}
 	return (0);
-}
+}*/

@@ -66,6 +66,7 @@ PARSER_SRC	=	preparser/preparser.c					\
 				preparser/globing_expand_braces.c		\
 				preparser/globing_expand_wildcard.c		\
 				preparser/globing.c						\
+				preparser/globing_file.c				\
 				parser/parse.c							\
 				#replace/replace_vars.c					\
 				replace/replace_alias.c					\

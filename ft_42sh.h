@@ -11,12 +11,15 @@
 
 # define MAX_ENV					0xF00
 # define MAX_VAR					0xF00
-# define MAX_REDIRECTION_COMMAND	32
 # define BELL						write(1, "\a", 1)
 # define PROMPT42					"$> "
 # define PATH_NOT_FOUND				-2
+
+# define MAX_REDIRECTION_COMMAND	32
 # define MAX_VARNAME_LENGTH			512
 # define MAX_ALIAS_NAME_LENGTH		(0xF00 - 1)
+# define MAX_WILDCARD_MATCHES		0xF00
+# define MAX_BINARY_ARGUMENTS		0xF000
 
 extern	char			**g_env;
 extern	char			**g_var;
@@ -124,6 +127,12 @@ typedef struct			s_alias
 	struct s_alias	*next;
 }						t_alias;
 
+typedef struct			s_matched_list
+{
+	char					*str;
+	struct s_matched_list	*next;
+}						t_mlist;
+
 typedef long long
 		unsigned int	t_lluint;
 
@@ -210,6 +219,7 @@ char					*cmd_globing_expand(char *s);
 void					cmd_globing_expand_braces(char *s, char *buff);
 void					cmd_globing_expand_wildcard(char *s, char *buff);
 int						cmd_globing_match(char *s1, char *s2);
+t_mlist					*cmd_match_patern_files(char *s);
 
 /*
  **	Terminal:
