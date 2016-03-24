@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/18 02:37:33 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/24 03:34:51 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,71 @@ static t_pr_code		g_pr_codes[] =
 	{0, NULL}
 };
 
+static size_t			pr_get_cursor_line(t_prompt *d)
+{
+	size_t		i;
+	size_t		ret;
+	size_t		col;
+
+	i = 0;
+	ret = 0;
+	col = 3;
+	while (i <= d->index)
+	{
+		if (d->buff[i] == '\n')
+		{
+			ret++;
+			col = 2;
+		}
+		if (!(col % d->col))
+			ret++;
+		i++;
+	}
+	return (ret);
+}
+
+static size_t			pr_get_next_line_length(char *buff, size_t *index)
+{
+	int		ret;
+
+	ret = 0;
+	if (!buff[*index])
+		return (0);
+	while (buff[*index] && buff[*index] != '\n')
+	{
+		ret++;
+		++(*index);
+	}
+	return (ret);
+}
+
+static void				pr_up_cursor(t_prompt *d)
+{
+	size_t		nlines;
+	size_t		index;
+	size_t		r;
+	size_t		y_cursor;
+	int			once;
+
+	once = 1;
+	index = 0;
+	nlines = 0;
+	y_cursor = pr_get_cursor_line(d);
+//	printf("cursor y = %lu\n", y_cursor);
+	while ((r = pr_get_next_line_length(d->buff, &index)))
+	{
+//		printf("r = %lu\n", r);
+		r += (once) ? 3 : 2;
+//		printf("line length = %lu\n", r);
+		once = 0;
+		nlines += r / (d->col) - !((r % d->col) || (d->buff[d->index]))
+			+ ((d->buff[index] == '\n') ? 1 : 0);
+	}
+//	printf("nlines = %lu\n", nlines);
+	if (nlines)
+		ft_putstr(tparm(tgetstr("UP", NULL), nlines));
+}
+
 void					pr_initline(t_prompt *d)
 {
 	static struct winsize	ws;
@@ -62,32 +127,35 @@ void					pr_initline(t_prompt *d)
 			ft_putstr(tparm(tgetstr("UP", NULL), l / (ws.ws_col) //up x - 1 times the nline
 						- !((l % ws.ws_col) || (d->buff[d->index]))));
 	}
+	pr_up_cursor(d);
 	ft_putstr(tgetstr("cr", NULL));
 	ft_putstr(tgetstr("cd", NULL));
 }
 
-static void				pr_affbuff_line(char *buff, size_t index, size_t col, int prompt)
+static void				pr_affbuff_line(t_prompt *d, int prompt)
 {
 	size_t					l;
 	size_t					gap;
 	size_t					x;
 
-	l = ft_strlen(buff) - index;
-	gap = (ft_strlen(PROMPT42) + ft_strlen(buff)) % col;
+	l = ft_strlen(d->buff) - d->index;
+	gap = (ft_strlen(PROMPT42) + ft_strlen(d->buff)) % d->col;
 	if (!gap)
-		gap = col - 1;
-	pr_display_line(buff, prompt);
+		gap = d->col - 1;
+//	pr_display_line(buff, prompt);
+	pr_display(d);
 	if (l > gap)
 	{
 		x = l - gap;
-		x = x / col + !!(x % col);
+		x = x / d->col + !!(x % d->col);
 		ft_putstr(tparm(tgetstr("UP", NULL), x));
-		ft_putstr(tparm(tgetstr("ch", NULL), col - 1));
-		l = l - gap - col * (x - 1);
+		ft_putstr(tparm(tgetstr("ch", NULL), d->col - 1));
+		l = l - gap - d->col * (x - 1);
 		l += (l == 0 ? 0 : -1);
 	}
 	if (l)
 		ft_putstr(tparm(tgetstr("LE", NULL), l));
+	(void)prompt;
 }
 
 static void				pr_affbuff(t_prompt *d)
@@ -101,7 +169,7 @@ ft_putstr(tgetstr("rc", NULL));
 
 //	ft_putstr(tparm(tgetstr("UP", NULL), nlines));
 //	x = get_col_index(d);
-	pr_affbuff_line(d->buff, d->index, d->col, 42);
+	pr_affbuff_line(d, 42);
 }
 
 inline void				get_command_init(t_prompt *d)
@@ -171,8 +239,7 @@ char					*get_command(t_prompt *d)
 		if (get_line(d) == PR_C_P)
 			break ;
 		pr_initline(d);
-		if (once)
-			once = 0;
+		once = 0;
 	}
 	pr_initline(d);
 	pr_history_append(d);

@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 16:22:55 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/19 18:04:12 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/24 03:33:36 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static char		*cmd_quote_strndup(char *ptr, size_t max)
 			delete = ((delete >> 0) & 1) ? delete ^ (1 << 0) : delete | (1 << 0);
 		if (ptr[i] == '`' && (i == 0 || (ptr[i - 1] != '\\')))
 			delete = ((delete >> 1) & 1) ? delete ^ (1 << 1) : delete | (1 << 1);
-		if (ptr[i] == ' ' && !delete && i != 0 && ptr[i - 1] == '\\')
+		if ((ptr[i] == ' ' && !delete && i != 0 && ptr[i - 1] == '\\')
+				|| (ptr[i] == '\n' && !delete && i != 0 && ptr[i - 1] == '\\'))
 			--str;
 		*str++ = ptr[i];
 	}

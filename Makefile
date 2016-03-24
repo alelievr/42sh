@@ -4,15 +4,15 @@
 
 #	Sources
 SRCDIR		=	src
-MAIN_SRC	=	main.c									\
-				ft_signals.c							\
-				execute_command.c						\
-				ft_prompt.c								\
-				process_pid_api.c						\
-				rw_history.c							\
-				bin_hashtable.c							\
-				hashtable_utils.c						\
-				killall_process.c						\
+MAIN_SRC	=	main/main.c								\
+				main/ft_signals.c						\
+				main/execute_command.c					\
+				main/ft_prompt.c						\
+				main/process_pid_api.c					\
+				main/rw_history.c						\
+				main/bin_hashtable.c					\
+				main/hashtable_utils.c					\
+				main/killall_process.c					\
 
 UTIL_SRC	=	utils/path_utils.c						\
 				utils/is_utils.c						\
@@ -67,9 +67,8 @@ PARSER_SRC	=	preparser/preparser.c					\
 				preparser/globing_expand_wildcard.c		\
 				preparser/globing.c						\
 				preparser/globing_file.c				\
+														\
 				parser/parse.c							\
-				#replace/replace_vars.c					\
-				replace/replace_alias.c					\
 
 OPER_SRC	=	operation/ft_pipe.c						\
 				operation/ft_right_redir.c				\
