@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/19 11:38:48 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/24 20:11:06 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/24 21:44:02 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,25 @@ static inline void		pr_move_shift_up(t_prompt *d)
 
 static inline void		pr_move_shift_down(t_prompt *d)
 {
-	if (d->index + d->col < ft_strlen(d->buff))
-		d->index += d->col;
+	size_t		last_line;
+	size_t		i;
+
+	last_line = 1;
+	i = d->index - 1;
+	while (d->buff[++i])
+		if (d->buff[i] == '\n')
+		{
+			last_line = 0;
+			break ;
+		}
+	if (last_line)
+		d->index = ft_strlen(d->buff) - 1;
 	else
-		d->index = ft_strlen(d->buff);
+	{
+		while (d->buff[d->index] != '\n' && d->buff[d->index])
+			d->index++;
+		d->index++;
+	}
 }
 
 void					pr_move(t_prompt *d)
