@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rw_history.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/24 22:44:13 by alelievr          #+#    #+#             */
+/*   Updated: 2016/03/24 22:56:50 by alelievr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_42sh.h"
 #include <fcntl.h>
 #include <sys/syslimits.h>
+#define HISTORY_SEP_CHAR		'\x80'
 
 void			load_history(t_prompt *d)
 {
@@ -16,7 +29,7 @@ void			load_history(t_prompt *d)
 		ft_strcpy(path, home);
 		ft_strcat(path, "/.42sh_history");
 		if ((fd = open(path, O_RDONLY | O_CREAT, 0644)) != -1)
-			while (get_next_line(fd, &tmp))
+			while (get_next_line_c(fd, &tmp, HISTORY_SEP_CHAR))
 			{
 				//TODO: opti !!!
 				if (!d->history)
@@ -49,7 +62,7 @@ void			write_history(t_prompt *d)
 			while (h)
 			{
 				write(fd, h->content, h->content_size - 1);
-				write(fd, "\n", 1);
+				write(fd, (char[]){HISTORY_SEP_CHAR}, 1);
 				h = h->next;
 			}
 		}

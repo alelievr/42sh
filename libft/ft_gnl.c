@@ -6,13 +6,22 @@
 /*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/09 16:41:28 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/15 23:41:41 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/24 22:56:18 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #define GNL_REM1		remain[fd].b[remain[fd].turn]
 #define GNL_REM2		remain[fd].b[!remain[fd].turn]
+
+static char				gnl_getc(char c)
+{
+	static char		ch = '\n';
+
+	if (c)
+		ch = c;
+	return (ch);
+}
 
 static int				rec_gnl(int const fd, char **line, t_gnl *remain,
 							int index)
@@ -25,7 +34,7 @@ static int				rec_gnl(int const fd, char **line, t_gnl *remain,
 	if ((ret = read(fd, buff, FT_GNL_BUFSIZE)) < 0)
 		return (-1);
 	buff[ret] = '\0';
-	if (((endl = ft_strchr(buff, '\n')) == NULL) && ret)
+	if (((endl = ft_strchr(buff, gnl_getc(0))) == NULL) && ret)
 	{
 		exitval = rec_gnl(fd, line, remain, index + ret);
 		ft_memcpy(*line + index, buff, ret);
@@ -60,16 +69,17 @@ static inline int		init_gnl(int const fd, char **line, t_gnl **remain)
 	return (0);
 }
 
-int						get_next_line(int const fd, char **line)
+int						get_next_line_c(int const fd, char **line, char c)
 {
 	static t_gnl		*remain;
 	char				*endl;
 	int					exitval;
 	size_t				len;
 
+	gnl_getc(c);
 	if (init_gnl(fd, line, &remain))
 		return (-1);
-	if ((endl = ft_strchr(GNL_REM1, '\n')) == NULL)
+	if ((endl = ft_strchr(GNL_REM1, gnl_getc(0))) == NULL)
 	{
 		len = ft_strlen(GNL_REM1);
 		if ((exitval = rec_gnl(fd, line, remain, len)) < 0)
@@ -83,4 +93,9 @@ int						get_next_line(int const fd, char **line)
 	remain[fd].turn = !remain[fd].turn;
 	ft_strcpy(GNL_REM1, endl + 1);
 	return (1);
+}
+
+int						get_next_line(int const fd, char **line)
+{
+	return (get_next_line_c(fd, line, '\n'));
 }

@@ -6,7 +6,7 @@
 /*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 18:51:11 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/18 01:49:36 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/24 22:45:12 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,5 +296,6 @@ typedef struct			s_gnl
 
 int						ft_gnl(const int fd, char **line);
 int						get_next_line(int const fd, char **line);
+int						get_next_line_c(int const fd, char **line, char c);
 
 #endif

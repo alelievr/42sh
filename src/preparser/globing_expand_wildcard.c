@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/19 18:13:31 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/24 01:00:00 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/24 23:07:50 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ void					cmd_globing_expand_wildcard(char *s, char *buff)
 
 	*buff = 0;
 	n = 0;
-	while (cmd_copy_next_string_to_glob(&s, to_expand))
+	while (cmd_copy_next_string_to_glob(&s, to_expand) && *s)
 	{
+		printf("s = %s\n", s);
 		printf("to expand: %s\n", to_expand);
 		if (!(matched_list = cmd_match_patern_files(to_expand)))
 			(void)(ft_strcat(buff, to_expand) && ft_strcat(buff, " "));

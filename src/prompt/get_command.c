@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/24 21:38:16 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/24 22:57:39 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static t_pr_code		g_pr_codes[] =
 	{0, NULL}
 };
 
-static int g_log = 0;
+//static int g_log = 0;
 
 static size_t			pr_get_next_line_length(char *buff, size_t *index)
 {
@@ -114,6 +114,7 @@ static size_t			pr_get_cursor_row(t_prompt *d)
 
 static void				pr_up_cursor(t_prompt *d)
 {
+	static size_t	last_nlines;
 	size_t			nlines;
 	size_t			index;
 	size_t			r;
@@ -130,11 +131,13 @@ static void				pr_up_cursor(t_prompt *d)
 			+ ((d->buff[index++] == '\n'));
 	}
 	nlines -= pr_get_cursor_row(d);
-	if (nlines > 0)
+	if (nlines > 0 && ((d->key != PR_UP && d->key != PR_DW)
+				|| ((d->key == PR_UP || d->key == PR_DW) && (last_nlines > nlines))))
 	{
 		ft_putstr(tparm(tgetstr("UP", NULL), nlines));
 //		dprintf(g_log, "upped of %lu\n", nlines);
 	}
+	last_nlines = nlines;
 }
 
 void					pr_initline(t_prompt *d, int flag)
@@ -270,8 +273,8 @@ int						get_line(t_prompt *d)
 #include <fcntl.h>
 char					*get_command(t_prompt *d)
 {
-	if (!g_log)
-		g_log = open("./42sh_log", O_WRONLY | O_CREAT, 0644);
+//	if (!g_log)
+//		g_log = open("./42sh_log", O_WRONLY | O_CREAT, 0644);
 	int			once;
 
 	once = 1;
