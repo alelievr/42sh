@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/24 03:34:51 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/24 20:46:49 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,7 @@ static t_pr_code		g_pr_codes[] =
 	{0, NULL}
 };
 
-static size_t			pr_get_cursor_line(t_prompt *d)
-{
-	size_t		i;
-	size_t		ret;
-	size_t		col;
-
-	i = 0;
-	ret = 0;
-	col = 3;
-	while (i <= d->index)
-	{
-		if (d->buff[i] == '\n')
-		{
-			ret++;
-			col = 2;
-		}
-		if (!(col % d->col))
-			ret++;
-		i++;
-	}
-	return (ret);
-}
+static int g_log = 0;
 
 static size_t			pr_get_next_line_length(char *buff, size_t *index)
 {
@@ -76,34 +55,72 @@ static size_t			pr_get_next_line_length(char *buff, size_t *index)
 	return (ret);
 }
 
+static size_t			pr_get_cursor_col(t_prompt *d)
+{
+	size_t		i;
+	size_t		col;
+
+	col = 3;
+	i = d->index + 1;
+	while (--i)
+	{
+		if (d->buff[i] == '\n')
+			break ;
+		col++;
+	}
+	col %= d->col;
+	return (col);
+}
+
+static size_t			pr_get_cursor_row(t_prompt *d)
+{
+	size_t		i;
+	size_t		ret;
+	size_t		col;
+
+	col = 3;
+	ret = 0;
+	i = d->index - 1;
+	while (d->buff[++i])
+	{
+		if (d->buff[i] == '\n')
+		{
+			ret++;
+			col = 2;
+		}
+		if (d->col && !(col % d->col))
+			ret++;
+		col++;
+	}
+	return (ret);
+}
+
 static void				pr_up_cursor(t_prompt *d)
 {
-	size_t		nlines;
-	size_t		index;
-	size_t		r;
-	size_t		y_cursor;
-	int			once;
+	size_t			nlines;
+	size_t			index;
+	size_t			r;
+	int				once;
 
 	once = 1;
 	index = 0;
 	nlines = 0;
-	y_cursor = pr_get_cursor_line(d);
-//	printf("cursor y = %lu\n", y_cursor);
 	while ((r = pr_get_next_line_length(d->buff, &index)))
 	{
-//		printf("r = %lu\n", r);
 		r += (once) ? 3 : 2;
-//		printf("line length = %lu\n", r);
 		once = 0;
 		nlines += r / (d->col) - !((r % d->col) || (d->buff[d->index]))
-			+ ((d->buff[index] == '\n') ? 1 : 0);
+			+ ((d->buff[index++] == '\n'));
 	}
-//	printf("nlines = %lu\n", nlines);
-	if (nlines)
+	nlines -= pr_get_cursor_row(d);
+	if (nlines > 0)
+	{
 		ft_putstr(tparm(tgetstr("UP", NULL), nlines));
+//		dprintf(g_log, "upped of %lu\n", nlines);
+	}
 }
 
-void					pr_initline(t_prompt *d)
+void					pr_initline(t_prompt *d, int flag)
 {
 	static struct winsize	ws;
 	size_t					l;
@@ -121,30 +138,39 @@ void					pr_initline(t_prompt *d)
 		return ;
 	d->col = ws.ws_col;
 	l = ft_strlen(PROMPT42) + d->index;
-	if (l > (ws.ws_col - !(l % ws.ws_col))) //number of line of my cmd-line
-	{
-		if (!(!d->buff[d->index] && (l == ws.ws_col)))
-			ft_putstr(tparm(tgetstr("UP", NULL), l / (ws.ws_col) //up x - 1 times the nline
-						- !((l % ws.ws_col) || (d->buff[d->index]))));
-	}
-	pr_up_cursor(d);
+//	if (l > (ws.ws_col - !(l % ws.ws_col))) //number of line of my cmd-line
+//	{
+//		if (!(!d->buff[d->index] && (l == ws.ws_col)))
+//			ft_putstr(tparm(tgetstr("UP", NULL), l / (ws.ws_col) //up x - 1 times the nline
+//						- !((l % ws.ws_col) || (d->buff[d->index]))));
+//	}
+	if (flag == PR_DEFAULT)
+		pr_up_cursor(d);
 	ft_putstr(tgetstr("cr", NULL));
 	ft_putstr(tgetstr("cd", NULL));
 }
 
-static void				pr_affbuff_line(t_prompt *d, int prompt)
+static void				pr_affbuff_lines(t_prompt *d)
 {
-	size_t					l;
-	size_t					gap;
-	size_t					x;
+	size_t					y_cursor;
+	size_t					x_cursor;
+//	size_t					l;
+//	size_t					gap;
+//	size_t					x;
 
-	l = ft_strlen(d->buff) - d->index;
-	gap = (ft_strlen(PROMPT42) + ft_strlen(d->buff)) % d->col;
-	if (!gap)
-		gap = d->col - 1;
+//	l = ft_strlen(d->buff) - d->index;
+//	gap = (ft_strlen(PROMPT42) + ft_strlen(d->buff)) % d->col;
+//	if (!gap)
+//		gap = d->col - 1;
 //	pr_display_line(buff, prompt);
 	pr_display(d);
-	if (l > gap)
+	y_cursor = pr_get_cursor_row(d);
+	x_cursor = pr_get_cursor_col(d);
+	if (y_cursor)
+		ft_putstr(tparm(tgetstr("UP", NULL), y_cursor));
+	if (x_cursor)
+		ft_putstr(tparm(tgetstr("ch", NULL), x_cursor));
+/*	if (l > gap)
 	{
 		x = l - gap;
 		x = x / d->col + !!(x % d->col);
@@ -154,8 +180,7 @@ static void				pr_affbuff_line(t_prompt *d, int prompt)
 		l += (l == 0 ? 0 : -1);
 	}
 	if (l)
-		ft_putstr(tparm(tgetstr("LE", NULL), l));
-	(void)prompt;
+		ft_putstr(tparm(tgetstr("LE", NULL), l));*/
 }
 
 static void				pr_affbuff(t_prompt *d)
@@ -169,7 +194,7 @@ ft_putstr(tgetstr("rc", NULL));
 
 //	ft_putstr(tparm(tgetstr("UP", NULL), nlines));
 //	x = get_col_index(d);
-	pr_affbuff_line(d, 42);
+	pr_affbuff_lines(d);
 }
 
 inline void				get_command_init(t_prompt *d)
@@ -180,7 +205,7 @@ inline void				get_command_init(t_prompt *d)
 	d->index = 0;
 	d->len = 0;
 	d->buff[0] = '\0';
-	pr_initline(d);
+	pr_initline(d, PR_DEFAULT);
 }
 
 static inline void		pr_history_append(t_prompt *d)
@@ -209,7 +234,7 @@ int						get_line(t_prompt *d)
 		d->key = 0;
 		if ((read(0, &(d->key), sizeof(d->key)) < 1) || (d->key == 4) || (d->key == 10))
 			break ;
-		pr_initline(d);
+		pr_initline(d, PR_DEFAULT);
 		if (ft_isprint(IS_CHAR(d->key)) && (d->key != '\t'))
 			pr_addchar(d);
 		i = -1;
@@ -225,8 +250,11 @@ int						get_line(t_prompt *d)
 	return (d->key);
 }
 
+#include <fcntl.h>
 char					*get_command(t_prompt *d)
 {
+	if (!g_log)
+		g_log = open("./42sh_log", O_WRONLY | O_CREAT, 0644);
 	int			once;
 
 	once = 1;
@@ -238,10 +266,10 @@ char					*get_command(t_prompt *d)
 			ft_printf("%{F}%s%{!F}", 123, PROMPT42);
 		if (get_line(d) == PR_C_P)
 			break ;
-		pr_initline(d);
+		pr_initline(d, PR_DEFAULT);
 		once = 0;
 	}
-	pr_initline(d);
+	pr_initline(d, PR_NEW_LINE);
 	pr_history_append(d);
 	signal(SIGINT, siguser_handler);
 	if (d->good_prompt)

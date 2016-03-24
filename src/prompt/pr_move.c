@@ -6,11 +6,21 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/19 11:38:48 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/03/20 10:16:10 by fdaudre-         ###   ########.fr       */
+/*   Updated: 2016/03/24 20:11:06 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
+
+static inline size_t	pr_get_cursor_col_buff(t_prompt *p)
+{
+    size_t	start_bound;
+
+    start_bound = p->index;
+    while (start_bound && p->buff[start_bound] != '\n')
+	        --start_bound;
+    return (p->index - start_bound);
+}	
 
 static inline void		pr_move_shift_left(t_prompt *d)
 {
@@ -34,10 +44,22 @@ static inline void		pr_move_shift_right(t_prompt *d)
 
 static inline void		pr_move_shift_up(t_prompt *d)
 {
-	if (d->index > d->col - 1)
-		d->index -= d->col;
-	else
+	size_t		r_index;
+	size_t		first_line;
+	size_t		i;
+
+	first_line = 1;
+	i = d->index + 1;
+	while (--i)
+		if (d->buff[i] == '\n')
+			first_line = 0;
+	if (first_line)
 		d->index = 0;
+	else
+	{
+		r_index = pr_get_cursor_col_buff(d);
+		d->index -= r_index + 1;
+	}
 }
 
 static inline void		pr_move_shift_down(t_prompt *d)
@@ -50,9 +72,9 @@ static inline void		pr_move_shift_down(t_prompt *d)
 
 void					pr_move(t_prompt *d)
 {
-	if ((d->key == PR_RI) && (d->buff[d->index]))
+	if ((d->key == PR_RI) && (d->buff[d->index]) && d->buff[d->index + 1] != '\n')
 		d->index++;
-	else if ((d->key == PR_LE) && d->index)
+	else if ((d->key == PR_LE) && d->index && d->buff[d->index - 1] != '\n')
 		d->index--;
 	else if ((d->key == PR_BEG) || (d->key == PR_C_A))
 		d->index = 0;

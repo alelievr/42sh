@@ -279,8 +279,12 @@ void					write_history(t_prompt *d);
 # define PR_C_E			5ull
 # define PR_C_K			11ull
 # define PR_C_U			21ull
-# define PR_TAB			9ull
+# define PR_C_L			12ull
 # define PR_C_P			16ull
+# define PR_TAB			9ull
+
+# define PR_DEFAULT		0
+# define PR_NEW_LINE	1
 
 void					pr_addchar(t_prompt *d,
 		char c) __attribute__((overloadable));
@@ -305,7 +309,7 @@ t_list					*get_history_list(t_list *h);
 void					pr_ctrlc_handler(int s);
 void					pr_display(t_prompt *d);
 void					pr_display_line(char *buff, int prompt);
-void					pr_initline(t_prompt *d);
+void					pr_initline(t_prompt *d, int flag);
 void					get_command_init(t_prompt *d);
 size_t					get_col_index(t_prompt *p);
 size_t					get_row_index(t_prompt *p);

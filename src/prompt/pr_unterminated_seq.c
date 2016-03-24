@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/24 01:52:39 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/24 02:02:00 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/24 19:52:19 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int			check_unterminated_sequences(t_prompt *d)
 	if ((len && d->buff[len - 1] == '\\') || b)
 	{
 		pr_addchar(d, '\n');
-		pr_initline(d);
+		pr_initline(d, PR_NEW_LINE);
 		return (1);
 	}
 	return (!!b);

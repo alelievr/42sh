@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/18 15:39:32 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/18 23:06:19 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/24 18:30:43 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void					exec_command(char *cmd)
 
 	printf("\ncmd = [%s]\n", cmd);
 	tmp = preparse_command(cmd);
-	if (tmp)
+	if (tmp && tmp[0])
 		if (!ft_builtins(tmp))
 		{
 			if (!(r = ft_exebin(tmp[0], tmp, g_env)))
