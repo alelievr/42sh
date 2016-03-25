@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/24 22:57:39 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/25 16:25:06 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,17 +112,16 @@ static size_t			pr_get_cursor_row(t_prompt *d)
 	return (ret);
 }
 
-static void				pr_up_cursor(t_prompt *d)
+static size_t			pr_get_max_row(t_prompt *d)
 {
-	static size_t	last_nlines;
 	size_t			nlines;
 	size_t			index;
 	size_t			r;
 	int				once;
 
-	once = 1;
 	index = 0;
 	nlines = 0;
+	once = 1;
 	while ((r = pr_get_next_line_length(d->buff, &index)))
 	{
 		r += (once) ? 3 : 2;
@@ -130,7 +129,15 @@ static void				pr_up_cursor(t_prompt *d)
 		nlines += r / (d->col) - !((r % d->col) || (d->buff[d->index]))
 			+ ((d->buff[index++] == '\n'));
 	}
-	nlines -= pr_get_cursor_row(d);
+	return (nlines);
+}
+
+static void				pr_up_cursor(t_prompt *d)
+{
+	static size_t	last_nlines;
+	size_t			nlines;
+
+	nlines = pr_get_max_row(d) - pr_get_cursor_row(d);
 	if (nlines > 0 && ((d->key != PR_UP && d->key != PR_DW)
 				|| ((d->key == PR_UP || d->key == PR_DW) && (last_nlines > nlines))))
 	{
@@ -270,7 +277,7 @@ int						get_line(t_prompt *d)
 	return (d->key);
 }
 
-#include <fcntl.h>
+//#include <fcntl.h>
 char					*get_command(t_prompt *d)
 {
 //	if (!g_log)
@@ -289,6 +296,7 @@ char					*get_command(t_prompt *d)
 		pr_initline(d, PR_DEFAULT);
 		once = 0;
 	}
+	d->index = ft_strlen(d->buff) - 1;
 	pr_initline(d, PR_NEW_LINE);
 	pr_history_append(d);
 	signal(SIGINT, siguser_handler);

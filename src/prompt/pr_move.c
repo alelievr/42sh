@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/19 11:38:48 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/24 22:32:20 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/25 15:40:59 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static inline size_t	pr_get_cursor_col_buff(t_prompt *p)
     while (start_bound && p->buff[start_bound] != '\n')
 	        --start_bound;
     return (p->index - start_bound);
-}	
+}
 
 static inline void		pr_move_shift_left(t_prompt *d)
 {
 	d->index--;
-	while (d->index && (d->buff[d->index] == ' '))
+	while (d->index && (d->buff[d->index] == ' ' && d->buff[d->index] != '\n'))
 		d->index--;
-	while (d->index && (d->buff[d->index] != ' '))
+	while (d->index && (d->buff[d->index] != ' ' || d->buff[d->index] == '\n'))
 		d->index--;
 	if (d->buff[d->index] == ' ')
 		d->index++;
@@ -36,9 +36,11 @@ static inline void		pr_move_shift_left(t_prompt *d)
 static inline void		pr_move_shift_right(t_prompt *d)
 {
 	d->index++;
-	while (d->buff[d->index] && (d->buff[d->index] != ' '))
+	while (d->buff[d->index] &&
+			(d->buff[d->index] != ' ' && d->buff[d->index] != '\n'))
 		d->index++;
-	while (d->buff[d->index] && (d->buff[d->index] == ' '))
+	while (d->buff[d->index]
+			&& (d->buff[d->index] == ' ' || d->buff[d->index] == '\n'))
 		d->index++;
 }
 

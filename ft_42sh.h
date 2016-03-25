@@ -318,6 +318,7 @@ size_t					get_max_row(t_prompt *p);
 size_t					get_prompt_length(t_prompt *p);
 int						check_unterminated_sequences(t_prompt *d);
 t_prompt				*get_current_prompt(t_prompt *p);
+char					*pr_unscape_buff(char *buff);
 
 /*
  ** Operation:

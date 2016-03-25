@@ -6,12 +6,13 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 22:50:41 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/18 02:44:42 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/25 16:13:51 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
 #include <fcntl.h>
+#define WRITE_MAX		0xF000
 
 static char		base64_char(int r)
 {
@@ -79,13 +80,14 @@ void			pr_vim_export(t_prompt *p)
 	fname = gen_rand_name();
 	if ((fd = open(fname, O_WRONLY | O_CREAT | O_TRUNC, 0644)) != -1)
 	{
+		pr_unscape_buff(p->buff);
 		len = ft_strlen(p->buff);
 		wr = 0;
 		while (len > 0)
 		{
-			write(fd, p->buff + wr, (len < 0xF000) ? len : 0xF000);
-			wr += 0xF000;
-			len -= 0xF000;
+			write(fd, p->buff + wr, (len < WRITE_MAX) ? len : WRITE_MAX);
+			wr += WRITE_MAX;
+			len -= WRITE_MAX;
 		}
 		close(fd);
 		exec_vim_file(fname);

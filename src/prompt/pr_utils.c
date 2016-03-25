@@ -21,3 +21,24 @@ void		pr_ctrlc_handler(int s)
 	}
 	(void)s;
 }
+
+char		*pr_unscape_buff(char *buff)
+{
+	char	*readptr;
+	char	*ret;
+
+	readptr = buff;
+	ret = buff;
+	while (*readptr)
+	{
+		if (*readptr == '\\' && (
+					*(readptr + 1) == ' ' ||
+					*(readptr + 1) == '\n' ||
+					*(readptr + 1) == '\x81' ||
+					*(readptr + 1) == '\x81'))
+			readptr++;
+		*buff++ = *readptr++;
+	}
+	*buff = 0;
+	return (ret);
+}
