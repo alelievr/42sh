@@ -149,7 +149,7 @@ clean:
 		echo "\033[38;5;53mCleaning:"; \
 		fi
 	@printf "\033[38;5;52m⇒ \033[38;5;53m"
-	rm -fv $(OBJ)
+	rm -fv $(OBJ) >/dev/null
 	@rmdir $(OBJDIR) 2> /dev/null || echo "" > /dev/null
 	@printf "\033[31m"
 	$(eval ALREADY_RM=x)
@@ -160,7 +160,7 @@ fclean: clean
 		echo "\033[38;5;53mCleaning:"; \
 		fi
 	@printf "\033[38;5;52m⇒ \033[38;5;53m"
-	rm -fv $(NAME)
+	rm -fv $(NAME) >/dev/null
 	@printf "\033[31m"
 	$(eval ALREADY_RM=x)
 

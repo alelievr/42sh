@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/24 22:42:39 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/25 18:03:54 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/25 19:01:39 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		pr_history_up(t_prompt *d)
 	{
 		++(d->history_index);
 		ft_strlcpy(d->buff, next_history->content, sizeof(d->buff));
-		d->index = ft_strlen(d->buff) - 1;
+		d->index = ft_strlen(d->buff);
 	}
 	else
 		BELL;
@@ -39,7 +39,7 @@ void		pr_history_dw(t_prompt *d)
 	{
 		--(d->history_index);
 		ft_strlcpy(d->buff, prev_history->content, sizeof(d->buff));
-		d->index = ft_strlen(d->buff) - 1;
+		d->index = ft_strlen(d->buff);
 	}
 }
 

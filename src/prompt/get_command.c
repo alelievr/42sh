@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/25 18:34:59 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/25 19:00:49 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,14 +134,13 @@ static size_t			pr_get_max_row(t_prompt *d)
 	return (nlines);
 }
 
-static void				pr_up_cursor(t_prompt *d)
+void					pr_up_cursor(t_prompt *d)
 {
 	static size_t	last_nlines;
 	size_t			nlines;
 
 	nlines = pr_get_max_row(d) - pr_get_cursor_row(d);
-	if (nlines > 0 && ((d->key != PR_UP && d->key != PR_DW)
-				|| ((d->key == PR_UP || d->key == PR_DW) && (last_nlines > nlines))))
+	if (nlines > 0)
 	{
 		ft_putstr(tparm(tgetstr("UP", NULL), nlines));
 //		dprintf(g_log, "upped of %lu\n", nlines);

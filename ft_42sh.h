@@ -310,16 +310,12 @@ void					pr_display(t_prompt *d);
 void					pr_display_line(char *buff, int prompt);
 void					pr_initline(t_prompt *d, int flag);
 void					get_command_init(t_prompt *d);
-size_t					get_col_index(t_prompt *p);
-size_t					get_row_index(t_prompt *p);
-void					get_row_bounds(t_prompt *p, size_t *start, size_t *end);
-size_t					get_max_row(t_prompt *p);
-size_t					get_prompt_length(t_prompt *p);
 int						check_unterminated_sequences(t_prompt *d);
 t_prompt				*get_current_prompt(t_prompt *p);
 char					*pr_unscape_buff(char *buff);
 size_t					pr_get_cursor_row(t_prompt *d);
 size_t					pr_get_current_prompt_length(t_prompt *d);
+void					pr_up_cursor(t_prompt *d);
 
 /*
  ** Operation:
