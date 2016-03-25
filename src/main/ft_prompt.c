@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/18 15:39:32 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/24 18:30:43 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/25 19:48:58 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void					exec_command(char *cmd)
 	printf("\ncmd = [%s]\n", cmd);
 	tmp = preparse_command(cmd);
 	if (tmp && tmp[0])
+	{
 		if (!ft_builtins(tmp))
 		{
 			if (!(r = ft_exebin(tmp[0], tmp, g_env)))
@@ -43,6 +44,7 @@ void					exec_command(char *cmd)
 			else if (r == PATH_NOT_FOUND)
 				ft_printf("%s: binary not found !\n", tmp[0]);
 		}
+	}
 }
 
 void					ft_prompt(void)

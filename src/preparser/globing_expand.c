@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 19:23:25 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/24 23:08:18 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/25 19:44:37 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,41 @@ static char		*cmd_globing_expand_string(char *s, char *buff)
 	return (ret);
 }
 
+static int		cmd_globing_check_integrity(char *s)
+{
+	int		brakets;
+	char	*b;
+
+	b = s;
+	brakets = 0;
+	while (*s)
+	{
+		if (NOT_ESCAPED(b, s, '['))
+		{
+			if (brakets)
+				return (!ft_printf("syntax error in [%s]\n", b));
+			else
+				brakets = 1;
+		}
+		if (NOT_ESCAPED(b, s, ']'))
+		{
+			if (brakets)
+				brakets = 0;
+			else
+				return (!ft_printf("syntax error in [%s]\n", b));
+		}
+		s++;
+	}
+	if (brakets)
+		return (!ft_printf("syntax error in [%s]\n", b));
+	return (1);
+}
+
 char			*cmd_globing_expand(char *s)
 {
 	static char		buff[0xF0000];
 
-	//TODO: check the to-glob-expression integrity !!!
-	if (cmd_is_to_glob(s))
+	if (cmd_globing_check_integrity(s) && cmd_is_to_glob(s))
 	{
 		printf("to glob string: %s\n", s);
 		cmd_globing_expand_string(s, buff);

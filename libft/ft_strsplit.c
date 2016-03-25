@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/20 12:05:21 by fdaudre-          #+#    #+#             */
-/*   Updated: 2015/04/01 12:55:56 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/25 20:05:42 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static inline int		ft_strsplit_nbr(char const *s, char const *c)
 	return (nbr);
 }
 
+#include <stdio.h>
 void					ft_strsplit_write(char **tab,
 							char const *s, char const *c)
 {

@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 15:27:22 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/23 22:31:43 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/25 20:06:15 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,17 @@ static char	**preparse_resplit_command(char **t)
 	i = (size_t)-1;
 	while (t[++i])
 	{
+		//TODO: this split returns realy strange value !!!
 		if (!(tmp = ft_strsplit(t[i], " \n\r\f\v")))
 			continue ;
 		j = (size_t)-1;
 		while (tmp[++j] && ((table[k++] = tmp[j])))
+		{
+			printf("string to add: %p\n", tmp[j]);
+			printf("added string %s\n", tmp[j]);
 			if (k == MAX_BINARY_ARGUMENTS)
 				break ;
+		}
 		free(tmp);
 		if (k == MAX_BINARY_ARGUMENTS)
 			break ;
@@ -58,5 +63,7 @@ char		**preparse_command(char *cmd)
 			return (NULL);
 	}
 	ret = preparse_resplit_command(ret);
+	for (i = 0; ret[i]; i++)
+		printf("ret = %s\n", ret[i]);
 	return (ret);
 }
