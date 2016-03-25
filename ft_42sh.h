@@ -239,7 +239,6 @@ typedef struct			s_prompt
 {
 	char				buff[PR_BUF_SIZE];
 	char				rbuff[PR_RBUF_SIZE];
-	size_t				len;
 	size_t				index;
 	t_lluint			key;
 	t_list				*history;
@@ -319,6 +318,8 @@ size_t					get_prompt_length(t_prompt *p);
 int						check_unterminated_sequences(t_prompt *d);
 t_prompt				*get_current_prompt(t_prompt *p);
 char					*pr_unscape_buff(char *buff);
+size_t					pr_get_cursor_row(t_prompt *d);
+size_t					pr_get_current_prompt_length(t_prompt *d);
 
 /*
  ** Operation:

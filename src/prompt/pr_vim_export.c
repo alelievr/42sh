@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/17 22:50:41 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/25 16:13:51 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/25 18:22:35 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ static void		read_file_content(t_prompt *p, char *fname)
 	{
 		ret = read(fd, p->buff, sizeof(p->buff));
 		p->index = 0;
-		p->len = ret;
 		p->buff[ret] = 0;
 	}
 }

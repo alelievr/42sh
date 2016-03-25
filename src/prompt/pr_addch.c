@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/20 10:02:38 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/16 01:29:49 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/25 17:58:55 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 void			pr_addchar(t_prompt *d, char c) __attribute__((overloadable))
 {
 	size_t				tmp;
+	size_t		len;
 
-	if (sizeof(d->buff) < d->len + 1)
+	len = ft_strlen(d->buff);
+	if (sizeof(d->buff) < len + 1)
 		return ;
-	tmp = d->len;
+	tmp = len;
 	d->buff[tmp + 1] = '\0';
 	while (tmp != d->index && tmp)
 	{
@@ -27,7 +29,6 @@ void			pr_addchar(t_prompt *d, char c) __attribute__((overloadable))
 	}
 	d->buff[tmp] = c;
 	++(d->index);
-	++(d->len);
 }
 
 void			pr_addchar(t_prompt *d) __attribute__((overloadable))
@@ -38,21 +39,21 @@ void			pr_addchar(t_prompt *d) __attribute__((overloadable))
 void			pr_addstr(t_prompt *d, char *s, size_t len)
 {
 	size_t		tmp;
+	size_t		rlen;
 
-	if (sizeof(d->buff) < d->len + len)
+	rlen = ft_strlen(d->buff);
+	if (sizeof(d->buff) < rlen + len)
 		return ;
-	tmp = d->len;
+	tmp = rlen;
 	while (*s)
 	{
 		if (*s == ' ')
 		{
 			d->buff[tmp++] = '\\';
 			++(d->index);
-			++(d->len);
 		}
 		d->buff[tmp++] = *s++;
 		++(d->index);
 	}
 	d->buff[tmp] = 0;
-	d->len += len;
 }

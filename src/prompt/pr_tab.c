@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 18:28:48 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/16 20:52:53 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/25 18:02:55 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static char			**get_autocomplete_list(t_prompt *p, char *beginword,
 void				pr_tab(t_prompt *d)
 {
 	char			*wordptr;
-	const size_t	len = d->len;
+	size_t			len = ft_strlen(d->buff);
 	char			**ac_list;
 
 	d->index = ft_strlen(d->buff);
@@ -97,14 +97,14 @@ void				pr_tab(t_prompt *d)
 	{
 		ft_strcat(d->buff, *ac_list);
 		d->index = ft_strlen(d->buff);
-		d->len = ft_strlen(d->buff);
+		len = ft_strlen(d->buff);
 	//	pr_addstr(d, *ac_list, ft_strlen(*ac_list));
 		printf("wptr = %s\n", wordptr);
 	}
 	else
 		BELL;
 	if (add_missing_slash(wordptr, ft_strlen(wordptr), NULL))
-		(void)((d->index)++ && (d->len++));
+		(d->index)++;
 	else if (access(wordptr, F_OK) == 0)
 		pr_addchar(d, ' ');
 }

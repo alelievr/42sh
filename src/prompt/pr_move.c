@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/19 11:38:48 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/25 15:40:59 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/25 18:44:42 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static inline void		pr_move_shift_down(t_prompt *d)
 			break ;
 		}
 	if (last_line)
-		d->index = ft_strlen(d->buff) - 1;
+		d->index = ft_strlen(d->buff);
 	else
 	{
 		while (d->buff[d->index] != '\n' && d->buff[d->index])

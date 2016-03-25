@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/25 16:25:06 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/25 18:34:59 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static size_t			pr_get_next_line_length(char *buff, size_t *index)
 	return (ret);
 }
 
-static size_t			pr_get_current_prompt_length(t_prompt *d)
+size_t					pr_get_current_prompt_length(t_prompt *d)
 {
 	size_t		ret;
 	size_t		i;
@@ -88,7 +88,7 @@ static size_t			pr_get_cursor_col(t_prompt *d)
 	return (col);
 }
 
-static size_t			pr_get_cursor_row(t_prompt *d)
+size_t					pr_get_cursor_row(t_prompt *d)
 {
 	size_t		i;
 	size_t		ret;
@@ -127,7 +127,9 @@ static size_t			pr_get_max_row(t_prompt *d)
 		r += (once) ? 3 : 2;
 		once = 0;
 		nlines += r / (d->col) - !((r % d->col) || (d->buff[d->index]))
-			+ ((d->buff[index++] == '\n'));
+			+ ((d->buff[index] == '\n'));
+		if (d->buff[index])
+			index++;
 	}
 	return (nlines);
 }
@@ -230,7 +232,6 @@ inline void				get_command_init(t_prompt *d)
 		raw_terminal_mode();
 	d->history_index = 0;
 	d->index = 0;
-	d->len = 0;
 	d->buff[0] = '\0';
 	pr_initline(d, PR_DEFAULT);
 }
@@ -277,7 +278,7 @@ int						get_line(t_prompt *d)
 	return (d->key);
 }
 
-//#include <fcntl.h>
+#include <fcntl.h>
 char					*get_command(t_prompt *d)
 {
 //	if (!g_log)

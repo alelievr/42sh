@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/24 22:42:39 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/24 22:43:20 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/25 18:03:54 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void		pr_history_up(t_prompt *d)
 	{
 		++(d->history_index);
 		ft_strlcpy(d->buff, next_history->content, sizeof(d->buff));
-		d->len = next_history->content_size;
-		d->index = d->len - 1;
+		d->index = ft_strlen(d->buff) - 1;
 	}
 	else
 		BELL;
@@ -40,14 +39,14 @@ void		pr_history_dw(t_prompt *d)
 	{
 		--(d->history_index);
 		ft_strlcpy(d->buff, prev_history->content, sizeof(d->buff));
-		d->len = prev_history->content_size;
-		d->index = d->len - 1;
+		d->index = ft_strlen(d->buff) - 1;
 	}
 }
 
 void		pr_history(t_prompt *d)
 {
 	static char		currentcmd[0xF0000];
+	size_t			len;
 
 	if (d->history_index == 0 && d->key == PR_UP)
 		ft_strlcpy(currentcmd, d->buff, sizeof(currentcmd));
@@ -57,8 +56,8 @@ void		pr_history(t_prompt *d)
 	{
 		--(d->history_index);
 		ft_strlcpy(d->buff, currentcmd, sizeof(currentcmd));
-		d->len = ft_strlen(currentcmd);
-		d->index = (d->len) ? d->len - 1 : 0;
+		len = ft_strlen(currentcmd);
+		d->index = (len) ? len - 1 : 0;
 		return ;
 	}
 	if (d->key == PR_UP)
