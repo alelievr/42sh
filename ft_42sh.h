@@ -39,6 +39,7 @@ enum					e_operate
 	BACKCOTE,
 	AND,
 	OR,
+	NO_OP
 };
 
 enum					e_status
@@ -51,7 +52,7 @@ enum					e_status
 typedef struct			s_redirection
 {
 	enum e_operate		type;	//specify the type of the redirection
-	char				*file;	//output file, if null the fd is taken
+	char				*file;	//std file, if null the fd is taken
 	int					fd;		//used when std* redirections like >&2 or 2>&- are
 								//	usedredirections for example
 	int					ftn__:32;
@@ -71,6 +72,7 @@ typedef struct			s_command
 	t_operator			*list; //each node is a command like (ls -l fkewlf > file),
 							   //	if there is a next element, the command output
 							   //	is piped in the next node
+	int					pipe[2];
 	int					background; //can be 1 or 0 if the command is in background
 	int					ftn__:32;
 	struct s_command	*next;
