@@ -220,6 +220,7 @@ void					cmd_globing_expand_braces(char *s, char *buff);
 void					cmd_globing_expand_wildcard(char *s, char *buff);
 int						cmd_globing_match(char *s1, char *s2);
 t_mlist					*cmd_match_patern_files(char *s);
+int						cmd_is_to_glob(char *s);
 
 /*
  **	Terminal:

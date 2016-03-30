@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 21:08:56 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/25 19:53:05 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/27 01:56:49 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int			ft_builtins(char **com)
 	i = 0;
 	while (g_builts[i].name)
 	{
-		printf("builtin: %s, *com = %p\n", g_builts[i].name, *com);
 		if (!ft_strcmp(*com, g_builts[i].name) && ((ret = 1)))
 		{
 			g_builts[i].fun(ac, com);
@@ -54,7 +53,6 @@ int			ft_builtins(char **com)
 		}
 		i++;
 	}
-	printf("try to execute !\n");
 	return (ret);
 }
 
