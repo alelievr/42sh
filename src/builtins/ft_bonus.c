@@ -29,6 +29,7 @@ int			ft_bonus(int ac, char **av)
 	ft_printf("TODO: <<\n");
 	ft_printf("TODO: ` and $()\n");
 	ft_printf("TODO: ctrl-R for history searches\n");
+	ft_printf("TODO: animated prompt\n");
 	ft_printf("TODO: advanced autocompletion: expand `command`, $... vars and globing\n");
 	ft_printf("TODO: super advanced autocompletion: display a selectable list of matches, when ./<TAB> only binay are listed, if there is one result to autocompletion and it's a directory, a / is append to continue the autocomplete, strstr nonsensitive complete Strcpy<TAB> -> ft_strcpy.c and finally, a command relative completion cd -> only dirs, nm -> only binarys ...\n");
 	return (0);

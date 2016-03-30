@@ -67,8 +67,10 @@ PARSER_SRC	=	preparser/preparser.c					\
 				preparser/globing_expand_wildcard.c		\
 				preparser/globing.c						\
 				preparser/globing_file.c				\
-														\
-				parser/parse.c							\
+
+LEXER_SRC	=	lexer/lex.c								\
+				lexer/lex_word.c						\
+				lexer/print_cmd_line.c					\
 
 OPER_SRC	=	operation/ft_pipe.c						\
 				operation/ft_right_redir.c				\
@@ -85,6 +87,7 @@ SRC			=	$(MAIN_SRC)		\
 				$(PROMPT_SRC)	\
 				$(PARSER_SRC)	\
 				$(OPER_SRC)		\
+				$(LEXER_SRC)	\
 
 
 #	Objects

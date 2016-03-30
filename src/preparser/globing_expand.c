@@ -6,14 +6,14 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 19:23:25 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/25 19:44:37 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/27 19:15:59 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
 #define IFBREAK_(x, y)	if (x) { y; break ; }
 
-static int		cmd_is_to_glob(char *s)
+int				cmd_is_to_glob(char *s)
 {
 	char	*begin;
 	int		b;
@@ -103,7 +103,7 @@ char			*cmd_globing_expand(char *s)
 
 	if (cmd_globing_check_integrity(s) && cmd_is_to_glob(s))
 	{
-		printf("to glob string: %s\n", s);
+//		printf("to glob string: %s\n", s);
 		cmd_globing_expand_string(s, buff);
 		free(s);
 //		printf("new string: %s\n", buff);

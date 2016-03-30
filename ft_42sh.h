@@ -16,6 +16,7 @@
 # define PATH_NOT_FOUND				-2
 
 # define MAX_REDIRECTION_COMMAND	32
+# define MAX_PIPE_COMMAND			16
 # define MAX_VARNAME_LENGTH			512
 # define MAX_ALIAS_NAME_LENGTH		(0xF00 - 1)
 # define MAX_WILDCARD_MATCHES		0xF00
@@ -26,20 +27,20 @@ extern	char			**g_var;
 
 enum					e_operate
 {
-	PIPE,
-	REDIR_IN_OUT,
-	REDIR_R,
-	BIN,
-	EREDIR_R,
-	REDIR_L,
-	DREDIR_L,
-	DREDIR_R,
-	EDREDIR_R,
-	SEMICOLON,
-	BACKCOTE,
-	AND,
-	OR,
-	NO_OP
+	OP_BIN,
+	OP_PIPE,
+//	OP_REDIR_IN_OUT,
+	OP_REDIR_R,
+	OP_REDIR_L,
+//	OP_EREDIR_R,
+//	OP_EDREDIR_R,
+	OP_DREDIR_L,
+	OP_DREDIR_R,
+	OP_SEMICOLON,
+//	OP_BACKCOTE,
+	OP_AND,
+	OP_OR,
+	OP_NO_OP
 };
 
 enum					e_status
@@ -60,19 +61,25 @@ typedef struct			s_redirection
 
 typedef struct			s_operator
 {
-	char				*bin;		//binary liked entered in the command line
+	char				*bin;		//binary entered in the command line
 	char				**av_bin;	//binay arguments
 	int					ac_bin;		//binay arguments number
 	int					ftn__:32;
 	t_redirection		redirs[MAX_REDIRECTION_COMMAND];	//all redirections of the command
 }						t_operator;
 
+typedef struct			s_pipe
+{
+	int			fd[2];
+	int			open;
+}						t_pipe;
+
 typedef struct			s_command
 {
 	t_operator			*list; //each node is a command like (ls -l fkewlf > file),
 							   //	if there is a next element, the command output
 							   //	is piped in the next node
-	int					pipe[2];
+	t_pipe				pipe;
 	int					background; //can be 1 or 0 if the command is in background
 	int					ftn__:32;
 	struct s_command	*next;
@@ -80,10 +87,10 @@ typedef struct			s_command
 
 typedef struct			s_commandline
 {
-	t_command			*command;
-	enum e_operate		type; //can be ||, && or ;
-	int					ftn__:32;
-	struct s_command	*next;
+	t_command				*command;
+	enum e_operate			type; //can be ||, && or ;
+	int						ftn__:32;
+	struct s_commandline	*next;
 }						t_commandline;
 
 typedef struct			s_operate
@@ -222,6 +229,7 @@ void					cmd_globing_expand_braces(char *s, char *buff);
 void					cmd_globing_expand_wildcard(char *s, char *buff);
 int						cmd_globing_match(char *s1, char *s2);
 t_mlist					*cmd_match_patern_files(char *s);
+int						cmd_is_to_glob(char *s);
 
 /*
  **	Terminal:
@@ -257,7 +265,6 @@ typedef struct			s_pr_code
 }						t_pr_code;
 
 void					ft_prompt(void);
-t_operate				*ft_parse(char *cmd);
 char					*get_command(t_prompt *d);
 void					load_history(t_prompt *d);
 void					write_history(t_prompt *d);
@@ -343,5 +350,20 @@ int						unset_env(char *name);
 int						set_var(char *name, char *value);
 int						unset_var(char *name);
 char					*get_var(char *name);
+
+/*
+ **	Lexer:
+*/
+
+typedef struct			s_lexer
+{
+	char		*op;
+	int			expected;
+}						t_lexer;
+
+t_commandline			*ft_lex(char **cmd);
+int						ft_lex_word(char **word, t_commandline **cmd);
+
+void					print_cmd_line(t_commandline *c);
 
 #endif

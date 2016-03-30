@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 15:39:25 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/19 18:00:47 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/30 19:51:11 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #define CHECK_BKQUOTE(x, y) (*x == '`' && ((x==y)||(x != y && *(x-1) != '\\')))
 #define SKIP_QUOTE(x) skip_char(x, '\'')
 #define SKIP_BKQUOTE(x) skip_char(x, '`')
+#define NOT_SEP(x, b) !(NOT_ESCAPED(b, x, '|') || NOT_ESCAPED(b, x, '>') || NOT_ESCAPED(b, x, '<') || NOT_ESCAPED(b, x, '&') || NOT_ESCAPED(b, x, ';'))
 
 static inline int	skip_blank(char **s)
 {
@@ -48,8 +49,16 @@ static inline int	skip_dbquote(char **s, char *begin)
 
 static inline int	skip_word(char **s, char *begin)
 {
+	if (!NOT_SEP(*s, begin))
+	{
+		if ((**s == '>' && *(*s + 1) == '>') || (**s == '<' && *(*s + 1) == '<') || (**s == '|' && *(*s + 1) == '|') || (**s == '&' && *(*s + 1) == '&'))
+			(*s) += 2;
+		else
+			(*s)++;
+		return (**s == 0);
+	}
 	while (**s && (!ft_isspace(**s) ||
-				(ft_isspace(**s) && *((*s) - 1) == '\\')))
+				(ft_isspace(**s) && *((*s) - 1) == '\\')) && NOT_SEP(*s, begin))
 	{
 		if (CHECK_QUOTE(*s, begin) && SKIP_QUOTE(s))
 			break ;
@@ -88,6 +97,7 @@ char				**cmd_split_quote(char *cmd)
 		else if (skip_word(&cmd, begin))
 			break ;
 		ptrs[nptr++] = cmd;
+		printf("part = %s\n", cmd);
 	}
 	ptrs[nptr++] = cmd;
 	return (cmd_split_quote_table(ptrs, len));

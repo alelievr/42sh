@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/18 15:39:32 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/25 19:48:58 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/30 18:45:20 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,30 @@ t_operate				*create_op_redir(char **cmd, int len, int type)
 
 void					exec_command(char *cmd)
 {
-	char				**tmp;
+	char				**pre;
 	int					r;
+	t_commandline		*cmdline;
 
-	tmp = NULL;
-	//TODO: parse the cmd to t_commandline *
 	//TODO: execute the t_commandline *
 
 	printf("\ncmd = [%s]\n", cmd);
-	tmp = preparse_command(cmd);
-	if (tmp && tmp[0])
+	if (!(pre = preparse_command(cmd)))
+		return ;
+	r = -1;
+	printf("parser:\n");
+	while (pre[++r])
+		printf("[%02i]: %s\n", r, pre[r]);
+	if (!(cmdline = ft_lex(pre)))
+		return ;
+	print_cmd_line(cmdline);
+	if (pre && pre[0])
 	{
-		if (!ft_builtins(tmp))
+		if (!ft_builtins(pre))
 		{
-			if (!(r = ft_exebin(tmp[0], tmp, g_env)))
-				ft_printf("%s: command not found !\n", tmp[0]);
+			if (!(r = ft_exebin(pre[0], pre, g_env)))
+				ft_printf("%s: command not found !\n", pre[0]);
 			else if (r == PATH_NOT_FOUND)
-				ft_printf("%s: binary not found !\n", tmp[0]);
+				ft_printf("%s: binary not found !\n", pre[0]);
 		}
 	}
 }

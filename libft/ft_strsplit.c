@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/20 12:05:21 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/25 20:05:42 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/27 19:15:53 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,22 @@
 
 static inline int		ft_strsplit_nbr(char const *s, char const *c)
 {
-	int					i;
-	int					nbr;
-	int					last;
+	int			ret;
 
-	i = -1;
-	last = 1;
-	nbr = 1;
-	while (s[++i])
-		if (ft_strchr(c, s[i]) != NULL)
-		{
-			if (!last)
-				nbr++;
-			if (!s[i + 1])
-				nbr--;
-			last = 1;
-		}
-		else
-			last = 0;
-	return (nbr);
+	ret = 0;
+	while (*s)
+	{
+		while (ft_strchr(c, *s) && *s)
+			s++;
+		if (!*s)
+			break ;
+		while (!ft_strchr(c, *s) && *s)
+			s++;
+		ret++;
+	}
+	return (ret);
 }
 
-#include <stdio.h>
 void					ft_strsplit_write(char **tab,
 							char const *s, char const *c)
 {
