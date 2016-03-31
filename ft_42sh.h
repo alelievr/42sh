@@ -8,6 +8,9 @@
 # include <sys/ioctl.h>
 # include <unistd.h>
 # include <stdlib.h>
+# define O_RDONLY					0
+# define O_WRONLY					1
+# define O_RDWR						2
 
 # define MAX_ENV					0xF00
 # define MAX_VAR					0xF00
@@ -51,6 +54,7 @@ enum					e_status
 };
 
 # define CLOSE_FD					(-2)
+# define STDOUT_AND_STDERR			(12)
 typedef struct			s_redirection
 {
 	enum e_operate		type;	//specify the type of the redirection
@@ -148,6 +152,7 @@ void					siguser_handler(int s);
 void					ft_signals(void);
 
 int						is_dir(const char *name);
+int						is_file(const char *name, int flag);
 
 char					*get_dirpath(char *path, char *buff);
 char					*get_filename(char *path, char *buff);
@@ -356,7 +361,8 @@ t_commandline			*ft_lex(char **cmd);
 int						is_operator(char *s);
 int						match_operator(char *s);
 int						lex_redir_file_template(enum e_operate t,
-		 int fd_in, t_redirection *r, char **v_op);
+		t_redirection *r, int fd_in , char **v_op);
+int						lex_check_next_value(t_commandline **cmd, char **word);
 
 int						add_word_to_current_command(char **word, t_commandline **cmd);
 int						add_redir_to_current_command(t_redirection r, t_commandline **cmd);
@@ -371,17 +377,16 @@ t_operator				*lex_new_operator(void);
 
 
 int						lex_pipe(char ***word, t_commandline **cmd);
-int						lex_rredir(char ***word, t_commandline **cmd);
-int						lex_drredir(char ***word, t_commandline **cmd);
 int						lex_lredir(char ***word, t_commandline **cmd);
 int						lex_dlredir(char ***word, t_commandline **cmd);
 int						lex_or(char ***word, t_commandline **cmd);
 int						lex_and(char ***word, t_commandline **cmd);
 int						lex_semicolon(char ***word, t_commandline **cmd);
-int						lex_fdredir(char ***word, t_commandline **cmd);
-int						lex_allredir(char ***word, t_commandline **cmd);
 int						lex_background(char ***word, t_commandline **cmd);
-int						lex_fdrredir(char ***word, t_commandline **cmd);
+int						lex_fd_rredir(char ***word, t_commandline **cmd);
+int						lex_all_rredir(char ***word, t_commandline **cmd);
+int						lex_fd_drredir(char ***word, t_commandline **cmd);
+int						lex_all_drredir(char ***word, t_commandline **cmd);
 
 void					print_cmd_line(t_commandline *c);
 

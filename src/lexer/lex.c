@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/20 10:20:48 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/31 18:57:04 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/31 21:10:10 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,25 @@
 
 static t_lexer		g_syntax[] = {
 	{"|", lex_pipe},
-	{">", lex_rredir},
-	{">>", lex_drredir},
 	{"<", lex_lredir},
 	{"<<", lex_dlredir},
 	{"||", lex_or},
 	{"&&", lex_and},
 	{";", lex_semicolon},
-	{"[0-9]>&", lex_fdredir},
-	{"[0-9]>", lex_fdrredir},
-	{">&", lex_allredir},
-	{">>&", lex_alldredir},
-	{"[0-9]>>", lex_dfdredir},
-	{"[0-9]>>&", lex_alldfdredir},
 	{"&", lex_background},
+
+	{">", lex_fd_rredir},
+	{"[0-9]>", lex_fd_rredir},
+
+	{">&", lex_all_rredir},
+	{"[0-9]>&", lex_all_rredir},
+
+	{">>", lex_fd_drredir},
+	{"[0-9]>>", lex_fd_drredir},
+
+	{">>&", lex_all_drredir},
+	{"[0-9]>>&", lex_all_drredir},
+
 //	{"`", lex_backquote},
 	{NULL, 0}
 };

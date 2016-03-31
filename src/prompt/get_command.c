@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/25 19:05:38 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/31 22:21:37 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,12 +277,13 @@ int						get_line(t_prompt *d)
 	return (d->key);
 }
 
-#include <fcntl.h>
+//#include <fcntl.h>
 char					*get_command(t_prompt *d)
 {
 //	if (!g_log)
 //		g_log = open("./42sh_log", O_WRONLY | O_CREAT, 0644);
 	int			once;
+	int			r;
 
 	once = 1;
 	signal(SIGINT, pr_ctrlc_handler);
@@ -291,9 +292,8 @@ char					*get_command(t_prompt *d)
 	{
 		if (!d->good_prompt)
 			ft_printf("%{F}%s%{!F}", 123, PROMPT42);
-		if (get_line(d) == PR_C_P)
+		if ((r = get_line(d)) == PR_C_P)
 			break ;
-		pr_initline(d, PR_DEFAULT);
 		once = 0;
 	}
 	d->index = ft_strlen(d->buff) - 1;
