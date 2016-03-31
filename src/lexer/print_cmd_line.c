@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/30 17:45:17 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/31 03:26:23 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/31 17:32:37 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static void					print_redirs(t_operator *o)
 	while (r[++i].type != OP_NO_OP)
 	{
 		if (r[i].file)
-			ft_printf("%s -> %s\n", get_verbose_operate(r[i].type), r[i].file);
+			ft_printf("%s: %i -> %s\n", get_verbose_operate(r[i].type), r[i].fd_from, r[i].file);
 		else
-			ft_printf("%s -> %i\n", get_verbose_operate(r[i].type), r[i].fd);
+			ft_printf("%s: %i -> %i\n", get_verbose_operate(r[i].type), r[i].fd_from, r[i].fd_to);
 	}
 }
 

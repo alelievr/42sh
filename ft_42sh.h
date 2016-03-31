@@ -50,13 +50,14 @@ enum					e_status
 	S_TERMINATED
 };
 
+# define CLOSE_FD					(-2)
 typedef struct			s_redirection
 {
 	enum e_operate		type;	//specify the type of the redirection
 	char				*file;	//std file, if null the fd is taken
-	int					fd;		//used when std* redirections like >&2 or 2>&- are
+	int					fd_from;
+	int					fd_to;	//used when std* redirections like >&2 or 2>&- are
 								//	usedredirections for example
-	int					ftn__:32;
 }						t_redirection;
 
 typedef struct			s_operator
@@ -299,7 +300,6 @@ void					pr_vim_export(t_prompt *p);
 t_list					*get_history_index(size_t index);
 t_list					*get_history_search(char *s);
 t_list					*get_history_list(t_list *h);
-int						lex_pipe(char **word, t_commandline **cmd);
 
 /*
  **	Prompt utils:
@@ -349,27 +349,39 @@ char					*get_var(char *name);
 typedef struct			s_lexer
 {
 	char		*op;
-	int			(*f)(char **, t_commandline **);
+	int			(*f)(char ***, t_commandline **);
 }						t_lexer;
 
 t_commandline			*ft_lex(char **cmd);
+int						is_operator(char *s);
+int						match_operator(char *s);
+int						lex_redir_file_template(enum e_operate t,
+		 int fd_in, t_redirection *r, char **v_op);
+
+int						add_word_to_current_command(char **word, t_commandline **cmd);
+int						add_redir_to_current_command(t_redirection r, t_commandline **cmd);
+
 t_operator				*get_current_operator(t_commandline *cl);
 t_command				*get_current_command(t_commandline *cl);
-int						add_word_to_current_command(char **word, t_commandline **cmd);
+t_commandline			*get_current_commandline(t_commandline *cl);
+
 t_commandline			*lex_new_commandline(void);
 t_command				*lex_new_command(void);
 t_operator				*lex_new_operator(void);
 
 
-int						lex_pipe(char **word, t_commandline **cmd);
-int						lex_rredir(char **word, t_commandline **cmd);
-int						lex_drredir(char **word, t_commandline **cmd);
-int						lex_lredir(char **word, t_commandline **cmd);
-int						lex_dlredir(char **word, t_commandline **cmd);
-int						lex_or(char **word, t_commandline **cmd);
-int						lex_and(char **word, t_commandline **cmd);
-int						lex_semicolon(char **word, t_commandline **cmd);
-int						lex_backquote(char **word, t_commandline **cmd);
+int						lex_pipe(char ***word, t_commandline **cmd);
+int						lex_rredir(char ***word, t_commandline **cmd);
+int						lex_drredir(char ***word, t_commandline **cmd);
+int						lex_lredir(char ***word, t_commandline **cmd);
+int						lex_dlredir(char ***word, t_commandline **cmd);
+int						lex_or(char ***word, t_commandline **cmd);
+int						lex_and(char ***word, t_commandline **cmd);
+int						lex_semicolon(char ***word, t_commandline **cmd);
+int						lex_fdredir(char ***word, t_commandline **cmd);
+int						lex_allredir(char ***word, t_commandline **cmd);
+int						lex_background(char ***word, t_commandline **cmd);
+int						lex_fdrredir(char ***word, t_commandline **cmd);
 
 void					print_cmd_line(t_commandline *c);
 

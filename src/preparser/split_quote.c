@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 15:39:25 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/30 19:51:11 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/31 18:01:23 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,11 @@ static inline int	skip_dbquote(char **s, char *begin)
 
 static inline int	skip_word(char **s, char *begin)
 {
-	if (!NOT_SEP(*s, begin))
+	int		n;
+
+	if ((n = match_operator(*s)))
 	{
-		if ((**s == '>' && *(*s + 1) == '>') || (**s == '<' && *(*s + 1) == '<') || (**s == '|' && *(*s + 1) == '|') || (**s == '&' && *(*s + 1) == '&'))
-			(*s) += 2;
-		else
-			(*s)++;
+		(*s) += n;
 		return (**s == 0);
 	}
 	while (**s && (!ft_isspace(**s) ||
@@ -97,7 +96,6 @@ char				**cmd_split_quote(char *cmd)
 		else if (skip_word(&cmd, begin))
 			break ;
 		ptrs[nptr++] = cmd;
-		printf("part = %s\n", cmd);
 	}
 	ptrs[nptr++] = cmd;
 	return (cmd_split_quote_table(ptrs, len));

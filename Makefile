@@ -73,6 +73,9 @@ LEXER_SRC	=	lexer/lex.c								\
 				lexer/lex_op.c							\
 				lexer/lex_redir.c						\
 				lexer/lex_current.c						\
+				lexer/lex_add.c							\
+				lexer/lex_redir2.c						\
+				lexer/lex_redir_template.c				\
 
 OPER_SRC	=	operation/ft_pipe.c						\
 				operation/ft_right_redir.c				\
