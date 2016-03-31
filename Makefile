@@ -6,7 +6,6 @@
 SRCDIR		=	src
 MAIN_SRC	=	main/main.c								\
 				main/ft_signals.c						\
-				main/execute_command.c					\
 				main/ft_prompt.c						\
 				main/process_pid_api.c					\
 				main/rw_history.c						\
@@ -69,8 +68,11 @@ PARSER_SRC	=	preparser/preparser.c					\
 				preparser/globing_file.c				\
 
 LEXER_SRC	=	lexer/lex.c								\
-				lexer/lex_word.c						\
 				lexer/print_cmd_line.c					\
+				lexer/lex_new.c							\
+				lexer/lex_op.c							\
+				lexer/lex_redir.c						\
+				lexer/lex_current.c						\
 
 OPER_SRC	=	operation/ft_pipe.c						\
 				operation/ft_right_redir.c				\

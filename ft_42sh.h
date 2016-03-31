@@ -93,15 +93,6 @@ typedef struct			s_commandline
 	struct s_commandline	*next;
 }						t_commandline;
 
-typedef struct			s_operate
-{
-	enum e_operate		type;
-	int					ftn__:32;
-//	int					len;
-	char				**value;
-	struct s_operate	*next;
-}					t_operate;
-
 typedef struct			s_builtins
 {
 	char	*name;
@@ -154,8 +145,6 @@ int						build_env(void);
 int						ft_exebin(char *path, char **av, char **env);
 void					siguser_handler(int s);
 void					ft_signals(void);
-int						execute_command(t_operate *b);
-int						execute_command(t_operate *begin);
 
 int						is_dir(const char *name);
 
@@ -310,6 +299,7 @@ void					pr_vim_export(t_prompt *p);
 t_list					*get_history_index(size_t index);
 t_list					*get_history_search(char *s);
 t_list					*get_history_list(t_list *h);
+int						lex_pipe(char **word, t_commandline **cmd);
 
 /*
  **	Prompt utils:
@@ -354,15 +344,32 @@ char					*get_var(char *name);
 /*
  **	Lexer:
 */
+# define LEXER_ERROR(x, args...) {ft_printf("42sh: "); ft_printf(x, ##args); return (0);}
 
 typedef struct			s_lexer
 {
 	char		*op;
-	int			expected;
+	int			(*f)(char **, t_commandline **);
 }						t_lexer;
 
 t_commandline			*ft_lex(char **cmd);
-int						ft_lex_word(char **word, t_commandline **cmd);
+t_operator				*get_current_operator(t_commandline *cl);
+t_command				*get_current_command(t_commandline *cl);
+int						add_word_to_current_command(char **word, t_commandline **cmd);
+t_commandline			*lex_new_commandline(void);
+t_command				*lex_new_command(void);
+t_operator				*lex_new_operator(void);
+
+
+int						lex_pipe(char **word, t_commandline **cmd);
+int						lex_rredir(char **word, t_commandline **cmd);
+int						lex_drredir(char **word, t_commandline **cmd);
+int						lex_lredir(char **word, t_commandline **cmd);
+int						lex_dlredir(char **word, t_commandline **cmd);
+int						lex_or(char **word, t_commandline **cmd);
+int						lex_and(char **word, t_commandline **cmd);
+int						lex_semicolon(char **word, t_commandline **cmd);
+int						lex_backquote(char **word, t_commandline **cmd);
 
 void					print_cmd_line(t_commandline *c);
 

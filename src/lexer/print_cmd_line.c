@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/30 17:45:17 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/30 18:12:32 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/03/31 03:26:23 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void					print_operators(t_operator *o)
 	ft_printf("binary: |%s|\n", o->bin);
 	i = -1;
 	while (o->av_bin[++i])
-		ft_printf("av[%i] = %s\n", i, o->av_bin[i]);
+		printf("av[%lu] = %s\n", i, o->av_bin[i]);
 	ft_printf("ac = %i\n", o->ac_bin);
 	print_redirs(o);
 }
@@ -72,7 +72,10 @@ static void					print_command(t_command *c)
 {
 	while (c)
 	{
-		print_operators(c->list);
+		if (c->list)
+			print_operators(c->list);
+		else
+			printf("!no command!");
 		if (c->next)
 			ft_printf("pipe\n");
 		if (c->background)
