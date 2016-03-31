@@ -391,4 +391,9 @@ int						lex_all_drredir(char ***word, t_commandline **cmd);
 
 void					print_cmd_line(t_commandline *c);
 
+/*
+ **	Executer:
+*/
+int						executer(t_commandline *cl);
+
 #endif

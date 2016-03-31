@@ -78,21 +78,22 @@ LEXER_SRC	=	lexer/lex.c								\
 				lexer/lex_redir_template.c				\
 				lexer/lex_utils.c						\
 
-OPER_SRC	=	operation/ft_pipe.c						\
-				operation/ft_right_redir.c				\
-				operation/ft_redir_stdin_stdout.c		\
-				operation/ft_double_right_redir.c		\
-				operation/ft_error_double_right_redir.c	\
-				operation/ft_error_right_redir.c		\
-				operation/ft_double_left_redir.c		\
-				operation/ft_left_redir.c				\
+EXEC_SRC	=	executer/executer.c						\
+				executer/ft_pipe.c						\
+				executer/ft_right_redir.c				\
+				executer/ft_redir_stdin_stdout.c		\
+				executer/ft_double_right_redir.c		\
+				executer/ft_error_double_right_redir.c	\
+				executer/ft_error_right_redir.c			\
+				executer/ft_double_left_redir.c			\
+				executer/ft_left_redir.c				\
 
 SRC			=	$(MAIN_SRC)		\
 				$(UTIL_SRC)		\
 				$(BUILTIN_SRC)	\
 				$(PROMPT_SRC)	\
 				$(PARSER_SRC)	\
-				$(OPER_SRC)		\
+				$(EXEC_SRC)		\
 				$(LEXER_SRC)	\
 
 

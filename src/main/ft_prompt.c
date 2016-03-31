@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/18 15:39:32 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/31 03:00:37 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/04/01 01:54:42 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void					exec_command(char *cmd)
 		return ;
 	}
 	print_cmd_line(cmdline);
+	executer(cmdline);
 /*	if (pre && pre[0])
 	{
 		if (!ft_builtins(pre))
