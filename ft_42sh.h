@@ -55,6 +55,7 @@ enum					e_status
 
 # define CLOSE_FD					(-2)
 # define STDOUT_AND_STDERR			(12)
+# define PROCESS_FD					(-3)
 typedef struct			s_redirection
 {
 	enum e_operate		type;	//specify the type of the redirection

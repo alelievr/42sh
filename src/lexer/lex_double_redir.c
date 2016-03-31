@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 21:08:43 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/31 23:04:58 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/04/01 00:57:41 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,18 @@ int				lex_fd_drredir(char ***word, t_commandline **cmd)
 
 int				lex_dlredir(char ***word, t_commandline **cmd)
 {
-	(void)word;
-	(void)cmd;
-	return (0);
+	t_redirection	r;
+
+	if (!lex_check_next_value(cmd, *word))
+		return (0);
+	ft_bzero(&r, sizeof(r));
+	r.type = OP_DREDIR_L;
+	r.fd_from = STDIN_FILENO;
+	r.fd_to = PROCESS_FD;
+	r.file = NULL;
+	if (!add_redir_to_current_command(r, cmd))
+		return (0);
+	(*word)++;
+	return (1);
 }
 

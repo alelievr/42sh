@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 01:52:41 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/31 22:10:01 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/04/01 01:01:35 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int						lex_lredir(char ***word, t_commandline **cmd)
 		LEXER_ERROR("bad input file: `%s'\n", w[1]);
 	r.file = ft_strdup(w[1]);
 	add_redir_to_current_command(r, cmd);
+	(*word)++;
 	return (1);
 }
 
