@@ -394,6 +394,17 @@ void					print_cmd_line(t_commandline *c);
 /*
  **	Executer:
 */
+# define BINARY_OK				0
+# define BINARY_NOT_IN_PATH		1
+# define BINARY_NOT_EXECUTABLE	2
+# define BINARY_NOT_FILE		3
+
+# define COMMAND_FAILED			1
+# define COMMAND_OK				0
+
 int						executer(t_commandline *cl);
+int						execute_command(t_command *c);
+int						execute_commandline(t_commandline *cl);
+int						execute_operator(t_operator *o);
 
 #endif

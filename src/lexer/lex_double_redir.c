@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 21:08:43 by alelievr          #+#    #+#             */
-/*   Updated: 2016/04/01 00:57:41 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/04/01 15:12:34 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int				lex_dlredir(char ***word, t_commandline **cmd)
 	r.type = OP_DREDIR_L;
 	r.fd_from = STDIN_FILENO;
 	r.fd_to = PROCESS_FD;
-	r.file = NULL;
+	r.file = ft_strdup((*word)[1]);
 	if (!add_redir_to_current_command(r, cmd))
 		return (0);
 	(*word)++;

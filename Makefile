@@ -79,14 +79,9 @@ LEXER_SRC	=	lexer/lex.c								\
 				lexer/lex_utils.c						\
 
 EXEC_SRC	=	executer/executer.c						\
-				executer/ft_pipe.c						\
-				executer/ft_right_redir.c				\
-				executer/ft_redir_stdin_stdout.c		\
-				executer/ft_double_right_redir.c		\
-				executer/ft_error_double_right_redir.c	\
-				executer/ft_error_right_redir.c			\
-				executer/ft_double_left_redir.c			\
-				executer/ft_left_redir.c				\
+				executer/execute_command_line.c			\
+				executer/execute_command.c				\
+				executer/execute_operator.c				\
 
 SRC			=	$(MAIN_SRC)		\
 				$(UTIL_SRC)		\

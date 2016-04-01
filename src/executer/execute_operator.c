@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_redir_stdin_stdout.c                            :+:      :+:    :+:   */
+/*   execute_operator.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/18 16:17:11 by alelievr          #+#    #+#             */
-/*   Updated: 2015/03/18 18:54:49 by alelievr         ###   ########.fr       */
+/*   Created: 2016/04/01 15:16:45 by alelievr          #+#    #+#             */
+/*   Updated: 2016/04/01 18:22:00 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
 
-void			ft_redir_stdin_stdout(int ac, char **av)
+int				execute_operator(t_operator *op)
 {
-	(void)ac;
-	(void)av;
-	dup2(1, 2);
+	(void)op;
+	return (0);
 }
