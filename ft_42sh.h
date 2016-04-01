@@ -167,7 +167,7 @@ char					*get_alias_value(char *name);
  **	Builtins:
 */
 
-int						ft_builtins(char **av);
+int						ft_builtins(char **av, int *ret);
 int						is_builtin(char *s);
 
 int						ft_env(int ac, char **av);
@@ -402,9 +402,13 @@ void					print_cmd_line(t_commandline *c);
 # define COMMAND_FAILED			1
 # define COMMAND_OK				0
 
+# define P_CHILD				0
+# define P_FATHER				1
+
 int						executer(t_commandline *cl);
 int						execute_command(t_command *c);
 int						execute_commandline(t_commandline *cl);
-int						execute_operator(t_operator *o);
+int						execute_operator(t_operator *o, t_command *c, int process);
+int						execute_binary(char *path, char **av, char **env);
 
 #endif

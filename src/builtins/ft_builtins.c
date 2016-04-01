@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 21:08:56 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/27 01:56:49 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/04/01 19:55:34 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_builtins	g_builts[] = {
 	{NULL, NULL}
 };
 
-int			ft_builtins(char **com)
+int			ft_builtins(char **com, int *cmdret)
 {
 	int		i;
 	int		ac;
@@ -48,7 +48,7 @@ int			ft_builtins(char **com)
 	{
 		if (!ft_strcmp(*com, g_builts[i].name) && ((ret = 1)))
 		{
-			g_builts[i].fun(ac, com);
+			*cmdret = g_builts[i].fun(ac, com);
 			break ;
 		}
 		i++;

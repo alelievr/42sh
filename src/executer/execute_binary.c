@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exebin.c                                        :+:      :+:    :+:   */
+/*   execute_binary.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/03/16 18:33:11 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/19 20:43:42 by alelievr         ###   ########.fr       */
+/*   Created: 2016/04/01 19:45:48 by alelievr          #+#    #+#             */
+/*   Updated: 2016/04/01 20:01:29 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,17 @@ int				ft_exebin(char *path, char **av, char **env)
 	else
 		return (ft_exe_bin_path(path, av));
 	(void)env;
+}
+
+int				execute_binary(char *path, char **av, char **env)
+{
+	char	*rpath;
+	int		ret;
+
+	if ((rpath = get_binhash_path(hashstring(path))))
+		exit(execve(rpath, av, env));
+	else if (ft_builtins(av, &ret))
+		exit(ret);
+	else
+		exit(execve(path, av, env));
 }

@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 15:16:13 by alelievr          #+#    #+#             */
-/*   Updated: 2016/04/01 18:47:40 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/04/01 19:59:33 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,34 @@ static int			check_command_executables(t_command *c, int print)
 	return (COMMAND_OK);
 }
 
-int					execute_command(t_command *c)
+static int			exe_create_pipes_fork(t_command *c)
 {
+	pid_t	pid;
 	int		res;
 
+	while (c->next != NULL)
+	{
+		if ((pid = fork()) == -1)
+			return (COMMAND_FAILED);
+		if (pid == 0)
+		{
+			execute_operator(c->list, c, P_CHILD);
+			if (c->list->bin)
+				execute_binary(c->list->bin, c->list->av_bin, g_env);
+			else
+				ft_printf("null executable !\n");
+		}
+		else
+			execute_operator(c->list, c, P_FATHER);
+		c = c->next;
+	}
+	waitpid(pid, &res, 0);
+	return (res);
+}
+
+int					execute_command(t_command *c)
+{
 	if (check_command_executables(c, 1))
 		return (COMMAND_FAILED);
-	res = ft_exebin(c->list->bin, c->list->av_bin, g_env);
-	if (res)
-		return (COMMAND_OK);
-	else
-		ft_printf("%s: command not found\n", c->list->bin);
-	return (COMMAND_FAILED);
+	return (exe_create_pipes_fork(c));
 }

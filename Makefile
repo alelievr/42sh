@@ -18,7 +18,6 @@ UTIL_SRC	=	utils/path_utils.c						\
 
 BUILTIN_SRC	=	builtins/build_env.c					\
 				builtins/ft_env.c						\
-				builtins/ft_exebin.c					\
 				builtins/ft_builtins.c					\
 				builtins/ft_exit.c						\
 				builtins/ft_unsetenv.c					\
@@ -82,6 +81,7 @@ EXEC_SRC	=	executer/executer.c						\
 				executer/execute_command_line.c			\
 				executer/execute_command.c				\
 				executer/execute_operator.c				\
+				executer/execute_binary.c				\
 
 SRC			=	$(MAIN_SRC)		\
 				$(UTIL_SRC)		\
