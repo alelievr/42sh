@@ -85,7 +85,6 @@ typedef struct			s_command
 	t_operator			*list; //each node is a command like (ls -l fkewlf > file),
 							   //	if there is a next element, the command output
 							   //	is piped in the next node
-	t_pipe				pipe;
 	int					background; //can be 1 or 0 if the command is in background
 	int					ftn__:32;
 	struct s_command	*next;
@@ -110,21 +109,6 @@ typedef struct			s_file
 	unsigned char		type;
 	char				*name;
 }						t_file;
-
-typedef struct			s_process
-{
-	pid_t				pid;
-	char				*name;
-	enum e_status		status;
-	struct s_process	*next;
-}						t_process;
-
-typedef struct			s_hashtable
-{
-	unsigned long		hash;
-	char				*path;
-	struct s_hashtable	*next;
-}						t_hashtable;
 
 typedef struct			s_alias
 {
@@ -192,6 +176,15 @@ int						ft_where(int ac, char **av);
 /*
  **	Pid utils:
 */
+
+typedef struct			s_process
+{
+	pid_t				pid;
+	char				*name;
+	enum e_status		status;
+	struct s_process	*next;
+}						t_process;
+
 t_process				*get_fg_pid(pid_t p, char *pname, int status);
 int						delete_last_bg_pid(void);
 void					add_bg_pid(pid_t p, char *pname, int status);
@@ -202,6 +195,14 @@ int						wait_process(pid_t pid, char *pname);
 /*
  **	HashTable:
  */
+
+typedef struct			s_hashtable
+{
+	unsigned long		hash;
+	char				*path;
+	struct s_hashtable	*next;
+}						t_hashtable;
+
 unsigned long			hashstring(char *str);
 t_hashtable				*new_hashtable_entry(unsigned long hash, const char *path);
 int						add_hashtable_entry(t_hashtable **ht, t_hashtable *e);
@@ -409,6 +410,8 @@ void					print_cmd_line(t_commandline *c);
 # define PIPE_READ				0
 # define PIPE_WRITE				1
 
+# define P_LIST_END				(-2)
+
 typedef struct			s_filedes
 {
 	int			fd;
@@ -420,7 +423,15 @@ int						execute_command(t_command *c);
 int						execute_commandline(t_commandline *cl);
 int						execute_operator(t_operator *o, t_command *c, int process);
 int						execute_binary(char *path, char **av, char **env);
-int						exe_stdout_to_pipe(t_command *c);
-int						exe_stdin_from_pipe(t_command *prev);
+int						exe_stdout_to_pipe(t_pipe *p);
+int						exe_stdin_from_pipe(t_pipe *p);
+
+void					exe_add_running_pid(pid_t pid);
+void					exe_remove_running_pids(void);
+int						exe_wait_command_pid(int *res);
+
+int						exe_get_pipe_number(t_command *c);
+t_pipe					*exe_create_command_pipes(t_command *c);
+void					exe_destroy_command_pipes(t_pipe *plist, t_command *c);
 
 #endif

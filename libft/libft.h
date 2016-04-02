@@ -6,7 +6,7 @@
 /*   By: fdaudre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/03 18:51:11 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/24 22:45:12 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/04/02 19:22:46 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ extern char const			*const g_serr[];
 # define FOR(a, b, c)		0){;} for ((a); (b); (c)
 # define SWITCH(x)			0){;} switch (x
 # define CASE(x);			case x:
+# define INIT(t, n, v)		t n = v;
 
 # define FT_DCOL			25
 # define FT_WCOL			202
