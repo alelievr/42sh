@@ -15,6 +15,7 @@ MAIN_SRC	=	main/main.c								\
 
 UTIL_SRC	=	utils/path_utils.c						\
 				utils/is_utils.c						\
+				utils/log.c								\
 
 BUILTIN_SRC	=	builtins/build_env.c					\
 				builtins/ft_env.c						\
@@ -82,6 +83,7 @@ EXEC_SRC	=	executer/executer.c						\
 				executer/execute_command.c				\
 				executer/execute_operator.c				\
 				executer/execute_binary.c				\
+				executer/execute_pipe.c					\
 
 SRC			=	$(MAIN_SRC)		\
 				$(UTIL_SRC)		\

@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executer.c                                         :+:      :+:    :+:   */
+/*   log.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/04/01 01:48:19 by alelievr          #+#    #+#             */
-/*   Updated: 2016/04/01 22:37:39 by alelievr         ###   ########.fr       */
+/*   Created: 2016/04/01 23:03:05 by alelievr          #+#    #+#             */
+/*   Updated: 2016/04/01 23:07:58 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
+#include <fcntl.h>
 
-/*
- **	Semicolon management:
-*/
-
-int					executer(t_commandline *cl)
+static int	get_log_fd(void)
 {
-	while (cl)
-	{
-		execute_commandline(cl);
-		while (cl->type != OP_NO_OP && cl->type != OP_SEMICOLON)
-			cl = cl->next;
-		if (cl->type == OP_NO_OP)
-			break ;
-		if (cl->type != OP_NO_OP)
-			cl = cl->next;
-	}
-	return (0);
+	static int	lfd = -1;
+
+	if (lfd == -1)
+		lfd = open("42sh_log", O_CREAT | O_WRONLY | O_APPEND, 0600);
+	return (lfd);
+}
+
+int			dlog(char *fmt, ...)
+{
+	va_list		ap;
+	int			ret;
+
+	va_start(ap, fmt);
+	ret = vdprintf(get_log_fd(), fmt, ap);
+	va_end(ap);
+	return (ret);
 }

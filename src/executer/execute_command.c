@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 15:16:13 by alelievr          #+#    #+#             */
-/*   Updated: 2016/04/01 19:59:33 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/04/02 02:12:39 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,28 +53,43 @@ static int			check_command_executables(t_command *c, int print)
 	return (COMMAND_OK);
 }
 
+static int			exe_child_operator(t_command *c, t_command *prev)
+{
+	if (c->next)
+		exe_stdout_to_pipe(c);
+	if (prev)
+		exe_stdin_from_pipe(prev);
+	execute_operator(c->list, c, P_CHILD);
+	exit(execute_binary(c->list->bin, c->list->av_bin, g_env));
+}
+
+#define CLOSE_PIPE(x)	close(x[0]); close(x[1]);
+#define FORK_FAILED_CLOSE_PIPE(x)	{CLOSE_PIPE(x); ft_printf("failed to fork !\n"); return (COMMAND_FAILED); }
 static int			exe_create_pipes_fork(t_command *c)
 {
-	pid_t	pid;
-	int		res;
+	pid_t		pid;
+	int			res;
+	t_command	*prev;
 
-	while (c->next != NULL)
+	prev = NULL;
+	while (c != NULL)
 	{
+		if (c->next)
+			if (pipe(c->pipe.fd) == -1)
+				EXECUTER_ERROR("can't create pipe !\n");
 		if ((pid = fork()) == -1)
-			return (COMMAND_FAILED);
+			FORK_FAILED_CLOSE_PIPE(c->pipe.fd);
 		if (pid == 0)
-		{
-			execute_operator(c->list, c, P_CHILD);
-			if (c->list->bin)
-				execute_binary(c->list->bin, c->list->av_bin, g_env);
-			else
-				ft_printf("null executable !\n");
-		}
+			exe_child_operator(c, prev);
 		else
 			execute_operator(c->list, c, P_FATHER);
+		prev = c;
 		c = c->next;
 	}
-	waitpid(pid, &res, 0);
+	res = 0;
+//	while (!waitpid(pid, &res, WNOHANG))
+//		printf("waiting ...\n");
+//		dlog("waiting for the end ..., res = %i\n", res);
 	return (res);
 }
 

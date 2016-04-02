@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/31 22:21:37 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/04/01 22:52:21 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,7 +299,8 @@ char					*get_command(t_prompt *d)
 	d->index = ft_strlen(d->buff) - 1;
 	pr_initline(d, PR_NEW_LINE);
 	pr_history_append(d);
-	signal(SIGINT, siguser_handler);
+//	signal(SIGINT, siguser_handler);
+	signal(SIGINT, SIG_DFL);
 	if (d->good_prompt)
 		pr_display(d);
 	if (d->good_prompt)

@@ -151,6 +151,7 @@ int						build_env(void);
 int						ft_exebin(char *path, char **av, char **env);
 void					siguser_handler(int s);
 void					ft_signals(void);
+int						dlog(char *fmt, ...);
 
 int						is_dir(const char *name);
 int						is_file(const char *name, int flag);
@@ -351,6 +352,7 @@ char					*get_var(char *name);
  **	Lexer:
 */
 # define LEXER_ERROR(x, args...) {ft_printf("42sh: "); ft_printf(x, ##args); return (0);}
+# define EXECUTER_ERROR(x, args...) {ft_printf("42sh: "); ft_printf(x, ##args); return (COMMAND_FAILED);}
 
 typedef struct			s_lexer
 {
@@ -404,11 +406,21 @@ void					print_cmd_line(t_commandline *c);
 
 # define P_CHILD				0
 # define P_FATHER				1
+# define PIPE_READ				0
+# define PIPE_WRITE				1
+
+typedef struct			s_filedes
+{
+	int			fd;
+	int			flag;
+}						t_filedes;
 
 int						executer(t_commandline *cl);
 int						execute_command(t_command *c);
 int						execute_commandline(t_commandline *cl);
 int						execute_operator(t_operator *o, t_command *c, int process);
 int						execute_binary(char *path, char **av, char **env);
+int						exe_stdout_to_pipe(t_command *c);
+int						exe_stdin_from_pipe(t_command *prev);
 
 #endif
