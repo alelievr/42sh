@@ -6,11 +6,12 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 15:16:13 by alelievr          #+#    #+#             */
-/*   Updated: 2016/04/02 21:26:27 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/04/03 01:40:37 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_42sh.h"
+#include <time.h>
 
 static int			check_executable(char *name)
 {
@@ -93,17 +94,11 @@ static int			exe_create_pipes_fork(t_command *c)
 		if (pid == 0)
 		{
 			if (i)
-			{
-				close(pipes[i - 1].fd[PIPE_WRITE]);
-				dup2(pipes[i - 1].fd[PIPE_READ], STDIN_FILENO);
-				close(pipes[i - 1].fd[PIPE_READ]);
-			}
+				if (exe_stdin_from_pipe(pipes + i - 1) == COMMAND_FAILED)
+					return (COMMAND_FAILED);
 			if (c->next)
-			{
-				close(pipes[i].fd[PIPE_READ]);
-				dup2(pipes[i].fd[PIPE_WRITE], STDOUT_FILENO);
-				close(pipes[i].fd[PIPE_WRITE]);
-			}
+				if (exe_stdout_to_pipe(pipes + i) == COMMAND_FAILED)
+					return (COMMAND_FAILED);
 			execute_operator(c->list, c, P_CHILD);
 			//exit(execv(bin[i], av[i]));
 			exit(execute_binary(c->list->bin, c->list->av_bin, g_env));
@@ -120,7 +115,15 @@ static int			exe_create_pipes_fork(t_command *c)
 	}
 
 	int		res;
-	exe_wait_command_pid(&res);
+	struct timespec		sleep;
+	sleep.tv_sec = 0;
+	sleep.tv_nsec = 1000000;
+	while (exe_wait_command_pid(&res) != S_TERMINATED)
+	{
+		printf("executing ...\n");
+		nanosleep(&sleep, NULL);
+	}
+//	exe_send_sig_pids(SIGKILL);
 	exe_remove_running_pids();
 	exe_destroy_command_pipes(pipes, begin);
 

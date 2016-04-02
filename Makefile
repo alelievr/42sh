@@ -110,7 +110,7 @@ LIB			=	-lft -lncurses
 NAME		=	42sh
 
 #	Compiler
-CFLAGS		=	-g -Werror -Wall -Wextra -O1 -fsanitize=address
+CFLAGS		=	-g -Werror -Wall -Wextra -O2 -fsanitize=address
 CC			=	clang
 
 #################

@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 20:12:34 by alelievr          #+#    #+#             */
-/*   Updated: 2016/04/02 19:58:23 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/04/02 23:06:49 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int				exe_get_stdout(int fd)
 
 int				exe_stdout_to_pipe(t_pipe *p)
 {
-	printf("pipe: %i/%i\n", p->fd[0], p->fd[1]);
 	if (close(p->fd[PIPE_READ]) == -1)
 		EXECUTER_ERROR("failed to close pipe !\n");
 	if (dup2(p->fd[PIPE_WRITE], STDOUT_FILENO) == -1)
@@ -75,7 +74,6 @@ int				exe_stdout_to_pipe(t_pipe *p)
 
 int				exe_stdin_from_pipe(t_pipe *p)
 {
-	printf("pipe: %i/%i\n", p->fd[0], p->fd[1]);
 	if (close(p->fd[PIPE_WRITE]) == -1)
 		EXECUTER_ERROR("failed to close pipe !\n");
 	if (dup2(p->fd[PIPE_READ], STDIN_FILENO) == -1)

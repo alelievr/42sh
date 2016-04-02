@@ -429,6 +429,7 @@ int						exe_stdin_from_pipe(t_pipe *p);
 void					exe_add_running_pid(pid_t pid);
 void					exe_remove_running_pids(void);
 int						exe_wait_command_pid(int *res);
+void					exe_send_sig_pids(int sig);
 
 int						exe_get_pipe_number(t_command *c);
 t_pipe					*exe_create_command_pipes(t_command *c);
