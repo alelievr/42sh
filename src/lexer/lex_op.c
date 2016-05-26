@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/31 01:29:12 by alelievr          #+#    #+#             */
-/*   Updated: 2016/04/01 01:19:24 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/05/23 23:46:30 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int			lex_semicolon(char ***word, t_commandline **cmd)
 	c = get_current_commandline(*cmd);
 	if (!c || !c->command || !c->command->list)
 	{
-		if (*cmd)
+		if (*cmd && (*cmd)->next)
 			(*cmd) = (*cmd)->next;
 		else
 			LEXER_ERROR("nothing to execute\n");

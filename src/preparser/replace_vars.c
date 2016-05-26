@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 16:51:46 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/18 18:43:42 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/05/23 20:57:51 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ char					*cmd_replace_vars(char *s)
 			buff[i++] = *s++;
 	}
 	buff[i] = 0;
-	free(begin);
+//	free(begin);
 	return (ft_strdup(buff));
 }

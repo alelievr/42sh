@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 15:39:25 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/31 18:01:23 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/05/23 20:54:32 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,6 @@ char				**cmd_split_quote(char *cmd)
 			break ;
 		ptrs[nptr++] = cmd;
 	}
-	ptrs[nptr++] = cmd;
+	ptrs[nptr] = cmd;
 	return (cmd_split_quote_table(ptrs, len));
 }

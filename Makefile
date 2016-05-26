@@ -86,6 +86,7 @@ EXEC_SRC	=	executer/executer.c						\
 				executer/execute_pipe.c					\
 				executer/execute_pid.c					\
 				executer/execute_utils.c				\
+				executer/execute_pipe_buff.c			\
 
 SRC			=	$(MAIN_SRC)		\
 				$(UTIL_SRC)		\

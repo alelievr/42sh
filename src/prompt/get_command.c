@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/16 16:30:07 by alelievr          #+#    #+#             */
-/*   Updated: 2016/04/01 22:52:21 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/05/21 14:09:33 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static t_pr_code		g_pr_codes[] =
 	{PR_UP, pr_history},
 	{PR_DW, pr_history},
 	{PR_C_P, pr_vim_export},
+	{PR_C_L, pr_clear},
 
 	{PR_TAB, pr_tab},
 	{0, NULL}
@@ -211,7 +212,7 @@ static void				pr_affbuff_lines(t_prompt *d)
 		ft_putstr(tparm(tgetstr("LE", NULL), l));*/
 }
 
-static void				pr_affbuff(t_prompt *d)
+void					pr_affbuff(t_prompt *d)
 {
 //	size_t			nlines;
 //	size_t			x;
@@ -299,8 +300,8 @@ char					*get_command(t_prompt *d)
 	d->index = ft_strlen(d->buff) - 1;
 	pr_initline(d, PR_NEW_LINE);
 	pr_history_append(d);
-//	signal(SIGINT, siguser_handler);
-	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, siguser_handler);
+//	signal(SIGINT, SIG_DFL);
 	if (d->good_prompt)
 		pr_display(d);
 	if (d->good_prompt)

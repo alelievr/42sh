@@ -6,7 +6,7 @@
 /*   By: fdaudre- <fdaudre-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/19 11:47:06 by fdaudre-          #+#    #+#             */
-/*   Updated: 2016/03/24 22:28:17 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/04/03 19:23:33 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,10 @@ void					pr_del(t_prompt *d)
 		d->buff[0] = '\0';
 		d->index = 0;
 	}
+}
+
+void					pr_clear(t_prompt *p)
+{
+	ft_putstr(tgetstr("cl", NULL));
+	pr_affbuff(p);
 }

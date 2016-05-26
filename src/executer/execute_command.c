@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 15:16:13 by alelievr          #+#    #+#             */
-/*   Updated: 2016/04/03 01:40:37 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/05/25 17:45:47 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int			check_executable(char *name)
 		return (BINARY_NOT_FILE);
 	if (access(name, F_OK) == 0 && !is_dir(name))
 	{
-		if (access(name, X_OK))
+		if (access(name, X_OK) == 0)
 			return (BINARY_OK);
 		else
 			return (BINARY_NOT_EXECUTABLE);
@@ -70,12 +70,11 @@ int			exe_child_operator(t_command *c, t_command *prev, t_pipe *p)
 	exit(execute_binary(c->list->bin, c->list->av_bin, g_env));
 }
 
-#define CLOSE_PIPE(x)	close(x[0]); close(x[1]);
-#define FORK_FAILED_CLOSE_PIPE(x, c) { exe_destroy_command_pipes(x, c); ft_printf("failed to fork !\n"); return (COMMAND_FAILED); }
+#define FORK_FAILED_CLOSE_PIPE(x) { exe_destroy_command_pipes(x); ft_printf("failed to fork !\n"); return (COMMAND_FAILED); }
 static int			exe_create_pipes_fork(t_command *c)
 {
 	t_command	*begin;
-	t_pipe	*pipes;
+	t_pprocess	*pipes;
 	pid_t	pid;
 
 //	char    *bin[] = {"/bin/ls", "/bin/cat", "/bin/cat"};
@@ -86,133 +85,51 @@ static int			exe_create_pipes_fork(t_command *c)
 	begin = c;
 
 	i = 0;
-	pipes = exe_create_command_pipes(c);
+	if ((pipes = exe_create_command_pipes(c)) == (void*)COMMAND_FAILED)
+		return (COMMAND_FAILED);
 
+	exe_init_pid_list(pipes);
 	while (c)
 	{
-		pid = fork();
+		if ((pid = fork()) == -1)
+			exit(ft_printf(("can't fork anymore !\n")));
 		if (pid == 0)
 		{
 			if (i)
-				if (exe_stdin_from_pipe(pipes + i - 1) == COMMAND_FAILED)
-					return (COMMAND_FAILED);
+				if (exe_stdin_from_pipe(&(pipes[i - 1].pipe)) == COMMAND_FAILED)
+					exit(COMMAND_FAILED);
 			if (c->next)
-				if (exe_stdout_to_pipe(pipes + i) == COMMAND_FAILED)
-					return (COMMAND_FAILED);
-			execute_operator(c->list, c, P_CHILD);
+				if (exe_stdout_to_pipe(&(pipes[i].pipe)) == COMMAND_FAILED)
+					exit(COMMAND_FAILED);
+			//execute_operator(c->list, c, P_CHILD);
 			//exit(execv(bin[i], av[i]));
 			exit(execute_binary(c->list->bin, c->list->av_bin, g_env));
 		}
-		execute_operator(c->list, c, P_FATHER);
+//		execute_operator(c->list, c, P_FATHER);
 		exe_add_running_pid(pid);
 		if (i)
 		{
-			close(pipes[i - 1].fd[PIPE_READ]);
-			close(pipes[i - 1].fd[PIPE_WRITE]);
+//			close(pipes[i - 1].fd[PIPE_READ]);
+			close(pipes[i - 1].pipe.fd[PIPE_WRITE]);
+			close(pipes[i - 1].pipe.fd_buff[PIPE_READ]);
 		}
 		c = c->next;
 		i++;
 	}
 
-	int		res;
+	int					res;
 	struct timespec		sleep;
 	sleep.tv_sec = 0;
 	sleep.tv_nsec = 1000000;
-	while (exe_wait_command_pid(&res) != S_TERMINATED)
+	while (exe_wait_command_pid(&res) == S_RUNNING)
 	{
-		printf("executing ...\n");
+		exe_io_buff_pipe_read_write(begin, pipes);
 		nanosleep(&sleep, NULL);
+		printf("executing ...\n");
 	}
 //	exe_send_sig_pids(SIGKILL);
 	exe_remove_running_pids();
-	exe_destroy_command_pipes(pipes, begin);
-
-/*
- 	pid[0] = fork();
-	if (pid[0] == 0)
-	{
-		//first child
-
-		close(pipes[0].fd[PIPE_READ]);
-		dup2(pipes[0].fd[PIPE_WRITE], STDOUT_FILENO);
-		close(pipes[0].fd[PIPE_WRITE]);
-		exit(execv(bin[0], av[0]));
-	}
-
-
-
-	pid[1] = fork();
-	if (pid[1] == 0)
-	{
-		//second child
-
-		close(pipes[1].fd[PIPE_READ]);
-		dup2(pipes[1].fd[PIPE_WRITE], STDOUT_FILENO);
-		close(pipes[1].fd[PIPE_WRITE]);
-		close(pipes[0].fd[PIPE_WRITE]);
-		dup2(pipes[0].fd[PIPE_READ], STDIN_FILENO);
-		close(pipes[0].fd[PIPE_READ]);
-		exit(execv(bin[1], av[1]));
-	}
-
-	close(pipes[0].fd[PIPE_READ]);
-	close(pipes[0].fd[PIPE_WRITE]);
-
-	pid[2] = fork();
-	if (pid[2] == 0)
-	{
-		//third child
-		close(pipes[1].fd[PIPE_WRITE]);
-		dup2(pipes[1].fd[PIPE_READ], STDIN_FILENO);
-		close(pipes[1].fd[PIPE_READ]);
-		exit(execv(bin[2], av[2]));
-	}
-
-	close(pipes[1].fd[PIPE_WRITE]);
-	close(pipes[1].fd[PIPE_READ]);*/
-
-	//father:
-
-//	waitpid(pid[0], ret + 0, 0);
-//	waitpid(pid[1], ret + 1, 0);
-//	waitpid(pid[2], ret + 2, 0);
-
-//	printf("ret = %i/%i/%i\n", ret[0], ret[1], ret[2]);
-//	int res = 0;
-	/*	pid_t			pid;
-	int				res;
-	t_command		*prev;
-	t_pipe			*pipes;
-	const t_command	*begin = c;
-
-	INIT(int, i, 0);
-	if ((pipes = exe_create_command_pipes(c)) == (void *)COMMAND_FAILED)
-		EXECUTER_ERROR("can't create pipe !\n");
-	prev = NULL;
-	while (c != NULL)
-	{
-		if ((pid = fork()) == -1)
-			FORK_FAILED_CLOSE_PIPE(pipes, (t_command *)begin);
-		if (pid == 0)
-			exe_child_operator(c, prev, pipes + i);
-		else
-		{
-//			printf("created pid for %s: %i\n", c->list->bin, pid);
-			execute_operator(c->list, c, P_FATHER);
-			exe_add_running_pid(pid);
-		}
-		++i;
-		prev = c;
-		c = c->next;
-	}
-	//exe_destroy_command_pipes(pipes, (t_command *)begin);
-	res = 0;*/
-//	if (exe_wait_command_pid(&res) == S_RUNNING)
-//		;
-	//exe_remove_running_pids();
-//	while (!waitpid(pid, &res, WNOHANG))
-//		printf("waiting ...\n");
-//		dlog("waiting for the end ..., res = %i\n", res);
+	exe_destroy_command_pipes(pipes);
 	return (res);
 }
 

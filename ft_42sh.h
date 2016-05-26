@@ -24,6 +24,7 @@
 # define MAX_ALIAS_NAME_LENGTH		(0xF00 - 1)
 # define MAX_WILDCARD_MATCHES		0xF00
 # define MAX_BINARY_ARGUMENTS		0xF000
+# define PIPE_BUFF_SIZE				127
 
 extern	char			**g_env;
 extern	char			**g_var;
@@ -46,13 +47,6 @@ enum					e_operate
 	OP_NO_OP
 };
 
-enum					e_status
-{
-	S_RUNNING,
-	S_STOPPED,
-	S_TERMINATED
-};
-
 # define CLOSE_FD					(-2)
 # define STDOUT_AND_STDERR			(12)
 # define PROCESS_FD					(-3)
@@ -73,12 +67,6 @@ typedef struct			s_operator
 	int					ftn__:32;
 	t_redirection		redirs[MAX_REDIRECTION_COMMAND];	//all redirections of the command
 }						t_operator;
-
-typedef struct			s_pipe
-{
-	int			fd[2];
-	int			open;
-}						t_pipe;
 
 typedef struct			s_command
 {
@@ -174,25 +162,6 @@ int						ft_alias(int ac, char **av);
 int						ft_where(int ac, char **av);
 
 /*
- **	Pid utils:
-*/
-
-typedef struct			s_process
-{
-	pid_t				pid;
-	char				*name;
-	enum e_status		status;
-	struct s_process	*next;
-}						t_process;
-
-t_process				*get_fg_pid(pid_t p, char *pname, int status);
-int						delete_last_bg_pid(void);
-void					add_bg_pid(pid_t p, char *pname, int status);
-t_process				*get_last_bg_pid(void);
-void					killall_bg_process(void);
-int						wait_process(pid_t pid, char *pname);
-
-/*
  **	HashTable:
  */
 
@@ -216,7 +185,8 @@ void					reload_binhash(void);
 /*
  **	Preparser:
 */
-# define NOT_ESCAPED(b, s, c) (*(s) == c && (s == b || *((s) - 1) != '\\'))
+# define NOT_ESCAPED(b, s, c)	(*(s) == c && (s == b || *((s) - 1) != '\\'))
+# define ESCAPED(b, s, c)		(*(s) == c && s != b && *((s) - 1) == '\\')
 char					**preparse_command(char *cmd);
 char					**cmd_split_quote(char *cmd);
 char					**cmd_split_quote_table(char **ptrs, size_t len);
@@ -301,6 +271,8 @@ void					pr_del(t_prompt *d);
 void					pr_tab(t_prompt *d);
 void					pr_history(t_prompt *d);
 void					pr_vim_export(t_prompt *p);
+void					pr_clear(t_prompt *p);
+void					pr_affbuff(t_prompt *p);
 
 /*
  ** Prompt history:
@@ -395,6 +367,36 @@ int						lex_all_drredir(char ***word, t_commandline **cmd);
 void					print_cmd_line(t_commandline *c);
 
 /*
+ **	Pid utils:
+*/
+
+enum					e_status
+{
+	S_RUNNING,
+	S_STOPPED,
+	S_TERMINATED,
+	S_UNDEFINED,
+};
+
+typedef struct			s_process
+{
+	pid_t				pid;
+	char				*name;
+	enum e_status		status;
+	struct s_process	*next;
+}						t_process;
+
+struct s_pipe_process;
+
+struct s_pipe_process	*exe_init_pid_list(struct s_pipe_process *p);
+t_process				*get_fg_pid(pid_t p, char *pname, int status);
+int						delete_last_bg_pid(void);
+void					add_bg_pid(pid_t p, char *pname, int status);
+t_process				*get_last_bg_pid(void);
+void					killall_bg_process(void);
+int						wait_process(pid_t pid, char *pname);
+
+/*
  **	Executer:
 */
 # define BINARY_OK				0
@@ -418,6 +420,22 @@ typedef struct			s_filedes
 	int			flag;
 }						t_filedes;
 
+typedef struct			s_pipe
+{
+	int			fd[2];
+	int			fd_buff[2];
+	int			open;
+	char		buff[PIPE_BUFF_SIZE];
+}						t_pipe;
+
+typedef struct			s_pipe_process
+{
+	t_pipe					pipe;
+	t_process				process;
+	size_t					npipes;
+	size_t					id;
+}						t_pprocess;
+
 int						executer(t_commandline *cl);
 int						execute_command(t_command *c);
 int						execute_commandline(t_commandline *cl);
@@ -432,7 +450,8 @@ int						exe_wait_command_pid(int *res);
 void					exe_send_sig_pids(int sig);
 
 int						exe_get_pipe_number(t_command *c);
-t_pipe					*exe_create_command_pipes(t_command *c);
-void					exe_destroy_command_pipes(t_pipe *plist, t_command *c);
+t_pprocess				*exe_create_command_pipes(t_command *c);
+void					exe_destroy_command_pipes(t_pprocess *plist);
+void					exe_io_buff_pipe_read_write(t_command *c, t_pprocess *ps);
 
 #endif

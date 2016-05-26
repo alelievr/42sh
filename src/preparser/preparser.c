@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/18 15:27:22 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/31 00:19:29 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/05/26 14:59:24 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ static void	preparse_split_add(char *s, char **table, size_t *k)
 		if (NOT_ESCAPED(begin, s, '`'))
 			while (*s && (NOT_ESCAPED(begin, s, '`')))
 				s++;
-		while (*s && (!ft_isspace(*s) || NOT_ESCAPED(begin, s, ' ')
-					|| (NOT_ESCAPED(begin, s, '\n'))))
+		while (*s && (!ft_isspace(*s) || ESCAPED(begin, s, ' ') || ESCAPED(begin, s, '\n')))
 			s++;
 		table[(*k)++] = ft_strndup(word, s - word);
 		if (*k == MAX_BINARY_ARGUMENTS)
@@ -83,6 +82,7 @@ char		**preparse_command(char *cmd)
 			return (NULL);
 		if (!(ret[i] = cmd_globing_expand(ret[i])))
 			return (NULL);
+		printf("str = %s\n", ret[i]);
 	}
 	ret = preparse_resplit_command(ret);
 	return (ret);
