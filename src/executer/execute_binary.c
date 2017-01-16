@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 19:45:48 by alelievr          #+#    #+#             */
-/*   Updated: 2016/04/01 20:01:29 by alelievr         ###   ########.fr       */
+/*   Updated: 2017/01/16 12:24:40 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,13 @@ int				wait_process(pid_t pid, char *pname)
 	return (ret);
 }
 
-static int		ft_exebin_fork(char *path, char **av, char **env)
+static int		ft_exebin_fork(char *path, char **av, char **env, bool willfork)
 {
 	pid_t	pid;
 	int		ret;
 
-	if ((pid = fork()) > 0)
+	pid = 0;
+	if (willfork && (pid = fork()) > 0)
 	{
 		//TODO try to fix this ...
 		get_fg_pid(pid, *av, S_RUNNING);
@@ -76,34 +77,35 @@ static int		ft_exebin_fork(char *path, char **av, char **env)
 	}
 	if (pid == 0)
 	{
-//		setpgid(0, 0);
-		exit(execve(path, av, env));
+		ret = execve(path, av, env);
+		if (willfork)
+			exit(ret);
 	}
 	return ((ret & 0xFF00) >> 8);
 }
 
-static int		ft_exe_bin_path(char *bin, char **av)
+static int		ft_exe_bin_path(char *bin, char **av, bool willfork)
 {
 	char		*path;
 
 	path = get_binhash_path(hashstring(bin));
 	if (!path)
 		return (0);
-	ft_exebin_fork(path, av, g_env);
+	ft_exebin_fork(path, av, g_env, willfork);
 	return (1);
 }
 
-int				ft_exebin(char *path, char **av, char **env)
+int				ft_exebin(char *path, char **av, char **env, bool willfork)
 {
 	if (access(path, F_OK | X_OK) != -1 && ft_strchr(path, '/'))
 	{
-		ft_exebin_fork(path, av, env);
+		ft_exebin_fork(path, av, env, willfork);
 		return (1);
 	}
 	else if (ft_strchr(path, '/'))
 		return (PATH_NOT_FOUND);
 	else
-		return (ft_exe_bin_path(path, av));
+		return (ft_exe_bin_path(path, av, willfork));
 	(void)env;
 }
 
@@ -112,10 +114,14 @@ int				execute_binary(char *path, char **av, char **env)
 	char	*rpath;
 	int		ret;
 
+	if ((ret = ft_builtins(av, &ret)))
+	{
+		if (is_builtin_forkable(av[0]))
+			exit(ret);
+		return (0);
+	}
 	if ((rpath = get_binhash_path(hashstring(path))))
 		exit(execve(rpath, av, env));
-	else if (ft_builtins(av, &ret))
-		exit(ret);
 	else
 		exit(execve(path, av, env));
 }

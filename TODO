@@ -1,0 +1,5 @@
+rework env builting to remove fork (juste execve, fork is done before now)
+repear ctrl-c and ctrl-\ and ctrl-d
+is stdin is not a tty, do not catch SIGINT / SIGSTOP
+rework the job control to get it work with command lines
+rework autocompletion to get something better ...

@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/03 15:50:40 by alelievr          #+#    #+#             */
-/*   Updated: 2016/05/26 18:45:30 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/11/26 15:53:51 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void			exe_io_buff_pipe_read_write(t_command *c, t_pprocess *pp)
 		fds[i].events = POLLIN;
 	}
 	npipes = pp[0].npipes;
-	printf("npipes = %i\n", npipes);
+//	printf("npipes = %i\n", npipes);
 	if (npipes > 0)
 	{
 		if ((ret = poll(fds, npipes, 100)) == -1)
@@ -43,16 +43,16 @@ void			exe_io_buff_pipe_read_write(t_command *c, t_pprocess *pp)
 		{
 			if (fds[i].revents & POLLIN)
 			{
-				printf("reading on %i\n", pp[i].pipe.fd[PIPE_READ]);
+//				printf("reading on %i\n", pp[i].pipe.fd[PIPE_READ]);
 				ret = read(pp[i].pipe.fd[PIPE_READ], buff, sizeof(buff) - 1);
 				if (ret > 0)
 				{
 					buff[ret] = 0;
-					printf("buff = %s\n", buff);
+//					printf("buff = %s\n", buff);
 					write(pp[i].pipe.fd_buff[PIPE_WRITE], buff, ret);
 					if (pp[i].process.status != S_RUNNING)
 					{
-						printf("closing pipe because process is terminated\n");
+//						printf("closing pipe because process is terminated\n");
 						pp[i].pipe.open = 0;
 						close(pp[i].pipe.fd[PIPE_READ]);
 						close(pp[i].pipe.fd_buff[PIPE_WRITE]);
@@ -60,7 +60,7 @@ void			exe_io_buff_pipe_read_write(t_command *c, t_pprocess *pp)
 				}
 				if (ret == 0)
 				{
-					printf("closing pipe !\n");
+//					printf("closing pipe !\n");
 					close(pp[i].pipe.fd[PIPE_READ]);
 					close(pp[i].pipe.fd_buff[PIPE_WRITE]);
 				}

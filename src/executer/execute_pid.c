@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/02 14:30:41 by alelievr          #+#    #+#             */
-/*   Updated: 2016/05/26 18:49:23 by alelievr         ###   ########.fr       */
+/*   Updated: 2016/11/26 15:55:07 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int				exe_wait_command_pid(int *ret)
 	npipes = pp->npipes;
 	while (pp && i <= pp[0].npipes && pp[i].process.pid != 0)
 	{
-		printf("checking wait for: %i\n", pp[i].process.pid);
+//		printf("checking wait for: %i\n", pp[i].process.pid);
 		if (pp[i].process.status == S_RUNNING &&
 				waitpid(pp[i].process.pid, ret, WCONTINUED | WNOHANG))
 		{

@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/03/18 15:02:20 by alelievr          #+#    #+#             */
-/*   Updated: 2016/03/17 21:54:16 by alelievr         ###   ########.fr       */
+/*   Updated: 2017/01/16 19:18:49 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int			ft_env(int ac, char **av)
 		while (av[i] && ft_strchr(av[i], '='))
 			new_env = ft_add_env(new_env, av[i++]);
 		if (av[i])
-			ft_exebin(av[i], &av[i], new_env);
+			ft_exebin(av[i], &av[i], new_env, false);
 		else
 			ft_print_env(new_env);
 		free(new_env);

@@ -8,6 +8,7 @@
 # include <sys/ioctl.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # define O_RDONLY					0
 # define O_WRONLY					1
 # define O_RDWR						2
@@ -90,6 +91,7 @@ typedef struct			s_builtins
 {
 	char	*name;
 	int		(*fun)(int, char **);
+	bool	forkable;
 }						t_builtins;
 
 typedef struct			s_file
@@ -120,7 +122,7 @@ typedef long long
 
 
 int						build_env(void);
-int						ft_exebin(char *path, char **av, char **env);
+int						ft_exebin(char *path, char **av, char **env, bool fork);
 void					siguser_handler(int s);
 void					ft_signals(void);
 int						dlog(char *fmt, ...);
@@ -142,6 +144,7 @@ char					*get_alias_value(char *name);
 
 int						ft_builtins(char **av, int *ret);
 int						is_builtin(char *s);
+int						is_builtin_forkable(char *s);
 
 int						ft_env(int ac, char **av);
 int						ft_exit(int ac, char **av);

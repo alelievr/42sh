@@ -188,6 +188,6 @@ run: $(NAME)
 	./$(NAME)
 
 codesize:
-	@cat $(SRC) |grep -v '/\*' |wc -l
+	@cat $(foreach S,$(SRC), $(SRCDIR)/$(S)) |grep -v '/\*' |wc -l
 
 .PHONY: all clean fclean re norme codesize

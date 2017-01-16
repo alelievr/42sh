@@ -6,7 +6,7 @@
 /*   By: alelievr <alelievr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/01 15:16:13 by alelievr          #+#    #+#             */
-/*   Updated: 2016/05/25 17:45:47 by alelievr         ###   ########.fr       */
+/*   Updated: 2017/01/16 12:14:53 by alelievr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ static int			check_command_executables(t_command *c, int print)
 				ft_printf("%s: can't execute file\n", c->list->bin);
 			return (COMMAND_FAILED);
 		}
+		if (is_builtin(c->list->bin) && !is_builtin_forkable(c->list->bin) && c->next != NULL)
+		{
+			ft_printf("builtin %s is not forkable\n", c->list->bin);
+			return (COMMAND_FAILED);
+		}
 		c = c->next;
 	}
 	return (COMMAND_OK);
@@ -88,22 +93,38 @@ static int			exe_create_pipes_fork(t_command *c)
 	if ((pipes = exe_create_command_pipes(c)) == (void*)COMMAND_FAILED)
 		return (COMMAND_FAILED);
 
+	pid = 0;
 	exe_init_pid_list(pipes);
 	while (c)
 	{
-		if ((pid = fork()) == -1)
-			exit(ft_printf(("can't fork anymore !\n")));
+		if (!is_builtin(c->list->bin) || is_builtin_forkable(c->list->bin))
+			if ((pid = fork()) == -1)
+				exit(ft_printf(("can't fork anymore !\n")));
 		if (pid == 0)
 		{
 			if (i)
 				if (exe_stdin_from_pipe(&(pipes[i - 1].pipe)) == COMMAND_FAILED)
+				{
+					printf("exited child cause bad pipe !\n");
 					exit(COMMAND_FAILED);
+				}
+			//printf("pipe num = %zu\n", pipes[0].npipes);
 			if (c->next)
 				if (exe_stdout_to_pipe(&(pipes[i].pipe)) == COMMAND_FAILED)
+				{
+					printf("exited child cause bad pipe !\n");
 					exit(COMMAND_FAILED);
+				}
+			for (size_t i = 0; i < pipes[0].npipes; i++)
+			{
+				close(pipes[i].pipe.fd[PIPE_READ]);
+				close(pipes[i].pipe.fd[PIPE_WRITE]);
+				close(pipes[i].pipe.fd_buff[PIPE_READ]);
+				close(pipes[i].pipe.fd_buff[PIPE_WRITE]);
+			}
 			//execute_operator(c->list, c, P_CHILD);
 			//exit(execv(bin[i], av[i]));
-			exit(execute_binary(c->list->bin, c->list->av_bin, g_env));
+			execute_binary(c->list->bin, c->list->av_bin, g_env);
 		}
 //		execute_operator(c->list, c, P_FATHER);
 		exe_add_running_pid(pid);
@@ -125,7 +146,7 @@ static int			exe_create_pipes_fork(t_command *c)
 	{
 		exe_io_buff_pipe_read_write(begin, pipes);
 		nanosleep(&sleep, NULL);
-		printf("executing ...\n");
+		//printf("executing ...\n");
 	}
 //	exe_send_sig_pids(SIGKILL);
 	exe_remove_running_pids();
